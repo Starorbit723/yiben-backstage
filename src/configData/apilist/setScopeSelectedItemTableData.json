@@ -1,0 +1,28 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [20,20,15,45],
+        "align": ["","","","","",""]
+    },
+    "thead": [{"th":"参数"},{"th":"参数类型"},{"th": "是否比传"},{"th":"含义"}],
+    "tbody": [
+        [
+            {"txt":"id"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"希望设置选中状态的Dom元素所在的图层id"}
+        ],
+        [
+            {"txt":"targetY"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"希望设置选中状态Y坐标，也就是所在的scope值"}
+        ],
+        [
+            {"txt":"targetX"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"希望设置选中状态X坐标，也就是所在的scope值的第几个"}
+        ]
+    ]
+}

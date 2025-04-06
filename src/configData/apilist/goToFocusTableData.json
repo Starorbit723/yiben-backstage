@@ -1,0 +1,26 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [10,15,10,20,10,35],
+        "align": ["","","","","",""]
+    },
+    "thead": [{"th":"参数"},{"th":"参数类型"},{"th":"是否必传"},{"th":"含义"},{"th": "默认值"},{"th":"备注"}],
+    "tbody": [
+        [
+            {"txt":"targetY"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"希望的落焦点所在的scope值"},
+            {"txt":"-"},
+            {"txt":"<div class='list3 scoped' scoped='3'></div>"}
+        ],
+        [
+            {"txt":"targetX"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"希望的落焦点所在的scope下的位置"},
+            {"txt":"-"},
+            {"txt":"<div class='list3-item incontroll'>落焦点-item-8</div>"}
+        ]
+    ]
+}

@@ -1,0 +1,52 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [20,15,30,35],
+        "align": ["","","","left"]
+    },
+    "thead": [{"th":"参数"},{"th":"参数类型"},{"th":"含义"},{"th":"备注"}],
+    "tbody": [
+        [
+            {"txt":"locationName"},
+            {"txt":"String"},
+            {"txt":"坐标点的名称"},
+            {"txt":"每一个可落焦的节点都有唯一的名称，名称的组成是ln_y_x(例如：ln_3_1)，y其实是该DOM所在的scope的值，x是该DOM所在scoped的第几个位置"}
+        ],
+        [
+            {"txt":"currentY"},
+            {"txt":"Number"},
+            {"txt":"当前焦点的Scoped值"},
+            {"txt":"类似于落焦点的纵坐标"}
+        ],
+        [
+            {"txt":"currentX"},
+            {"txt":"Number"},
+            {"txt":"当前焦点所在的Scoped中的位置"},
+            {"txt":"类似于落焦点的横坐标"}
+        ],
+        [
+            {"txt":"lastY"},
+            {"txt":"Number"},
+            {"txt":"同图层内的，上一次焦点的Scoped值"},
+            {"txt":"没有之前的焦点记录时，返回-1"}
+        ],
+        [
+            {"txt":"lastX"},
+            {"txt":"Number"},
+            {"txt":"同图层内的，上一次焦点所在的Scoped中的位置"},
+            {"txt":"没有之前的焦点记录时，返回-1"}
+        ],
+        [
+            {"txt":"isBoundary"},
+            {"txt":"Boolean"},
+            {"txt":"该操作是否触碰到边界"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"dataSource"},
+            {"txt":"Object"},
+            {"txt":"绑定到该DOM节点的数据"},
+            {"txt":"绑定的数据是JSON，但是Layer Scoper拥有强大的服务意识，会在返回给开发者数据时统一转回成Object，可直接使用"}
+        ]
+    ]
+}

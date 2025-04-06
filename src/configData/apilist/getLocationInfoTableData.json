@@ -1,0 +1,34 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [20,20,20,40],
+        "align": ["","","","","",""]
+    },
+    "thead": [{"th":"返回参数"},{"th":"参数类型"},{"th": "默认值"},{"th":"含义"}],
+    "tbody": [
+        [
+            {"txt":"currentX"},
+            {"txt":"Number"},
+            {"txt":"-1"},
+            {"txt":"当前焦点X坐标"}
+        ],
+        [
+            {"txt":"currentY"},
+            {"txt":"Number"},
+            {"txt":"-1"},
+            {"txt":"当前焦点Y坐标，也就是所在scope值"}
+        ],
+        [
+            {"txt":"lastX"},
+            {"txt":"Number"},
+            {"txt":"-1"},
+            {"txt":"该图层上一次焦点X坐标"}
+        ],
+        [
+            {"txt":"lastY"},
+            {"txt":"Number"},
+            {"txt":"-1"},
+            {"txt":"该图层上一次焦点Y坐标，也就是所在scope值"}
+        ]
+    ]
+}

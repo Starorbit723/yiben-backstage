@@ -1,0 +1,98 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [20,15,10,20,10,25],
+        "align": ["","","","","",""]
+    },
+    "thead": [{"th":"参数"},{"th":"参数类型"},{"th":"是否必传"},{"th":"含义"},{"th": "默认值"},{"th":"备注"}],
+    "tbody": [
+        [
+            {"txt":"id"},
+            {"txt":"String"},
+            {"txt":"是"},
+            {"txt":"DOM的id"},
+            {"txt":""},
+            {"txt":"标识一个可以落焦的图层，必传", "focus": true}
+        ],
+        [
+            {"txt":"defaultPoint"},
+            {"txt":"Object"},
+            {"txt":"是"},
+            {"txt":"该图层默认落焦点坐标"},
+            {"txt":""},
+            {"txt":"例：{ y: 1, x: 1 }"}
+        ],
+        [
+            {"txt":"defaultPoint.y"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"落焦点所在的scope值"},
+            {"txt":"-1"},
+            {"txt":"<div class='list scoped' scoped='1'></div>"}
+        ],
+        [
+            {"txt":"defaultPoint.x"},
+            {"txt":"Number"},
+            {"txt":"是"},
+            {"txt":"落焦点所在scope的第几个位置"},
+            {"txt":"-1"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn"},
+            {"txt":"Object"},
+            {"txt":"否"},
+            {"txt":"默认回调方法传入"},
+            {"txt":""},
+            {"txt":"默认回调方法的Function Name值是固定的"}
+        ],
+        [
+            {"txt":"callBackFn.cbFocusUp"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"按“上”键的默认回调方法"},
+            {"txt":""},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn.cbFocusDown"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"按“下”键的默认回调方法"},
+            {"txt":""},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn.cbFocusLeft"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"按“左”键的默认回调方法"},
+            {"txt":""},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn.cbFocusRight"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"按“右”键的默认回调方法"},
+            {"txt":""},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn.cbBackSpace"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"按“返回/后退”键的默认回调方法"},
+            {"txt":""},
+            {"txt":""}
+        ],
+        [
+            {"txt":"callBackFn.cbFocusChange"},
+            {"txt":"Function"},
+            {"txt":"否"},
+            {"txt":"焦点移动默认回调方法"},
+            {"txt":""},
+            {"txt":"焦点每次移动后默认触发"}
+        ]
+    ]
+}

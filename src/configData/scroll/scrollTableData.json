@@ -1,0 +1,106 @@
+{
+    "tableConfig":{
+        "suitable": false,
+        "width": [20,15,10,20,10,25],
+        "align": ["","","","","",""]
+    },
+    "thead": [{"th":"参数"},{"th":"参数类型"},{"th":"是否必传"},{"th":"含义"},{"th": "默认值"},{"th":"备注"}],
+    "tbody": [
+        [
+            {"txt":"needScroll"},
+            {"txt":"Boolean"},
+            {"txt":"否"},
+            {"txt":"该图层是否需要滚动"},
+            {"txt":"false"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollDirection"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动方向: 'horizontal' / 'vertical'"},
+            {"txt":""},
+            {"txt":"needScroll=true 时，该字段为必传字段", "focus": true}
+        ],
+        [
+            {"txt":"scrollBarConfig"},
+            {"txt":"Object"},
+            {"txt":"否"},
+            {"txt":"滚动条配置项"},
+            {"txt":""},
+            {"txt":"用于自定义滚动条样式"}
+        ],
+        [
+            {"txt":"scrollBarConfig.showScrollBar"},
+            {"txt":"Boolean"},
+            {"txt":"否"},
+            {"txt":"是否展示滚动条"},
+            {"txt":"false"},
+            {"txt":"false 表示滚动条会隐藏"}
+        ],
+        [
+            {"txt":"scrollBarConfig.trackWidth"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动条宽度"},
+            {"txt":"8px"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.trackBackground"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动条背景色"},
+            {"txt":"none"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.trackBorderRadius"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动条轨道圆角"},
+            {"txt":"0px"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.thumbColor"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动滑块颜色"},
+            {"txt":"rgba(255,255,255,0)"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.thumbBorderWidth"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动滑块边框宽度"},
+            {"txt":"0"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.thumbBorderColor"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动滑块边框颜色"},
+            {"txt":"none"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.thumbBorderRadius"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动滑块圆角"},
+            {"txt":"4px"},
+            {"txt":""}
+        ],
+        [
+            {"txt":"scrollBarConfig.thumbHoverColor"},
+            {"txt":"String"},
+            {"txt":"否"},
+            {"txt":"滚动滑块鼠标悬浮颜色"},
+            {"txt":"rgba(255,255,255,0)"},
+            {"txt":""}
+        ]
+    ]
+}

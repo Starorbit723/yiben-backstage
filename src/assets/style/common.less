@@ -1,0 +1,226 @@
+/*
+	全局通用基本样式
+*/
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	font-family: 'PinPingPingFangSC-Regular', 'Microsoft YaHei UI', arial, sans-serif;
+	font-weight: 400;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+img {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+#app {
+	display: flex;
+	width: 100%;
+	min-width: 1265px;
+	height: auto;
+}
+
+nav {
+	flex: 0 0 240px;
+	width: 240px;
+    height: 100vh;
+    overflow-y: scroll;
+    box-shadow: 2px 2px rgba(0,0,0,0.1);
+}
+nav::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+nav::-webkit-scrollbar-track {
+    background: none;
+    border-radius: none;
+}
+nav::-webkit-scrollbar-thumb {
+    background: none;
+    border: none;
+}
+nav::-webkit-scrollbar-thumb:hover {
+    background: none;
+}
+
+
+/*
+	页面使用的基本颜色
+*/
+
+@theme-color100: rgb(3, 189, 173);
+@theme-color75: rgba(3, 189, 173, 0.75);
+@theme-color50: rgba(3, 189, 173,0.5);
+@theme-color25: rgba(3, 189, 173,0.25);
+@theme-color10: rgba(3, 189, 173,0.1);
+
+@theme-fu-color100: rgba(241, 101, 7, 1);
+@theme-fu-color75: rgba(241, 101, 7, 0.75);
+@theme-fu-color50: rgba(241, 101, 7, 0.5);
+@theme-fu-color25: rgba(241, 101, 7, 0.25);
+@theme-fu-color10: rgba(241, 101, 7, 0.1);
+
+@warn-focus-color: rgb(218, 29, 29); 
+
+@table-title: #333;
+@table-text: #000;
+
+main {
+	flex: 1;
+	height: calc(100vh);
+	padding: 0 30px 0 40px;
+    overflow-y: auto;
+    .ls-content-wrapper{
+        padding: 30px 0 100px 0;
+        .ls-title-lv1{
+            height: 30px;
+            line-height: 30px;
+            font-size: 24px;
+        }
+        .ls-title-lv2{
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            color: @theme-color100;
+            font-weight: 600;
+            background: url('../images/title-point.png') no-repeat;
+            background-position: 0 center;
+            background-size: 10px 10px;
+            text-indent: 18px;
+        }
+        .ls-title-lv3{
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            color: @theme-color100;
+            font-weight: 600;
+        }
+        .ls-blockzone{
+            padding: 15px;
+            background-color: @theme-color10;
+        }
+        .ls-image{
+            box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+        .ls-image.ls-image50{
+            width: 50%;
+        }
+        .ls-image.ls-image75{
+            width: 75%;
+        }
+        .ls-text{
+            line-height: 26px;
+            font-size: 15px;
+            color: #000;
+        }
+        .ls-list-content{
+            margin: 0;
+            padding: 20px;
+            font-size: 15px;
+            color: @theme-fu-color100;
+            li{
+                line-height: 30px;
+            }
+        }
+        .ls-block{
+            padding: 20px;
+            border: 1px solid @theme-fu-color50;
+            background: rgba(241, 101, 7, 0.1);
+        }
+        .ls-top-20{
+            margin-top: 20px;
+        }
+        .ls-top-30{
+            margin-top: 30px;
+        }
+        .ls-top-40{
+            margin-top: 40px;
+        }
+        .ls-top-50{
+            margin-top: 50px;
+        }
+        .ls-top-80{
+            margin-top: 80px;
+        }
+        .ls-textfocus{
+            color: @theme-color100;
+            font-weight: 600;
+        }
+    }
+}
+
+main::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    cursor: pointer;
+}
+main::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0);
+    border-radius: none;
+}
+main::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 3px;
+}
+main::-webkit-scrollbar-thumb:hover {
+    background: @theme-color100;
+    cursor: pointer;
+}
+
+
+/*
+	工具类样式
+*/
+.clear {
+	clear: both;
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+	visibility: hidden;
+	overflow: hidden;
+}
+.clearfix {
+	zoom: 1;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+	font-size:0;
+}
+
+.ellipsis() {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.line-clamp(@val) {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: @val;
+	/*! autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/* autoprefixer: on */
+}
+
+
+

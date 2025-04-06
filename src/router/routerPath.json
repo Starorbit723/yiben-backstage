@@ -1,0 +1,186 @@
+[{
+    "version": "1.0.0",
+    "routes":[{
+        "title": "start",
+        "enTitle": "Start",
+        "cnTitle": "开始",
+        "path": "",
+        "level": 0,
+        "children":[{
+            "title": "install",
+            "enTitle": "Install",
+            "cnTitle": "安装",
+            "path": "/v1/start/install",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""
+        },{
+            "title": "update",
+            "enTitle": "Update",
+            "cnTitle": "更新",
+            "path": "/v1/start/update",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""
+        }]
+    },{
+        "title": "idea",
+        "enTitle": "Idea",
+        "cnTitle": "设计",
+        "path": "",
+        "level": 0,
+        "children":[{
+            "title": "layer",
+            "enTitle": "Layer",
+            "cnTitle": "图层",
+            "path": "/v1/idea/layer",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""
+        },{
+            "title": "scope",
+            "enTitle": "Scope",
+            "cnTitle": "区域",
+            "path": "/v1/idea/scope",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""
+        },{
+            "title": "boundary",
+            "enTitle": "Boundary",
+            "cnTitle": "边界",
+            "path": "/v1/idea/boundary",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""
+        }]
+    },{
+        "title": "use",
+        "enTitle": "Use",
+        "cnTitle": "使用",
+        "path": "",
+        "level": 0,
+        "children":[{
+            "title": "init",
+            "enTitle": "Init",
+            "cnTitle": "初始化",
+            "path": "/v1/use/init",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "scroll",
+            "enTitle": "Scroll",
+            "cnTitle": "滚动",
+            "path": "/v1/use/scroll",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "eventbind",
+            "enTitle": "EventBind",
+            "cnTitle": "事件绑定",
+            "path": "/v1/use/eventbind",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "databind",
+            "enTitle": "DataBind",
+            "cnTitle": "数据绑定",
+            "path": "/v1/use/databind",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "callback",
+            "enTitle": "Callback",
+            "cnTitle": "回调",
+            "path": "/v1/use/callback",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        }]
+    },{
+        "title": "api",
+        "enTitle": "Api",
+        "cnTitle": "接口",
+        "path": "",
+        "level": 0,
+        "children":[{
+            "title": "initcontroller",
+            "enTitle": "InitController",
+            "cnTitle": "初始化",
+            "path": "/v1/api/initcontroller",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "addnewcontroller",
+            "enTitle": "addNewController",
+            "cnTitle": "添加图层",
+            "path": "/v1/api/addnewcontroller",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "wakeup",
+            "enTitle": "wakeUp",
+            "cnTitle": "唤醒图层",
+            "path": "/v1/api/wakeup",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "gotofocus",
+            "enTitle": "goToFocus",
+            "cnTitle": "移动焦点",
+            "path": "/v1/api/gotofocus",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "getlocationinfo",
+            "enTitle": "getLocationInfo",
+            "cnTitle": "焦点信息",
+            "path": "/v1/api/getlocationinfo",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        },{
+            "title": "setscopeselecteditem",
+            "enTitle": "setScopeSelectedItem",
+            "cnTitle": "选中",
+            "path": "/v1/api/setscopeselecteditem",
+            "level": 1,
+            "linkType": "inner",
+            "component": ""  
+        }]
+    }]
+},{
+    "version": "2.0.0",
+    "routes":[{
+        "title": "install",
+        "enTitle": "Install",
+        "cnTitle": "安装",
+        "path": "",
+        "level": 0,
+        "children":[{
+            "title": "start",
+            "enTitle": "",
+            "cnTitle": "开始",
+            "path": "/v2/install/start",
+            "level": 2,
+            "linkType": "inner",
+            "component": ""
+        },{
+            "title": "updatenotes",
+            "enTitle": "",
+            "cnTitle": "更新日志",
+            "path": "/v2/install/updatenotes",
+            "level": 2,
+            "linkType": "inner",
+            "component": ""
+        }]
+    }]
+}]
