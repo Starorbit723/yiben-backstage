@@ -13,15 +13,119 @@
     <div class="ls-title-lv2">不依赖于任何开发框架，Java Script原生级别封装，多种方式引入，一键式初始化，开箱即用。</div>
     <div class="ls-title-lv2">代码体量极小但功能强大，内置API丰富，生命周期预留充分，以开发者视角来设计的代码架构。</div>
     <a class="start-btn" href="/start/install">让我们开始吧</a>
+    <div @click="verificationEmail">发送</div>
+    <input v-model="verfySMSCode" />
+    <div @click="verfySMS">验证</div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+// import cloudbase from "@cloudbase/js-sdk"
+
+// const app = cloudbase.init({
+// 	env: "cloud1-0gvvdaq4c40b8f74",
+// 	clientId: "AAU5PwABE-ooYTmgFWo" // 应用ID
+// });
+
+// console.log('app', app);
+// const auth = this.$cloudbase.auth();
+// const phoneNumber = "+86 15011540723";
+// const verification = await auth.getVerification({
+//   phone_number: phoneNumber,
+// });
+// console.log('verification', verification);
+
+const auth = Vue.prototype.$cloudbase.auth();
+console.log('aaaaa', auth);
+
 export default {
   name: 'HomePage',
   data() {
     return {
+      verfySMSCode: '',
+      verification_token: '',
     }
+  },
+  mounted() {
+    console.log('cloudbase', this.$cloudbase); // 将会输出 1
+    
+    // verification();
+    // this.$cloudbase.callFunction({
+    //   name: "utils",
+    //   // 云函数2.0 参数
+    //   type: "wxId",
+    //   data: {},
+    // }).then((res) => {
+    //   const result = res.result; //云函数执行结果
+    //   console.log(result);
+    // });
+    // this.verificationEmail();
+  },
+  methods:{
+    async verificationEmail() {
+      // const auth = this.$cloudbase.auth();
+      const phoneNumber = "+86 15365652382";
+      // const verification = await auth.getVerification({
+      //   phone_number: phoneNumber,
+      // });
+      // const email = "790936393@qq.com";
+      // const verification = await auth.getVerification({
+      //   email: email,
+      // });
+      // verification();
+      try {
+        // 请求发送邮箱验证邮件
+        const result = await auth.getVerification({
+          phone_number: phoneNumber,
+          // email: email,
+        });
+        console.log('验证发送成功:', result);
+        this.smsResult = result;
+        // this.verfySMS(result);
+      } catch (error) {
+        console.error('验证发送失败:', error);
+      }
+    },
+    async verfySMS() {
+      console.log('verfySMS smsResult', this.smsResult);
+      // const auth = this.$cloudbase.auth();
+      // 验证验证码的正确性
+      try {
+        const verificationTokenRes = await auth.verify({
+          verification_id: this.smsResult.verification_id,
+          verification_code: this.verfySMSCode,
+        });
+        console.log('验证SMS成功:', verificationTokenRes);
+        this.verification_token = verificationTokenRes.verification_token;
+        this.signIn();
+      } catch (e) {
+        console.log('验证SMS失败:', e);
+      }
+    },
+    async signIn() {
+      try {
+        // const signInRes = await auth.signIn({
+        //   username: '+86 15365652382',
+        //   verification_token: this.verification_token,
+        // });
+        const signUpRes = await auth.signUp({
+          phone_number: '+86 15365652382',
+          verification_code: this.verfySMSCode,
+          verification_token: this.verification_token,
+          // 可选，设置昵称
+          name: "史长安",
+          // 可选，设置密码
+          password: "1234567890",
+          // 可选，设置登录用户名
+          username: "happysca",
+        });
+        console.log('登录成功:', signUpRes);
+      } catch (e) {
+        console.log('登录失败:', e);
+      }
+      
+    },
   }
 }
 </script>

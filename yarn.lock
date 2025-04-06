@@ -1022,6 +1022,154 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@cloudbase/adapter-interface@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.npmjs.org/@cloudbase/adapter-interface/-/adapter-interface-0.6.0.tgz#9c96c53ea5ab197253ac15c520cacdf84a8d71e3"
+  integrity sha512-o+/hht5Zi4bxkPGGNVoGofXpux9pQYe5Oio+qbyL4bpR/+507rVRc/EH4t9YPUn6e0PDR+DZ794x221UiFU9JQ==
+
+"@cloudbase/adapter-wx_mp@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@cloudbase/adapter-wx_mp/-/adapter-wx_mp-1.1.0.tgz#bd600e68cdc4bb90f31293e5c2feb564909fcec8"
+  integrity sha512-eVolqrCtMwQQ1sJZxoaXoAtw8yIuKmkLDz1vvJX61rn/SuFkOSVmeKVg/4YQMa/NfC88NqbjNSzVTdiHLVfYsQ==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    web-streams-polyfill "^4.0.0"
+
+"@cloudbase/ai@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/ai/-/ai-2.11.0.tgz#580be323b609665d9d0b9555487a7a3e2b6bf991"
+  integrity sha512-CoGhQRUS+rLtB0k+aa5HdPs54t+TdY0zIJGSFg/bqh/wFO+RBximzH/IbrLk3rzpUxNxREMv+hY2OJulIvgkKw==
+  dependencies:
+    "@cloudbase/types" "^2.11.0"
+    "@mattiasbuelens/web-streams-adapter" "^0.1.0"
+    text-encoding-shim "^1.0.5"
+    web-streams-polyfill "^4.0.0"
+
+"@cloudbase/analytics@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/analytics/-/analytics-2.11.0.tgz#bf4149d08873539dac752563694a14ec19856c73"
+  integrity sha512-wfOU2QFb5zPGO7jT0OS08AbVuOFKW4wWgKz7bCiw7vgXJJ91IPl4VRpBeYbTbVyuqb5cvd/wpdtmCttdMfyxFA==
+  dependencies:
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/app@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/app/-/app-2.11.0.tgz#4ac9c2c7ef8f4ef093a14a11e4b377347a5539ae"
+  integrity sha512-eaqONoKrIBNZj0GCqK2WULIl4Oc0DL4BWX97sJa3shrKM/X9ssZD6N7ZijxIjyOxZb8svSPSBF5rXg3yP5UQ6A==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    "@cloudbase/adapter-wx_mp" "^1.1.0"
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/auth@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/auth/-/auth-2.11.0.tgz#e0df03c02ac59b766874665e212d43fa4725019b"
+  integrity sha512-46H6lbUqYoDssfM0c0sSBr7mTABRq+LaobEcyABrP07LCIUTn/8LKARMKzQWr+8vcW40CVJCY89IZ+kvb8Hfzg==
+  dependencies:
+    "@cloudbase/adapter-wx_mp" "^1.1.0"
+    "@cloudbase/oauth" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/cloudrun@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/cloudrun/-/cloudrun-2.11.0.tgz#3d3cb57b65330dae523cd270af330b87c8127713"
+  integrity sha512-iAfKS3RfR6xJU+r7/QuhJwPoYKuOGy+mpIXegQXgTinWe7jZH6yhBcVaBtTrlxdBzXayHkkBXOcgfn2H2mNl5A==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/database@0.9.21":
+  version "0.9.21"
+  resolved "https://registry.npmjs.org/@cloudbase/database/-/database-0.9.21.tgz#2d9f0230f2fa6536cc2886f36bd57ffdc0023d3d"
+  integrity sha512-tpOFC8BUtM0a6kKwpHrjJ9zqII8HZDHj3ZlmhZpKRTyzgS8GjFlM49f20pTgkcfwWzbPyvJROW6UYuLU1Vq+CQ==
+  dependencies:
+    bson "^4.0.2"
+    lodash.clonedeep "4.5.0"
+    lodash.set "4.3.2"
+    lodash.unset "4.5.2"
+
+"@cloudbase/functions@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/functions/-/functions-2.11.0.tgz#03cdc3680ac2a73549db7bbf0d32d00c2175fc3e"
+  integrity sha512-61TXUvtUpI8N2K+BcVN+tAuLm/mXmxN2pd2ofr7vCzy+n9rVCbuw1bxUFP1y/fgXzSXsu9jzSraLvOS9RF+K7Q==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    "@cloudbase/cloudrun" "^2.11.0"
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/js-sdk@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/js-sdk/-/js-sdk-2.11.0.tgz#2cfb563b3d6b1f7bb432dd9e62ae162a3c3217fd"
+  integrity sha512-hG21uN9CUnuegKMLTy0akiWFygKVUKgk3MJC1LI6MNSvWMeYz5Q+MxdbLbdls/AsYo0WX+Odr7r3tXxTRDnCQg==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    "@cloudbase/ai" "^2.11.0"
+    "@cloudbase/analytics" "^2.11.0"
+    "@cloudbase/app" "^2.11.0"
+    "@cloudbase/auth" "^2.11.0"
+    "@cloudbase/cloudrun" "^2.11.0"
+    "@cloudbase/database" "0.9.21"
+    "@cloudbase/functions" "^2.11.0"
+    "@cloudbase/model" "^2.11.0"
+    "@cloudbase/realtime" "^2.11.0"
+    "@cloudbase/storage" "^2.11.0"
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/model@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/model/-/model-2.11.0.tgz#add399a64b871e1aacc0412af089f49d36112723"
+  integrity sha512-Z5gIy55jmMM92xosg1tKS6TfLzV/QmNRBoy1ooV+3S7gBjyu4+T61j3M2fmqoTHqFDsHI8AiGqyCoEqQR2EIRA==
+  dependencies:
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+    "@cloudbase/wx-cloud-client-sdk" "^1.5.0"
+
+"@cloudbase/oauth@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/oauth/-/oauth-2.11.0.tgz#8b947f385287d4c40f7e39afde2fcb07f31f6068"
+  integrity sha512-Rt6l63oV1EQw6ajvea0U3/aRJxT4HNIE+p2cRk4HdMmnRJjPWpeATzYdyjttReXdF/35QsYwjK2Tm4YixbJIXQ==
+
+"@cloudbase/realtime@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/realtime/-/realtime-2.11.0.tgz#da409e69670c5486e7b8a9bdd12275dc78fc3c58"
+  integrity sha512-ZAYDLXfxZ0fkFFPvhygS3KhlZV6JRTTOkR8EJayvrmgDdL6W2f8kBMH6nCo0dq/M4FAnrDeGoExKDagkA+qB4g==
+  dependencies:
+    "@cloudbase/types" "^2.11.0"
+
+"@cloudbase/storage@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/storage/-/storage-2.11.0.tgz#49e402a632edac645b038c86c7fbeae16189a363"
+  integrity sha512-AE8+yyBs43dBmEGSq1EnmeMwdDUrk+ycHRlJcnpVhz4ZtSPyehHfysab7LYfd1ibkPPeDYbza3ksclipHWI8sw==
+  dependencies:
+    "@cloudbase/types" "^2.11.0"
+    "@cloudbase/utilities" "^2.11.0"
+
+"@cloudbase/types@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/types/-/types-2.11.0.tgz#6d8dc239f95f9d201ec6eb573d596b4a0f386dd2"
+  integrity sha512-c1IXTUGxjt7rEu64/t+WabAY5Vn5Z/dZSNI6GJTIKjmudTwIjKWRw7OtJU+YFV9J7r3WL8L4aDAQRIPm2bd3bQ==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+
+"@cloudbase/utilities@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/@cloudbase/utilities/-/utilities-2.11.0.tgz#341112674baf441ce1081525328ba6c4ac08cb40"
+  integrity sha512-6v4g8f4yamxNXjKlO89DPrEcqgEETNlYt03yoBK470S3PfZb22SisfO+Ad3MVnyPIqAuCBtYgnmWuwB3okt1jA==
+  dependencies:
+    "@cloudbase/adapter-interface" "^0.6.0"
+    "@cloudbase/types" "^2.11.0"
+    jwt-decode "^3.1.2"
+
+"@cloudbase/wx-cloud-client-sdk@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/@cloudbase/wx-cloud-client-sdk/-/wx-cloud-client-sdk-1.5.0.tgz#7a769c6bad99ae61f3c53760b5bce9ed75c0b663"
+  integrity sha512-ceXxNPYX2/SxJ3Dq2fmEZkkOQaCKPJvhwo5gkIrhi9h2cUlBvaRTaqqQXYufjjXuVo10MLg03oyQsNKZNojWPg==
+
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz"
@@ -1112,6 +1260,11 @@
   version "2.0.5"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
+
+"@mattiasbuelens/web-streams-adapter@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@mattiasbuelens/web-streams-adapter/-/web-streams-adapter-0.1.0.tgz#607b5a25682f4ae2741da7ba6df39302505336b3"
+  integrity sha512-oV4PyZfwJNtmFWhvlJLqYIX1Nn22ML8FZpS16ZUKv0hg7414xV1fjsGqxQzLT2dyK92TKxsJSwMOd7VNHAtPmA==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -2225,12 +2378,19 @@ browserslist@^4.0.0, browserslist@^4.16.3, browserslist@^4.21.10, browserslist@^
     node-releases "^2.0.14"
     update-browserslist-db "^1.0.13"
 
+bson@^4.0.2:
+  version "4.7.2"
+  resolved "https://registry.npmjs.org/bson/-/bson-4.7.2.tgz#320f4ad0eaf5312dd9b45dc369cc48945e2a5f2e"
+  integrity sha512-Ry9wCtIZ5kGqkJoi6aD8KjxFZEx78guTQDnpXWiNthsxzrxAK/i8E6pCHAIZTbaEFWcOCvbecMukfK7XUvyLpQ==
+  dependencies:
+    buffer "^5.6.0"
+
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/buffer-from/-/buffer-from-1.1.2.tgz"
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
 
-buffer@^5.5.0:
+buffer@^5.5.0, buffer@^5.6.0:
   version "5.7.1"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/buffer/-/buffer-5.7.1.tgz"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -4252,6 +4412,11 @@ jsprim@^1.2.2:
     json-schema "0.4.0"
     verror "1.10.0"
 
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
+
 keyv@^4.5.3:
   version "4.5.4"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/keyv/-/keyv-4.5.4.tgz"
@@ -4355,6 +4520,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.clonedeep@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
@@ -4385,6 +4555,11 @@ lodash.merge@^4.6.2:
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/lodash.merge/-/lodash.merge-4.6.2.tgz"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash.set@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==
+
 lodash.truncate@^4.4.2:
   version "4.4.2"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
@@ -4394,6 +4569,11 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
+
+lodash.unset@4.5.2:
+  version "4.5.2"
+  resolved "https://registry.npmjs.org/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
+  integrity sha512-bwKX88k2JhCV9D1vtE8+naDKlLiGrSmf8zi/Y9ivFHwbmRfA8RxS/aVJ+sIht2XOwqoNr4xUPUkGZpc1sHFEKg==
 
 lodash@^4.17.14, lodash@^4.17.20, lodash@^4.17.21:
   version "4.17.21"
@@ -6102,6 +6282,11 @@ terser@^5.10.0, terser@^5.26.0:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
+text-encoding-shim@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/text-encoding-shim/-/text-encoding-shim-1.0.5.tgz#dfd9cde8dbbffe0c52be2fc277a6a65c66d23e41"
+  integrity sha512-H7yYW+jRn4yhu60ygZ2f/eMhXPITRt4QSUTKzLm+eCaDsdX8avmgWpmtmHAzesjBVUTAypz9odu5RKUjX5HNYA==
+
 text-table@^0.2.0:
   version "0.2.0"
   resolved "http://jfrog.cloud.qiyi.domain/artifactory/api/npm/npm/text-table/-/text-table-0.2.0.tgz"
@@ -6417,6 +6602,11 @@ wcwidth@^1.0.1:
   integrity sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==
   dependencies:
     defaults "^1.0.3"
+
+web-streams-polyfill@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-4.1.0.tgz#3ba095d0eb3ef6377cd126e8354b2cdba286e0d3"
+  integrity sha512-A7Jxrg7+eV+eZR/CIdESDnRGFb6/bcKukGvJBB5snI6cw3is1c2qamkYstC1bY1p08TyMRlN9eTMkxmnKJBPBw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
