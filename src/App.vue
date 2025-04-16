@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <nav>
-      <NavMenu />
-    </nav>
     <main>
       <router-view></router-view>
     </main>
@@ -10,12 +7,9 @@
 </template>
 
 <script>
-import NavMenu from '@/components/NavMenu.vue';
-
 export default {
   name: 'App',
   components: {
-    NavMenu,
   }
 }
 </script>

@@ -1,22 +1,24 @@
 <template>
-  <div class="nav-menu">
-    <a class="logo" href="/home">
-      <img src="../assets/images/logo-page.png" />
-    </a>
-    <div class="slide-zone">
-      <div class="nav-level1" v-for="item in cRouter" :key="item.title">
-        <div class="nav-level1-title">{{item.cnTitle}}</div>
-        <div class="nav-leve2" v-for="item2 in item.children" :key="item2.title">
-          <div class="nav-level2-title">
-            <router-link :to="{ name: item2.title, params: { username: 'erina' }}">
-              <span class="cn">{{item2.cnTitle}}</span>
-              <span class="en">{{item2.enTitle}}</span>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <el-menu
+    router
+    :default-active="activeIndex"
+    class="el-menu-demo"
+    mode="horizontal"
+    background-color="#545C64"
+    text-color="#FFFFFF"
+    active-text-color="#FFD04B"
+    @select="handleSelect">
+    <el-menu-item index="usermanagement">人员管理</el-menu-item>
+    <el-submenu index="2">
+      <template slot="title">工作台</template>
+      <el-menu-item index="usermanagement">选项1</el-menu-item>
+      <el-menu-item index="2-2">选项2</el-menu-item>
+      <el-menu-item index="2-3">选项3</el-menu-item>
+      <el-menu-item index="2-4">选项4</el-menu-item>
+    </el-submenu>
+    <el-menu-item index="3" disabled>消息中心</el-menu-item>
+    <el-menu-item index="4">订单管理</el-menu-item>
+  </el-menu>
 </template>
 
 <script>
@@ -28,7 +30,7 @@ export default {
   },
   data() {
     return {
-      version: '1.0.0',
+      activeIndex: '1',
       routerPath: pathData,
     }
   },
@@ -37,70 +39,13 @@ export default {
       return this.routerPath[this.version.split('.')[0] - 1].routes;
     },
   },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.nav-menu{
-  width: 240px;
-  height: 100vh;
-  box-shadow: 2px 0 2px rgba(0, 71, 83, 0.1);
-  user-select: none;
-  .logo{
-    height: 70px;
-    padding: 10px 0;
-    img {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-  .slide-zone{
-    padding: 10px 0;
-    .nav-level1{
-      margin-bottom: 15px;
-      .nav-level1-title{
-        padding-left: 15px;
-        height: 24px;
-        line-height: 24px;
-        color: rgb(180, 180, 180);
-        font-weight: 600;
-        font-size: 15px;
-      }
-      .nav-leve2{
-        padding-top: 5px;
-        .nav-level2-title{
-          a{
-            display: block;
-            padding-left: 15px;
-            height: 36px;
-            line-height: 36px;
-            text-decoration: none;
-            font-size: 14px;
-            color: #000;
-            cursor: pointer;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            .cn {
-              margin-right: 15px;
-            }
-            .en {
-              font-size: 14px;
-            }
-          }
-          a:hover{
-            color: rgb(3, 189, 173);
-            background-color: rgba(78, 241, 228, 0.1);
-          }
-          a.router-link-active.router-link-exact-active{
-            color: rgb(3, 189, 173);
-            font-weight: 700;
-            border-right: 3px solid rgba(1, 211, 193, 1);
-            background-color: rgba(78, 241, 228, 0.1);
-          }
-        }
-      }
-    }
-  }
-}
 </style>

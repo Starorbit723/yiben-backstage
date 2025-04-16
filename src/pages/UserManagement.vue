@@ -1,14 +1,13 @@
 <template>
-  <div class="home-page">
-    <router-view name="header"></router-view>
-    <router-view></router-view>
+  <div class="usermanagement-page">
+    
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'HomePage',
+  name: 'UserManagement',
   data() {
     return {
       
@@ -25,7 +24,7 @@ export default {
 
 <style lang="less">
 @import '../assets/style/common.less';
-.home-page{
+.usermanagement-page{
   
 }
 </style>

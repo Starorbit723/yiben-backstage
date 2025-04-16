@@ -1,5 +1,5 @@
 {
-  "name": "layerscoper",
+  "name": "yiben-backstage",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   "dependencies": {
     "@cloudbase/js-sdk": "^2.11.0",
     "core-js": "^3.8.3",
-    "prismjs": "^1.29.0",
+    "element-ui": "^2.15.14",
     "vue": "^2.6.14",
     "vue-prism-editor": "^1.3.0",
     "vue-router": "^3.6.5",
@@ -27,7 +27,7 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "vue-template-compiler": "^2.6.14",
-    "webpack": "^5.0.0"
+    "webpack": "^4.0.0"
   },
   "eslintConfig": {
     "root": true,
