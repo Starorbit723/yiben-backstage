@@ -23,7 +23,22 @@ const routes = [
 				name: "UserManagement",
 				path: 'usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement')
-			}
+			},
+			{
+				name: "BookManagement",
+				path: 'bookmanagement',
+				component: r => require.ensure([], () => r(require('@/pages/BookManagement')), 'BookManagement')
+			},
+			{
+				name: "BookConfig",
+				path: 'bookconfig',
+				component: r => require.ensure([], () => r(require('@/pages/BookConfig')), 'BookConfig')
+			},
+			{
+				name: "TimeTable",
+				path: 'timetable',
+				component: r => require.ensure([], () => r(require('@/pages/TimeTable')), 'TimeTable')
+			},
 		]
 	},
 ]

@@ -94,6 +94,116 @@
         :total="totalCount">
       </el-pagination>
     </div>
+    <el-dialog
+      :title="dialogType === 'look' ? '查看信息': '编辑信息'"
+      :visible.sync="dialogVisible"
+      width="80%">
+      <el-form ref="form" :model="formItem" label-width="80px">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="壹本ID">
+              <el-input v-model="formItem.yibenid" size="small" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="openid">
+              <el-input v-model="formItem.openid" size="small" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="unionid">
+              <el-input v-model="formItem.unionid" size="small" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6"> 
+            <el-form-item label="用户类型">
+              <el-select class="yb-select" v-model="formItem.userType" size="small" :disabled="dialogType === 'look'">
+                <el-option
+                  v-for="item in userTypeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="微信昵称">
+              <el-input v-model="formItem.nickName" size="small" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="父母姓名">
+              <el-input v-model="formItem.parentName" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="手机号">
+              <el-input placeholder="请输入用户手机号" maxlength="11" v-model="formItem.phoneNumber" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="积分">
+              <el-input v-model="formItem.point" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="省">
+              <el-input v-model="formItem.province" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="市">
+              <el-input v-model="formItem.city" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="性别">
+              <el-input v-model="formItem.gender" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="年龄">
+              <el-input v-model="formItem.age" size="small" :disabled="dialogType === 'look'"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <div class="children-zone">
+          <div class="children-zone-title">学生信息</div>
+          <el-row :gutter="20" v-for="(item,index) in formItem.children" :key="index">
+            <el-col :span="6">
+              <el-form-item label="姓名">
+                <el-input v-model="item.name" size="small" :disabled="dialogType === 'look'"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="年龄">
+                <el-input v-model="item.age" size="small" :disabled="dialogType === 'look'"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="性别">
+                <el-input v-model="item.gender" size="small" :disabled="dialogType === 'look'"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-button class="del-btn" v-if="dialogType === 'edit'" type="danger" size="small" @click="delChild(index)" >删除</el-button>
+            </el-col>
+          </el-row>
+          
+        </div>
+        <div class="clearfix"></div>
+      </el-form>
+      <span slot="footer" class="dialog-footer" v-if="dialogType === 'edit'">
+        <el-button @click="handleDialogClose" size="small">取 消</el-button>
+        <el-button type="primary" size="small" @click="addChild()" >添加学生</el-button>
+        <el-button type="primary" @click="handleDialogEnsure" size="small">确认并保存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -105,6 +215,8 @@ export default {
   data() {
     return {
       userTypeOptions: userType,
+      dialogVisible: false,
+      dialogType: 'look',
       form: {
         yibenid: '',
         nickName: '',
@@ -166,6 +278,8 @@ export default {
       currentPage: 1,
       totalCount: 0,
       limit: 20,
+      // 对话框
+      formItem: {},
     }
   },
   mounted() {
@@ -173,11 +287,9 @@ export default {
   },
   methods:{
     filterTag(type) {
-      console.log(type);
       let _text = '';
       this.userTypeOptions.forEach(ele => {
         if (ele.value === type) {
-          console.log(ele.value, type);
           _text = ele.label;
         }
       });
@@ -191,8 +303,26 @@ export default {
       console.log(`currentPage ${val}`);
       this.currentPage = val;
     },
-    handleLook() {},
-    handleEdit() {},
+    handleLook(scope) {
+      this.dialogType = 'look';
+      this.formItem = scope;
+      this.dialogVisible = true;
+    },
+    handleEdit(scope) {
+      this.dialogType = 'edit';
+      this.formItem = scope;
+      this.dialogVisible = true;
+    },
+    handleDialogClose() {
+      this.dialogType = 'look';
+      this.dialogVisible = false;
+    },
+    handleDialogEnsure() {
+      this.dialogVisible = false;
+    },
+    delChild(index) {
+      console.log(index);
+    },
   }
 }
 </script>
@@ -200,6 +330,17 @@ export default {
 <style lang="less">
 @import '../assets/style/common.less';
 .usermanagement-page{
-  
+  .children-zone{
+    height: 50px;
+    line-height: 50px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    .children-zone-title{
+      text-indent: 7px;
+    }
+    .del-btn{
+      vertical-align: top;
+      margin: 4px 0 0 10px;
+    }
+  }
 }
 </style>
