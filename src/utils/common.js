@@ -7,3 +7,9 @@ export const isValidSMSCode = (code) => {
   const regex = /^\d{6}$/;
   return regex.test(code);
 }
+
+export const userType = [
+  { label: '客户', value: 0 },
+  { label: '销售', value: 1 },
+  { label: '老师', value: 2 }, 
+];

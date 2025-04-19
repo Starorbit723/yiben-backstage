@@ -11,7 +11,7 @@ const routes = [
 	},
 	{
 		path: '/login',
-		name: '/login',
+		name: 'login',
 		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage')
 	},
 	{

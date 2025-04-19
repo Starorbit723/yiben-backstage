@@ -157,30 +157,4 @@
             "component": ""  
         }]
     }]
-},{
-    "version": "2.0.0",
-    "routes":[{
-        "title": "install",
-        "enTitle": "Install",
-        "cnTitle": "安装",
-        "path": "",
-        "level": 0,
-        "children":[{
-            "title": "start",
-            "enTitle": "",
-            "cnTitle": "开始",
-            "path": "/v2/install/start",
-            "level": 2,
-            "linkType": "inner",
-            "component": ""
-        },{
-            "title": "updatenotes",
-            "enTitle": "",
-            "cnTitle": "更新日志",
-            "path": "/v2/install/updatenotes",
-            "level": 2,
-            "linkType": "inner",
-            "component": ""
-        }]
-    }]
 }]

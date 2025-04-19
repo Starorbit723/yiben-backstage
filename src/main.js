@@ -4,12 +4,9 @@ import ElementUI from 'element-ui'
 import cloudbase from "@cloudbase/js-sdk"
 import router from './router'
 import store from './store'
-import { PrismEditor } from 'vue-prism-editor'
-import 'vue-prism-editor/dist/prismeditor.min.css'
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
-Vue.component('PrismEditor', PrismEditor)
 Vue.config.productionTip = false;
 
 Vue.prototype.$cloudbase = cloudbase.init({

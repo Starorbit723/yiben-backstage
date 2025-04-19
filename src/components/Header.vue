@@ -33,6 +33,7 @@ export default {
 <style lang="less">
 @import '../assets/style/common.less';
 .common-header-wrapper{
+  position: relative;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
@@ -46,9 +47,11 @@ export default {
     font-size: 24px;
   }
   .nav{
-    float: left;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
     height: 60px;
-    min-width: 730px;
   }
   .user{
     float: right;
