@@ -1,12 +1,12 @@
 <template>
-  <div class="home-page">
+  <div class="bookmanagement-page">
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'HomePage',
+  name: 'BookManagement',
   data() {
     return {
       
@@ -23,7 +23,7 @@ export default {
 
 <style lang="less">
 @import '../assets/style/common.less';
-.home-page{
+.bookmanagement-page{
   
 }
 </style>

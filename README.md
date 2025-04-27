@@ -7,7 +7,7 @@ yarn install ||  yarn
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+yarn run serve    http://localhost:8080/
 ```
 
 ### Compiles and minifies for production
@@ -107,6 +107,15 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 4. 当前用户预约
 	1. 先查是否为发起人，如果有发起人订单还需要继续查参团人信息
 	2. 再查是否为参团人，分别查出主预定id 参团信息
+
+#预约后台查询条件  带分页预约单  时间倒叙排列
+1. 校区id
+2. ownerName
+3. ownerPhone
+4. ownerChildren
+5. 创建预约单时间  [startTime, endTime]
+
+
 
 
 

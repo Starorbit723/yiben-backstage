@@ -67,7 +67,7 @@
         <el-table-column prop="children" label="学生信息">
           <template slot-scope="scope">
             <div style="display:inline; margin-right:30px;" v-for="(item, index) in scope.row.children" :key="index">
-              姓名：{{item.name}}&nbsp;&nbsp;年龄：{{item.age}}&nbsp;&nbsp;性别：{{item.gender}}
+              姓名：{{item.name}}&nbsp;&nbsp;年龄：{{item.age}}&nbsp;&nbsp;性别：{{genderShow(item.gender)}}
             </div>
           </template>
         </el-table-column>
@@ -163,7 +163,14 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="性别">
-              <el-input v-model="formItem.gender" size="small" :disabled="dialogType === 'look'"></el-input>
+              <el-select class="yb-select" v-model="formItem.gender" size="small" :disabled="dialogType === 'look'">
+                <el-option
+                  v-for="item in genderOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -187,7 +194,14 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="性别">
-                <el-input v-model="item.gender" size="small" :disabled="dialogType === 'look'"></el-input>
+                <el-select class="yb-select" v-model="item.gender" size="small" :disabled="dialogType === 'look'">
+                  <el-option
+                    v-for="item in genderOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -208,13 +222,14 @@
 </template>
 
 <script>
-import { userType } from '@/utils/common';
+import { userType, gender } from '@/utils/common';
 
 export default {
   name: 'UserManagement',
   data() {
     return {
       userTypeOptions: userType,
+      genderOptions: gender,
       dialogVisible: false,
       dialogType: 'look',
       form: {
@@ -235,7 +250,7 @@ export default {
         city: '',
         country: '',
         province: '',
-        gender: '',
+        gender: 0,
         language: '',
         age: '',
         userType: 0,
@@ -305,12 +320,12 @@ export default {
     },
     handleLook(scope) {
       this.dialogType = 'look';
-      this.formItem = scope;
+      this.formItem = JSON.parse(JSON.stringify(scope));
       this.dialogVisible = true;
     },
     handleEdit(scope) {
       this.dialogType = 'edit';
-      this.formItem = scope;
+      this.formItem = JSON.parse(JSON.stringify(scope));
       this.dialogVisible = true;
     },
     handleDialogClose() {
@@ -320,8 +335,38 @@ export default {
     handleDialogEnsure() {
       this.dialogVisible = false;
     },
+    genderShow(val) {
+      let res = '';
+      this.genderOptions.forEach((ele) => {
+        if (val === ele.value) {
+          res = ele.label;
+        }
+      });
+      return res;
+    },
     delChild(index) {
       console.log(index);
+      this.formItem.children.splice(index, 1);
+    },
+    addChild() {
+      let flag = true;
+      this.formItem.children.forEach((ele) => {
+        if (!ele.name || !ele.age) {
+          flag = false;
+        }
+      });
+      if (flag) {
+        this.formItem.children.push({
+          name: '',
+          age: '',
+          gender: 0,
+        });
+      } else {
+        this.$message({
+          message: '请确认信息是否填写完成',
+          type: 'warning'
+        });
+      }
     },
   }
 }
