@@ -20,3 +20,16 @@ export const gender = [
   { label: '女', value: 2 }, 
 ];
 
+export const bookType = [
+  { label: '单人试听', value: 1 },
+  { label: '拼团试听', value: 2 }, 
+];
+
+export const bookStatus = [
+  { label: '拼团中', value: 0 },
+  { label: '已预约', value: 1 },
+  { label: '校区确认中', value: 2 },
+  { label: '待使用', value: 3 },
+  { label: '已使用', value: 4 },
+  { label: '已取消', value: 5 },
+];
