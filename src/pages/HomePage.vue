@@ -24,7 +24,6 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/style/common.less';
 .home-page{
   
 }

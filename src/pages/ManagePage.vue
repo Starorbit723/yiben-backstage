@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/style/common.less';
 .manage-page{
   height: 100%;
   .router-zone{

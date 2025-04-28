@@ -373,7 +373,6 @@ export default {
 </script>
 
 <style lang="less">
-@import '../assets/style/common.less';
 .usermanagement-page{
   .children-zone{
     height: 50px;

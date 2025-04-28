@@ -1,43 +1,8 @@
 <template>
   <div class="timetable-page">
-    <!--查询条件-->
-    <div class="yb-common-searchzone">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="起始时间">
-              <el-time-select
-                @change="startTimeChange"
-                placeholder="起始时间"
-                v-model="form.startTime"
-                :picker-options="{
-                  start: '08:00',
-                  step: '00:05',
-                  end: '22:00'
-                }">
-              </el-time-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="结束时间">
-              <el-time-select
-                @change="startTimeChange"
-                placeholder="结束时间"
-                v-model="form.endTime"
-                :picker-options="{
-                  start: '08:00',
-                  step: '00:05',
-                  end: '22:00'
-                }">
-              </el-time-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
     <!--表格区域-->
     <div class="timetable-congfig-zone">
-      <div class="day-cyc" v-for="(item,index) in timetableConfig" :key="index">
+      <div class="day-cyc" v-for="(item, index) in timetableConfig" :key="index">
         <div class="title">
           <div class="text">{{item.title}}</div>
           <div class="select"></div>
@@ -68,7 +33,7 @@
               <div class="schedule-item-title" :style="{'backgroundColor': titleColorStep[indext]}">{{items.startTime}} ~ {{items.endTime}}</div>
               <div class="teacher-room">{{itemt.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{items.room}}</div>
               <div class="lessonname">{{items.lesson}}</div>
-              <div class="del-btn">删除</div>
+              <div class="del-btn" @click="delSchdule(index, indext, indexs)">删除</div>
             </div>
             <el-button class="addSchdule-btn" type="primary" @click="addSchdule(index, indext)">添加日程</el-button>
             <el-button class="deleteSchdule-btn" type="danger" @click="deleteTeacher(index, indext)">删除老师</el-button>
@@ -303,17 +268,19 @@ export default {
         startTime: '',
         endTime: '',
         posTop: 0,
-        heightRate: 120,
+        heightRate: 0,
         room: '',
         lesson: '',
       }
     },
+    delSchdule(index, indext, indexs) {
+      this.timetableConfig[index].teachers[indext].schedule.splice(indexs, 1);
+    }
   }
 }
 </script>
 
 <style lang="less">
-@import '../assets/style/common.less';
 .timetable-page{
   .timetable-congfig-zone{
     padding: 20px;

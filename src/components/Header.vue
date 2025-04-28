@@ -24,7 +24,10 @@ export default {
   },
   computed: {
     userName() {
-      return JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.name;
+      if (localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')) {
+        return JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.name;
+      }
+      return '';
     }
   },
   mounted() {
