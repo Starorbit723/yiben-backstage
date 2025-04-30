@@ -33,3 +33,18 @@ export const bookStatus = [
   { label: '已使用', value: 4 },
   { label: '已取消', value: 5 },
 ];
+
+export const schoolType = [
+  { label: '广安门校区', value: 1 },
+];
+
+export const presentType = [
+  { label: '未到场', value: 0 },
+  { label: '已到场', value: 1 },
+];
+
+export const prepaidType = [
+  { label: '未付款', value: 0 },
+  { label: '已付款', value: 1 },
+];
+
