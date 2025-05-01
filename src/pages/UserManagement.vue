@@ -41,7 +41,7 @@
           <el-button class="yb-button" type="success" size="small">添加用户</el-button>
         </el-col>
         <el-col :span="2">
-          <el-button class="yb-button" type="primary" size="small">查询用户</el-button>
+          <el-button class="yb-button" type="primary" size="small" @click="searchUserList()">查询用户</el-button>
         </el-col>
       </el-row>
     </div>
@@ -97,6 +97,7 @@
     <el-dialog
       :title="dialogType === 'look' ? '查看信息': '编辑信息'"
       :visible.sync="dialogVisible"
+      @close="handleDialogClose"
       width="80%">
       <el-form ref="form" :model="formItem" label-width="80px">
         <el-row :gutter="20">
@@ -300,6 +301,10 @@ export default {
     
   },
   methods:{
+    searchUserList() {
+      console.log(this.form, this.currentPage, this.limit);
+      // 调用查询预定信息接口
+    },
     filterTag(type) {
       let _text = '';
       this.userTypeOptions.forEach(ele => {

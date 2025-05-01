@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
 	cache: {},
@@ -38,6 +38,16 @@ const mutations = {
 	},
 	setRdelete(state, data) {
 		state.Rdelete = data;
+	},
+	clearAllLoginCache(state) {
+		state.cache = {};
+		state.oauthInstance = {};
+		state.userInfo = {};
+		state.userTag = '';
+		state.Rlook = false;
+		state.Rcreat = false;
+		state.Redit = false;
+		state.Rdelete = false;
 	},
 };
 

@@ -41,7 +41,7 @@ export const RightMixin = {
     }
     if (to.meta.look.indexOf(store.getters.getUserTag) !== -1 && from.path !== '/login') {
       store.commit('setRlook', true);
-      console.log('l', store.state.Rlook, 'c', store.state.Rcreat, 'e', store.state.Redit, 'd', store.state.Rdelete);
+      console.log('look:', store.state.Rlook, '| creat:', store.state.Rcreat, '| edit:', store.state.Redit, '| delete:', store.state.Rdelete);
       next();
     } else {
       store.commit('setRlook', false);

@@ -124,12 +124,11 @@ export default {
         startTime: '',
         endTime: '',
       },
-      titleColorStep: ['#409EFF', '#FF0000'],
+      titleColorStep: ['rgb(50, 151, 253)', 'rgb(8, 190, 166)', 'rgb(233, 120, 15)', 'rgb(160, 23, 240)', 'rgb(23, 240, 77)'],
       timetableConfig: [{
-        title: '111111',
+        title: '星期六',
         isWorkDay: 1,
-        teachers: [
-          {
+        teachers: [{
             name: 'Tracy',
             schedule: [
               {
@@ -141,26 +140,33 @@ export default {
                 lesson: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
               }
             ]
-          }
+        }]
+      },{
+        title: '星期日',
+        isWorkDay: 1,
+        teachers: []
+      },{
+        title: '星期一',
+        isWorkDay: 1,
+        teachers: [
+          
         ]
       },{
-        title: '2222222',
+        title: '星期二',
         isWorkDay: 1,
-        teachers: [
-          {
-            name: 'Tracy',
-            schedule: [
-              {
-                startTime: '8:00',
-                endTime: '10:00',
-                posTop: 0,
-                heightRate: 120,
-                room: '第5教室',
-                lesson: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-              }
-            ]
-          }
-        ]
+        teachers: []
+      },{
+        title: '星期三',
+        isWorkDay: 1,
+        teachers: []
+      },{
+        title: '星期四',
+        isWorkDay: 1,
+        teachers: []
+      },{
+        title: '星期五',
+        isWorkDay: 1,
+        teachers: []
       }],
       // 添加老师弹框
       addTeacherDialogVisible: false,

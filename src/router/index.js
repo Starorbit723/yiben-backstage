@@ -17,12 +17,24 @@ const routes = [
 	{
 		path: '/',
 		name: '/',
-		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage')
+		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage'),
+		meta: {
+			look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+		},
 	},
 	{
 		path: '/login',
 		name: 'login',
-		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage')
+		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage'),
+		meta: {
+			look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+		},
 	},
 	{
 		path: '/manage',

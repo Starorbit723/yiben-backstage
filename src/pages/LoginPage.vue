@@ -55,6 +55,8 @@ export default {
       return '发送短信验证码';
     },
   },
+  mounted() {
+  },
   methods: {
     ...mapMutations([
       'setLoginCache',
