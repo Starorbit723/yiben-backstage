@@ -48,3 +48,23 @@ export const prepaidType = [
   { label: '已付款', value: 1 },
 ];
 
+export const arrayToString = (arr) => {
+  if (arr && arr.length) {
+    return arr.join('#');
+  }
+  return "";
+};
+
+export const stringToArray = (str) => {
+  if (str.trim().length > 0) {
+    let _arr = [];
+    if (str.trim().indexOf('#') !== -1) {
+      _arr = str.trim().split('#');
+    } else {
+      _arr.push(str.trim());
+    }
+    return _arr;
+  }
+  return [];
+};
+

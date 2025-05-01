@@ -1,7 +1,6 @@
 <template>
   <div class="common-header-wrapper">
-    <!-- <div class="title">壹本后台管理系统</div> -->
-    <div class="title"></div>
+    <div class="title">壹本后台管理系统</div>
     <div class="nav">
       <NavMenu></NavMenu>
     </div>

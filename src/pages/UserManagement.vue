@@ -208,7 +208,6 @@
               <el-button class="del-btn" v-if="dialogType === 'edit'" type="danger" size="small" @click="delChild(index)" >删除</el-button>
             </el-col>
           </el-row>
-          
         </div>
         <div class="clearfix"></div>
       </el-form>

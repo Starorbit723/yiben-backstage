@@ -38,6 +38,18 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="6"> 
+            <el-form-item label="预约校区">
+              <el-select class="yb-select" v-model="form.schoolid" size="small">
+                <el-option
+                  v-for="item in schoolTypeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="下单时间">
               <el-date-picker
@@ -56,11 +68,11 @@
     <!--按钮区域-->
     <div class="yb-common-btnzone">
       <el-row :gutter="20">
-        <el-col :offset="20" :span="2">
-          <el-button class="yb-button" type="success" size="small">添加预约</el-button>
-        </el-col>
-        <el-col :span="2">
-          <el-button class="yb-button" type="primary" size="small">查询用户</el-button>
+        <!-- <el-col :offset="20" :span="2">
+          <el-button class="yb-button" type="success" size="small" @click="creatNewBook()">添加预约</el-button>
+        </el-col> -->
+        <el-col :offset="22" :span="2">
+          <el-button class="yb-button" type="primary" size="small" @click="searchBookList()">查询用户</el-button>
         </el-col>
       </el-row>
     </div>
@@ -131,6 +143,7 @@
     <el-dialog
       :title="dialogType === 'look' ? '查看信息' : dialogType === 'creat' ? '新建信息' : '编辑信息'"
       :visible.sync="dialogVisible"
+      @close="handleDialogClose"
       width="90%">
       <el-form ref="form" :model="formItem" label-width="120px">
         <el-row :gutter="20">
@@ -282,18 +295,50 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!--拼团信息-->
         <div class="member-zone" v-if="formItem.bookType === 2">
           <div class="member-zone-title">拼团信息</div>
-
+          <div class="group-member" v-for="(gitem, gindex) in groupInfo" :key="gindex">
+            <el-row :gutter="20">
+              <el-col :span="6">
+                <el-form-item label="拼团人">
+                  <el-input v-model="gitem.memberName" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="拼团人电话">
+                  <el-input v-model="gitem.memberPhone" placeholder="请输入手机号" maxlength="11" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="9">
+                <el-form-item label="拼团人学生">
+                  <el-input
+                    v-model="gitem.ownerChildrenShow"
+                    size="small"
+                    placeholder="多个学生请用英文输入法“#”分割开填写，例如：“小明#小红”"
+                    :disabled="dialogType === 'look'"></el-input>
+                </el-form-item>
+              </el-col>
+              <!-- <el-col :span="3">
+                <el-button class="del-btn" v-if="dialogType === 'creat' || dialogType === 'edit'" type="danger" size="small" @click="delMember(gindex)" >删除</el-button>
+              </el-col> -->
+            </el-row>
+          </div>
+          <div class="clearfix"></div>
         </div>
       </el-form>
+      <span slot="footer" class="dialog-footer" v-if="dialogType === 'creat' || dialogType === 'edit'">
+        <el-button @click="handleDialogClose" size="small">取 消</el-button>
+        <!-- <el-button v-if="formItem.bookType === 2" type="primary" size="small" @click="addMenber()" >添加拼团人</el-button> -->
+        <el-button type="primary" @click="handleDialogEnsure" size="small">确认并保存</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, gender, bookType, bookStatus, schoolType, presentType, prepaidType } from '@/utils/common';
+import { userType, gender, bookType, bookStatus, schoolType, presentType, prepaidType, arrayToString } from '@/utils/common';
 
 export default {
   name: 'BookManagement',
@@ -308,7 +353,7 @@ export default {
       prepaidTypeOptions: prepaidType,
       bookStatusOptions: bookStatus,
       form: {
-        schoolid: '',
+        schoolid: 1,
         bookid: '',
         bookType: '',
         ownerName: '',
@@ -318,6 +363,25 @@ export default {
       },
       tableData: [{
         bookid: '123123123131312231',
+        bookType: 2,
+        originInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
+        prevInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
+        ownerName: '张先生',
+        ownerPhone: '13012345678',
+        ownerOpenid: '123123123231312',
+        ownerYibenid: 'yb1234123123',
+        schoolid: 1,
+        ownerChildren: ['name', 'name2'],
+        ifPrepaid: 1,
+        matchTeacher: 'Tracy',
+        ifPresent: 1,
+        receptionTeacherPhone: '13012345678',
+        createTime: '2025-11-28 15:23:46',
+        lessonTime: '2025-12-28 15:00:00',
+        lessonRoom: '第五教室',
+        status: 1
+      },{
+        bookid: '66666666666',
         bookType: 1,
         originInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
         prevInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
@@ -326,7 +390,7 @@ export default {
         ownerOpenid: '123123123231312',
         ownerYibenid: 'yb1234123123',
         schoolid: 1,
-        ownerChildren: ['name'],
+        ownerChildren: ['name', 'name2'],
         ifPrepaid: 1,
         matchTeacher: 'Tracy',
         ifPresent: 1,
@@ -334,18 +398,18 @@ export default {
         createTime: '2025-11-28 15:23:46',
         lessonTime: '2025-12-28 15:00:00',
         lessonRoom: '第五教室',
-        status: 2
+        status: 1
       }],
       // 分页器
       currentPage: 1,
       totalCount: 0,
       limit: 20,
       // 对话框
-      dialogVisible: true,
-      dialogType: 'creat', // creat look edit
+      dialogVisible: false,
+      dialogType: 'edit', // creat look edit
       formItem: {
         bookid: '',
-        bookType: 2,
+        bookType: 1,
         originInfo: {
           yibenid: '',
           openid: ''
@@ -370,7 +434,35 @@ export default {
         lessonRoom: '', // 后台改
         status: 0, //  0 拼团中 1 已预约 2 校区确认中 3 待使用 4 已使用  5 已取消
       },
-      groupInfo: {
+      formItemCreat: {
+        bookid: '',
+        bookType: 1,
+        originInfo: {
+          yibenid: '',
+          openid: ''
+        },
+        prevInfo: {
+          yibenid: '',
+          openid: ''
+        },
+        schoolid: 1,
+        ownerName: '',
+        ownerPhone: '',
+        ownerOpenid: '',
+        ownerYibenid: '',
+        ownerChildren: [],
+        ownerChildrenShow: '', // 用于展示
+        ifPrepaid: 0, // 后台改
+        matchTeacher: '', // 后台改
+        ifPresent: 0, // 后台改
+        receptionTeacherPhone: '', // 后台改
+        createTime: '', // 后台改
+        lessonTime: '', // 后台改
+        lessonRoom: '', // 后台改
+        status: 1, //  0 拼团中 1 已预约 2 校区确认中 3 待使用 4 已使用  5 已取消
+      },
+      // 拼团信息
+      groupInfo: [{
         groupInfoid: '',
         bookid: '',
         memberOpenid: '',
@@ -378,15 +470,83 @@ export default {
         memberName: '',
         memberPhone: '',
         memberChildren: [],
+        ownerChildrenShow: '',
+      },{
+        groupInfoid: '',
+        bookid: '',
+        memberOpenid: '',
+        memberYibenid: '',
+        memberName: '',
+        memberPhone: '',
+        memberChildren: [],
+        ownerChildrenShow: '',
+      }],
+      // 用于初始化数据格式
+      groupInfoItem: {
+        groupInfoid: '',
+        bookid: '',
+        memberOpenid: '',
+        memberYibenid: '',
+        memberName: '',
+        memberPhone: '',
+        memberChildren: [],
+        ownerChildrenShow: '',
       },
     }
   },
   computed: {
   },
   mounted() {
-    
   },
   methods:{
+    // 添加新预约
+    // creatNewBook() {},
+    // 查询预约用户 
+    searchBookList() {
+      console.log(this.form, this.currentPage, this.limit);
+      // 调用查询预定信息接口
+    },
+    // 查看单条信息
+    handleLook(row) {
+      this.formItem = JSON.parse(JSON.stringify(row));
+      this.formItem.ownerChildrenShow = arrayToString(this.formItem.ownerChildren);
+      this.dialogType = 'look';
+      // 如果是拼团，需要再请求成员接口
+      if (this.formItem.bookType === 2) {
+        // this.groupInfo = XXXX;
+        
+        this.dialogVisible = true;
+      } else {
+        this.dialogVisible = true;
+      }
+    },
+    handleEdit(row) {
+      this.formItem = JSON.parse(JSON.stringify(row));
+      this.formItem.ownerChildrenShow = arrayToString(this.formItem.ownerChildren);
+      this.dialogType = 'edit';
+      // 如果是拼团，需要再请求成员接口
+      if (this.formItem.bookType === 2) {
+        // this.groupInfo = XXXX;
+        
+        this.dialogVisible = true;
+      } else {
+        this.dialogVisible = true;
+      }
+    },
+    // addMenber() {
+    // },
+    // delMember(gindex) {
+    //   console.log(gindex);
+    // },
+    handleDialogEnsure() {
+      // 保存主订单信息
+      // 拼团订单保存成员信息
+      this.dialogVisible = false;
+    },
+    handleDialogClose() {
+      this.dialogVisible = false;
+      this.dialogType = 'look';
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.limit = val;
@@ -413,6 +573,7 @@ export default {
       });
       return _text;
     },
+
   }
 }
 </script>
@@ -420,7 +581,6 @@ export default {
 <style lang="less">
 .bookmanagement-page{
   .member-zone{
-    height: 50px;
     line-height: 50px;
     border-top: 1px solid rgba(0,0,0,0.1);
     .member-zone-title{
@@ -429,6 +589,9 @@ export default {
     .del-btn{
       vertical-align: top;
       margin: 4px 0 0 10px;
+    }
+    .group-member{
+
     }
   }
 }
