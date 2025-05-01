@@ -42,6 +42,17 @@ const routes = [
 		component: r => require.ensure([], () => r(require('@/pages/ManagePage')), 'ManagePage'),
 		children: [
 			{
+				path: 'home',
+				name: "home",
+				component: r => require.ensure([], () => r(require('@/pages/HomePage')), 'HomePage'),
+				meta: {
+					look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+				},
+			},
+			{
 				name: "UserManagement",
 				path: 'usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement'),

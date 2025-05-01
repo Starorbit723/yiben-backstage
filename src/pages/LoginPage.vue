@@ -21,11 +21,9 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapState, mapMutations } from 'vuex';
 import { isValidPhoneNumber, isValidSMSCode } from '@/utils/common.js'
 
-const auth = Vue.prototype.$cloudbase.auth();
 
 export default {
   name: 'LoginPage',
@@ -88,7 +86,7 @@ export default {
         // 开始请求短信
         try {
         // 请求发送邮箱验证邮件
-          const result = await auth.getVerification({
+          const result = await this.$auth.getVerification({
             phone_number: `+86 ${this.phoneNumber}`,
           });
           console.log('验证发送成功:', result);
@@ -115,7 +113,7 @@ export default {
         this.phoneError = '';
         this.codeError = '';
         try {
-          const verificationTokenRes = await auth.verify({
+          const verificationTokenRes = await this.$auth.verify({
             verification_id: this.smsResult.verification_id,
             verification_code: this.verfySMSCode,
           });
@@ -129,7 +127,7 @@ export default {
     },
     async signIn() {
       try {
-        const signUpRes = await auth.signIn({
+        const signUpRes = await this.$auth.signIn({
           phone_number: `+86 ${this.phoneNumber}`,
           verification_code: this.verfySMSCode,
           verification_token: this.verification_token,
@@ -141,6 +139,7 @@ export default {
           // username: "happysca",
         });
         console.log('登录成功:', signUpRes);
+        this.$router.push('/manage/home');
       } catch (e) {
         console.log('登录失败:', e);
       }

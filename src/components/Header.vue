@@ -7,16 +7,13 @@
     <div class="loginout">
       <el-button type="warning" size="mini" @click="loginout()">退出登录</el-button>
     </div>
-    <div class="user">您好: {{userName}}</div>
+    <div class="user">当前用户: {{userName}}</div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapMutations } from 'vuex';
 import NavMenu from '@/components/NavMenu';
-
-const auth = Vue.prototype.$cloudbase.auth();
 
 export default {
   name: 'UserManagement',
@@ -45,7 +42,7 @@ export default {
     ]),
     async loginout() {
       try {
-          const result = await auth.signOut();
+          const result = await this.$auth.signOut();
           console.log('退出登录成功:', result);
           this.$router.push('/login');
         } catch (error) {
