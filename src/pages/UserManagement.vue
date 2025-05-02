@@ -302,7 +302,7 @@ export default {
   },
   methods:{
     async searchUserList() {
-      console.log(this.form, this.currentPage, this.limit);
+      console.log(JSON.stringify(this.form), this.currentPage, this.limit);
       // 调用查询预定信息接口
       const params = {
         pageNo: this.currentPage,
@@ -318,7 +318,10 @@ export default {
       }).then(res => {
         console.log('userManagePage result:', res);
         if (res.result.success) {
-          // 先把detail 整个保存
+          this.currentPage = res.result.data.pageNo;
+          this.pageSize = res.result.data.pageSize;
+          this.totalCount = res.result.data.total;
+          this.tableData = res.result.data.list;
         }
       }).catch(err => {
         console.error('userManagePage error:', err)
@@ -355,7 +358,8 @@ export default {
       this.dialogType = 'look';
       this.dialogVisible = false;
     },
-    handleDialogEnsure() {
+    async handleDialogEnsure() {
+
       this.dialogVisible = false;
     },
     genderShow(val) {

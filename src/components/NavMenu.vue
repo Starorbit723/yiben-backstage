@@ -11,11 +11,13 @@
     <el-menu-item index="home">首页</el-menu-item>
     <el-menu-item index="usermanagement">用户管理</el-menu-item>
     <el-menu-item index="bookmanagement">预约管理</el-menu-item>
-    <el-submenu index="worktable">
+    <el-menu-item index="timetable">课程管理</el-menu-item>
+    <el-menu-item index="operationmanagement">运营管理</el-menu-item>
+    <!-- <el-submenu index="worktable">
       <template slot="title">工作台</template>
       <el-menu-item index="bookconfig">预约配置</el-menu-item>
       <el-menu-item index="timetable">课程表配置</el-menu-item>
-    </el-submenu>
+    </el-submenu> -->
   </el-menu>
 </template>
 
@@ -40,6 +42,7 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+      this.activeIndex = key;
     }
   }
 }

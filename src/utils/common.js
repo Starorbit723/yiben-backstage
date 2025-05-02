@@ -50,8 +50,12 @@ export const prepaidType = [
 ];
 
 export const arrayToString = (arr) => {
-  if (arr && arr.length) {
-    return arr.join('#');
+  if (arr) {
+    if (arr.length >= 2) {
+      return arr.join('#');
+    } else {
+      return arr[0];
+    }
   }
   return "";
 };

@@ -5,7 +5,7 @@ Vue.use(Router);
 
 /*
 	【Meta Rights】
-	superAdmin: 超级管理员
+	superadmin: 超级管理员
 	admin: 管理员
 	educator: 教务
 	teacher: 老师
@@ -19,10 +19,10 @@ const routes = [
 		name: '/',
 		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage'),
 		meta: {
-			look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+			look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			delete: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
 		},
 	},
 	{
@@ -30,10 +30,10 @@ const routes = [
 		name: 'login',
 		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage'),
 		meta: {
-			look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-			delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+			look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+			delete: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
 		},
 	},
 	{
@@ -46,10 +46,10 @@ const routes = [
 				name: "home",
 				component: r => require.ensure([], () => r(require('@/pages/HomePage')), 'HomePage'),
 				meta: {
-					look: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-					creat: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-					edit: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
-					delete: ['superAdmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
+					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
+					delete: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr']
 				},
 			},
 			{
@@ -57,10 +57,10 @@ const routes = [
 				path: 'usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement'),
 				meta: {
-					look: ['superAdmin', 'admin', 'educator'],
-					creat: ['superAdmin', 'admin', 'educator'],
-					edit: ['superAdmin', 'admin', 'educator'],
-					delete: ['superAdmin', 'admin']
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
 				},
 			},
 			{
@@ -68,10 +68,10 @@ const routes = [
 				path: 'bookmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/BookManagement')), 'BookManagement'),
 				meta: {
-					look: ['superAdmin', 'admin', 'educator'],
-					creat: ['superAdmin', 'admin', 'educator'],
-					edit: ['superAdmin', 'admin', 'educator'],
-					delete: ['superAdmin', 'admin']
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
 				},
 			},
 			{
@@ -84,9 +84,14 @@ const routes = [
 				path: 'timetable',
 				component: r => require.ensure([], () => r(require('@/pages/TimeTable')), 'TimeTable'),
 				meta: {
-					rights: ['superAdmin', 'admin', 'educator','hr']
+					rights: ['superadmin', 'admin', 'educator','hr']
 				},
 			},
+			{
+				name: "OperationManagement",
+				path: 'operationmanagement',
+				component: r => require.ensure([], () => r(require('@/pages/OperationManagement')), 'OperationManagement'),
+			}
 		]
 	},
 ]

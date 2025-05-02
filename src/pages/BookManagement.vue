@@ -19,9 +19,16 @@
               <el-input placeholder="请输入手机号" maxlength="11" v-model="form.ownerPhone" size="small" clearable></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="预约学生">
-              <el-input v-model="form.ownerChildren" size="small" clearable></el-input>
+          <el-col :span="6"> 
+            <el-form-item label="预约校区">
+              <el-select class="yb-select" v-model="form.schoolid" size="small">
+                <el-option
+                  v-for="item in schoolOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -31,18 +38,6 @@
               <el-select class="yb-select" v-model="form.bookType" size="small" clearable>
                 <el-option
                   v-for="item in bookTypeOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6"> 
-            <el-form-item label="预约校区">
-              <el-select class="yb-select" v-model="form.schoolid" size="small">
-                <el-option
-                  v-for="item in schoolOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -358,7 +353,6 @@ export default {
         bookType: '',
         ownerName: '',
         ownerPhone: '',
-        ownerChildren: '',
         bookTimeRanger: []
       },
       tableData: [{
@@ -504,8 +498,30 @@ export default {
     // creatNewBook() {},
     // 查询预约用户 
     searchBookList() {
-      console.log(JSON.parse(JSON.stringify(this.form)), this.currentPage, this.limit);
+      console.log(JSON.stringify(this.form), this.currentPage, this.limit);
       // 调用查询预定信息接口
+      const params = {
+        pageNo: this.currentPage,
+        pageSize: this.limit,
+        condition: this.form,
+      };
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'bookManagePage',
+          data: params,
+        }
+      }).then(res => {
+        console.log('bookManagePage result:', res);
+        if (res.result.success) {
+          this.currentPage = res.result.data.pageNo;
+          this.pageSize = res.result.data.pageSize;
+          this.totalCount = res.result.data.total;
+          this.tableData = res.result.data.list;
+        }
+      }).catch(err => {
+        console.error('bookManagePage error:', err)
+      });
     },
     // 查看单条信息
     handleLook(row) {
