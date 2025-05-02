@@ -67,7 +67,7 @@
           <el-button class="yb-button" type="success" size="small" @click="creatNewBook()">添加预约</el-button>
         </el-col> -->
         <el-col :offset="22" :span="2">
-          <el-button class="yb-button" type="primary" size="small" @click="searchBookList()">查询用户</el-button>
+          <el-button class="yb-button" type="primary" size="small" @click="searchBookList(0)">查询用户</el-button>
         </el-col>
       </el-row>
     </div>
@@ -98,18 +98,8 @@
         </el-table-column>
         <el-table-column prop="lessonTime" label="上课时间" width="160"></el-table-column>
         <el-table-column prop="lessonRoom" label="教室" width="100"></el-table-column>
-        <el-table-column prop="originInfo" label="原始发起人信息" width="200">
-          <template slot-scope="scope">
-            <div>壹本id: {{scope.row.originInfo.yibenid}}</div>
-            <div>openid: {{scope.row.originInfo.openid}}</div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="prevInfo" label="转发关联人信息" width="200">
-          <template slot-scope="scope">
-            <div>壹本id: {{scope.row.prevInfo.yibenid}}</div>
-            <div>openid: {{scope.row.originInfo.openid}}</div>
-          </template>
-        </el-table-column>
+        <el-table-column prop="originYibenid" label="原始发起人id" width="100"></el-table-column>
+        <el-table-column prop="prevYibenid" label="转发关联人id" width="100"></el-table-column>
         <el-table-column prop="createTime" label="预约创建时间" width="160"></el-table-column>
         <el-table-column
           fixed="right"
@@ -149,12 +139,12 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="发起人ID">
-              <el-input v-model="formItem.originInfo.yibenid" size="small" disabled clearable></el-input>
+              <el-input v-model="formItem.originYibenid" size="small" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="转发人ID">
-              <el-input v-model="formItem.prevInfo.yibenid" size="small" disabled clearable></el-input>
+              <el-input v-model="formItem.prevYibenid" size="small" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -293,16 +283,16 @@
         <!--拼团信息-->
         <div class="member-zone" v-if="formItem.bookType === 2">
           <div class="member-zone-title">拼团信息</div>
-          <div class="group-member" v-for="(gitem, gindex) in groupInfo" :key="gindex">
+          <div class="group-member" v-for="(gitem, gindex) in groupInfoList" :key="gindex">
             <el-row :gutter="20">
               <el-col :span="6">
                 <el-form-item label="拼团人">
-                  <el-input v-model="gitem.memberName" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+                  <el-input v-model="gitem.memberName" size="small" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="拼团人电话">
-                  <el-input v-model="gitem.memberPhone" placeholder="请输入手机号" maxlength="11" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+                  <el-input v-model="gitem.memberPhone" placeholder="请输入手机号" maxlength="11" size="small" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="9">
@@ -311,7 +301,7 @@
                     v-model="gitem.ownerChildrenShow"
                     size="small"
                     placeholder="多个学生请用英文输入法“#”分割开填写，例如：“小明#小红”"
-                    :disabled="dialogType === 'look'"></el-input>
+                    disabled></el-input>
                 </el-form-item>
               </el-col>
               <!-- <el-col :span="3">
@@ -358,17 +348,19 @@ export default {
       tableData: [{
         bookid: '123123123131312231',
         bookType: 2,
-        originInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
-        prevInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
+        originYibenid: '213123123123312',
+        originOpenid: '213123123123312',
+        prevYibenid: '213123123123312',
+        prevOpenid: '213123123123312',
         ownerName: '张先生',
         ownerPhone: '13012345678',
         ownerOpenid: '123123123231312',
         ownerYibenid: 'yb1234123123',
         schoolid: 1,
         ownerChildren: ['name', 'name2'],
-        ifPrepaid: 1,
+        ifPrepaid: '0',
         matchTeacher: 'Tracy',
-        ifPresent: 1,
+        ifPresent: '0',
         receptionTeacherPhone: '13012345678',
         createTime: '2025-11-28 15:23:46',
         lessonTime: '2025-12-28 15:00:00',
@@ -377,17 +369,19 @@ export default {
       },{
         bookid: '66666666666',
         bookType: 1,
-        originInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
-        prevInfo: { yibenid: 'yb1234123123', openid: '123123123231312'},
+        originYibenid: '213123123123312',
+        originOpenid: '213123123123312',
+        prevYibenid: '213123123123312',
+        prevOpenid: '213123123123312',
         ownerName: '张先生',
         ownerPhone: '13012345678',
         ownerOpenid: '123123123231312',
         ownerYibenid: 'yb1234123123',
         schoolid: 1,
         ownerChildren: ['name', 'name2'],
-        ifPrepaid: 1,
+        ifPrepaid: '0',
         matchTeacher: 'Tracy',
-        ifPresent: 1,
+        ifPresent: '0',
         receptionTeacherPhone: '13012345678',
         createTime: '2025-11-28 15:23:46',
         lessonTime: '2025-12-28 15:00:00',
@@ -404,14 +398,10 @@ export default {
       formItem: {
         bookid: '',
         bookType: 1,
-        originInfo: {
-          yibenid: '',
-          openid: ''
-        },
-        prevInfo: {
-          yibenid: '',
-          openid: ''
-        },
+        originYibenid: '',
+        originOpenid: '',
+        prevYibenid: '',
+        prevOpenid: '',
         schoolid: 1,
         ownerName: '',
         ownerPhone: '',
@@ -419,26 +409,23 @@ export default {
         ownerYibenid: '',
         ownerChildren: [],
         ownerChildrenShow: '', // 用于展示
-        ifPrepaid: 0, // 后台改
+        ifPrepaid: '0', // 后台改
         matchTeacher: '', // 后台改
-        ifPresent: 0, // 后台改
+        ifPresent: '0', // 后台改
         receptionTeacherPhone: '', // 后台改
         createTime: '', // 后台改
         lessonTime: '', // 后台改
         lessonRoom: '', // 后台改
         status: 0, //  0 拼团中 1 已预约 2 校区确认中 3 待使用 4 已使用  5 已取消
+        groupInfoList: [],
       },
       formItemCreat: {
         bookid: '',
         bookType: 1,
-        originInfo: {
-          yibenid: '',
-          openid: ''
-        },
-        prevInfo: {
-          yibenid: '',
-          openid: ''
-        },
+        originYibenid: '',
+        originOpenid: '',
+        prevYibenid: '',
+        prevOpenid: '',
         schoolid: 1,
         ownerName: '',
         ownerPhone: '',
@@ -446,9 +433,9 @@ export default {
         ownerYibenid: '',
         ownerChildren: [],
         ownerChildrenShow: '', // 用于展示
-        ifPrepaid: 0, // 后台改
+        ifPrepaid: '0', // 后台改
         matchTeacher: '', // 后台改
-        ifPresent: 0, // 后台改
+        ifPresent: '0', // 后台改
         receptionTeacherPhone: '', // 后台改
         createTime: '', // 后台改
         lessonTime: '', // 后台改
@@ -456,7 +443,7 @@ export default {
         status: 1, //  0 拼团中 1 已预约 2 校区确认中 3 待使用 4 已使用  5 已取消
       },
       // 拼团信息
-      groupInfo: [{
+      groupInfoList: [{
         groupInfoid: '',
         bookid: '',
         memberOpenid: '',
@@ -497,11 +484,11 @@ export default {
     // 添加新预约
     // creatNewBook() {},
     // 查询预约用户 
-    searchBookList() {
+    searchBookList(type) {
       console.log(JSON.stringify(this.form), this.currentPage, this.limit);
       // 调用查询预定信息接口
       const params = {
-        pageNo: this.currentPage,
+        pageNo: type === 0 ? 1 : this.currentPage,
         pageSize: this.limit,
         condition: this.form,
       };
@@ -520,6 +507,10 @@ export default {
           this.tableData = res.result.data.list;
         }
       }).catch(err => {
+        this.$message({
+          message: `查询失败`,
+          type: 'warning'
+        });
         console.error('bookManagePage error:', err)
       });
     },
@@ -557,8 +548,33 @@ export default {
     // },
     handleDialogEnsure() {
       // 保存主订单信息
-      // 拼团订单保存成员信息
-      this.dialogVisible = false;
+      console.log(JSON.stringify(this.formItem));
+      // 调用查询预定信息接口
+      const params = this.formItem;
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'bookModify',
+          data: params,
+        }
+      }).then(res => {
+        console.log('bookModify result:', res);
+        if (res.result.success) {
+          this.$message({
+            message: `修改成功`,
+            type: 'success'
+          });
+          this.searchBookList(1);
+          this.dialogVisible = false;
+        }
+      }).catch(err => {
+        console.error('bookManagePage error:', err);
+        this.$message({
+          message: `修改失败`,
+          type: 'warning'
+        });
+        this.dialogVisible = false;
+      });
     },
     handleDialogClose() {
       this.dialogVisible = false;

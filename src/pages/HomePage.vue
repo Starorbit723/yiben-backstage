@@ -26,7 +26,7 @@ export default {
     },
     role() {
       const roleMap = {
-        superAdmin: '超级管理员',
+        superadmin: '超级管理员',
         admin: '管理员',
         educator: '教务老师',
         teacher: '老师',

@@ -40,13 +40,13 @@ export const workDayType = [
 ];
 
 export const presentType = [
-  { label: '未到场', value: 0 },
-  { label: '已到场', value: 1 },
+  { label: '未到场', value: '0' },
+  { label: '已到场', value: '1' },
 ];
 
 export const prepaidType = [
-  { label: '未付款', value: 0 },
-  { label: '已付款', value: 1 },
+  { label: '未付款', value: '0' },
+  { label: '已付款', value: '1' },
 ];
 
 export const arrayToString = (arr) => {

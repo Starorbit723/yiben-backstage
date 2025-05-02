@@ -324,6 +324,10 @@ export default {
           this.tableData = res.result.data.list;
         }
       }).catch(err => {
+        this.$message({
+          message: `查询失败`,
+          type: 'warning'
+        });
         console.error('userManagePage error:', err)
       });
     },
