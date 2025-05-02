@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'HomePage',
@@ -39,10 +39,37 @@ export default {
   },
   created() {
     this.getDay();
+    this.fetchSchoolOptions();
   },
   mounted() {
   },
   methods:{
+    ...mapMutations([
+      'setSchoolOptions',
+    ]),
+    async fetchSchoolOptions() {
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'schoolList',
+          data: {},
+        }
+      }).then(res => {
+        console.log('schoolList result:', res);
+        if (res.result.data) {
+          const arr = [];
+          res.result.data.forEach(ele => {
+            arr.push({
+              label: ele.detail.name,
+              value: ele.schoolid
+            });
+          });
+          this.setSchoolOptions(arr);
+        }
+      }).catch(err => {
+        console.error('schoolList error:', err)
+      });
+    },
     getDay() {
       // 获取当前时间
       const today = new Date();

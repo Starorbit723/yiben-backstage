@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     Rlook: false,
     Rcreat: false,
     Redit: false,
-    Rdelete: false
+    Rdelete: false,
+    schoolOptions: [],
   },
   mutations: {
     setLoginCache(state, data) {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
     setRdelete(state, data) {
       state.Rdelete = data;
     },
+    setSchoolOptions(state, data) {
+      state.schoolOptions = data;
+    },
     clearAllLoginCache(state) {
       state.cache = {};
       state.oauthInstance = {};
@@ -55,7 +59,8 @@ const store = new Vuex.Store({
       return state.userTag;
     },
   },
-  actions: {}
+  actions: {
+  }
 });
 
 export default store;

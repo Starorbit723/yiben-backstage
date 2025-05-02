@@ -1,11 +1,51 @@
 <template>
   <div class="timetable-page">
+    <!--查询条件-->
+    <div class="yb-common-searchzone">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-row :gutter="20">
+          <el-col :span="6"> 
+            <el-form-item label="预约校区">
+              <el-select class="yb-select" v-model="form.schoolid" size="small">
+                <el-option
+                  v-for="item in schoolOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+    <!--按钮区域-->
+    <div class="yb-common-btnzone">
+      <el-row :gutter="20">
+        <el-col :offset="20" :span="2">
+          <el-button class="yb-button" type="primary" size="small" @click="getTimeTableBySchoolId()">查询</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button class="yb-button" type="success" size="small" @click="saveTimeTableBySchoolId()">保存修改</el-button>
+        </el-col>
+      </el-row>
+    </div>
     <!--表格区域-->
     <div class="timetable-congfig-zone">
       <div class="day-cyc" v-for="(item, index) in timetableConfig" :key="index">
         <div class="title">
           <div class="text">{{item.title}}</div>
-          <div class="select"></div>
+          <div class="select">
+            <el-select class="yb-select" v-model="item.isWorkDay" size="small">
+              <el-option
+                v-for="item in workDayTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+          <el-button type="primary" style="width:100%" @click="addTeacher(index)" size="small">添加老师</el-button>
         </div>
         <div class="timeline">
           <div class="step">08:00</div>
@@ -40,7 +80,6 @@
           </div>
           <div class="clearfix"></div>
         </div>
-        <el-button type="primary" @click="addTeacher(index)">添加</el-button>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -115,59 +154,45 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { workDayType } from '@/utils/common';
 
 export default {
   name: 'TimeTable',
   data() {
     return {
+      workDayTypeOptions: workDayType,
       form: {
-        startTime: '',
-        endTime: '',
+        schoolid: 1,
       },
       titleColorStep: ['rgb(50, 151, 253)', 'rgb(8, 190, 166)', 'rgb(233, 120, 15)', 'rgb(160, 23, 240)', 'rgb(23, 240, 77)'],
-      timetableConfig: [{
-        title: '星期六',
-        isWorkDay: 1,
-        teachers: [{
-            name: 'Tracy',
-            schedule: [
-              {
-                startTime: '8:00',
-                endTime: '10:00',
-                posTop: 0,
-                heightRate: 120,
-                room: '第5教室',
-                lesson: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-              }
-            ]
-        }]
-      },{
-        title: '星期日',
-        isWorkDay: 1,
-        teachers: []
-      },{
-        title: '星期一',
-        isWorkDay: 1,
-        teachers: [
-          
-        ]
-      },{
-        title: '星期二',
-        isWorkDay: 1,
-        teachers: []
-      },{
-        title: '星期三',
-        isWorkDay: 1,
-        teachers: []
-      },{
-        title: '星期四',
-        isWorkDay: 1,
-        teachers: []
-      },{
-        title: '星期五',
-        isWorkDay: 1,
-        teachers: []
-      }],
+      detail: {},
+      // 数据基础类
+      timetableClass: [
+        { title: '星期六', isWorkDay: 1, teachers: [
+          // {
+          //   name: '',
+          //   schedule: [
+          //     {
+          //       startTime: '8:00',
+          //       endTime: '10:00',
+          //       posTop: 0,
+          //       heightRate: 120,
+          //       room: '第5教室',
+          //       lesson: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+          //     }
+          //   ]
+          // }
+        ]},
+        { title: '星期日', isWorkDay: 1, teachers: []},
+        { title: '星期一', isWorkDay: 1, teachers: []},
+        { title: '星期二', isWorkDay: 1, teachers: []},
+        { title: '星期三', isWorkDay: 1, teachers: []},
+        { title: '星期四', isWorkDay: 1, teachers: []},
+        { title: '星期五', isWorkDay: 1, teachers: []},
+      ],
+      // 用户编辑修改
+      timetableConfig: [],
       // 添加老师弹框
       addTeacherDialogVisible: false,
       teacherName: '',
@@ -185,10 +210,59 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['schoolOptions']),
+  },
+  created() {
+  },
   mounted() {
-    
+    this.getTimeTableBySchoolId();
   },
   methods:{
+    async getTimeTableBySchoolId() {
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'schoolRead',
+          data: {
+            schoolid: this.form.schoolid,
+          },
+        }
+      }).then(res => {
+        console.log('schoolRead result:', res);
+        if (res.result.success) {
+          // 先把detail 整个保存
+          this.detail = res.result.data[0].detail;
+          this.timetableConfig = res.result.data[0].detail.timetableConfig || this.timetableClass;
+        }
+      }).catch(err => {
+        console.error('schoolRead error:', err)
+      });
+    },
+    async saveTimeTableBySchoolId() {
+      const params = {
+        schoolid: this.form.schoolid,
+        detail: Object.assign(this.detail, { timetableConfig: this.timetableConfig }),
+      }
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'schoolSave',
+          data: params,
+        }
+      }).then(res => {
+        console.log('schoolSave result:', res);
+        if (res.result.success) {
+          this.$message({
+            message: '课程表保存车成功',
+            type: 'success'
+          });
+          this.getTimeTableBySchoolId();
+        }
+      }).catch(err => {
+        console.error('schoolSave error:', err)
+      });
+    },
     addTeacher(index) {
       console.log(index);
       this.addDayIndex = index;
@@ -292,15 +366,21 @@ export default {
     padding: 20px;
     .day-cyc{
       position: relative;
-      width: 1300px;
+      width: 1320px;
       height: 970px;
       margin-bottom: 50px;
       .title{
         float: left;
         width: 100px;
+        padding-right: 20px;
         .text{
-          height: 40px;
+          text-indent: 10px;
+          height: 50px;
           line-height: 40px;
+          font-weight: 700;
+        }
+        .select{
+          height: 50px;
         }
       }
       .timeline{

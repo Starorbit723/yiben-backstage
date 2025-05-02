@@ -38,6 +38,11 @@ export const schoolType = [
   { label: '广安门校区', value: 1 },
 ];
 
+export const workDayType = [
+  { label: '工作日', value: 1 },
+  { label: '休息日', value: 2 },
+];
+
 export const presentType = [
   { label: '未到场', value: 0 },
   { label: '已到场', value: 1 },

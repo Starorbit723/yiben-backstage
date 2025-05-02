@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      activeIndex: 'usermanagement',
+      activeIndex: 'home',
       routerPath: pathData,
     }
   },
