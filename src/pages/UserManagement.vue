@@ -301,9 +301,28 @@ export default {
     
   },
   methods:{
-    searchUserList() {
+    async searchUserList() {
       console.log(this.form, this.currentPage, this.limit);
       // 调用查询预定信息接口
+      const params = {
+        pageNo: this.currentPage,
+        pageSize: this.limit,
+        condition: this.form,
+      };
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'userManagePage',
+          data: params,
+        }
+      }).then(res => {
+        console.log('userManagePage result:', res);
+        if (res.result.success) {
+          // 先把detail 整个保存
+        }
+      }).catch(err => {
+        console.error('userManagePage error:', err)
+      });
     },
     filterTag(type) {
       let _text = '';

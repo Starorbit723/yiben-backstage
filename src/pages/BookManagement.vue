@@ -42,7 +42,7 @@
             <el-form-item label="预约校区">
               <el-select class="yb-select" v-model="form.schoolid" size="small">
                 <el-option
-                  v-for="item in schoolTypeOptions"
+                  v-for="item in schoolOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -260,7 +260,7 @@
             <el-form-item label="预约校区">
               <el-select class="yb-select" v-model="formItem.schoolid" size="small" :disabled="dialogType === 'look'">
                 <el-option
-                  v-for="item in schoolTypeOptions"
+                  v-for="item in schoolOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -337,8 +337,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, gender, bookType, bookStatus, schoolType, presentType, prepaidType, arrayToString } from '@/utils/common';
+import { userType, gender, bookType, bookStatus, presentType, prepaidType, arrayToString } from '@/utils/common';
 
 export default {
   name: 'BookManagement',
@@ -348,7 +349,6 @@ export default {
       userTypeOptions: userType,
       genderOptions: gender,
       bookTypeOptions: bookType,
-      schoolTypeOptions: schoolType,
       presentTypeOptions: presentType,
       prepaidTypeOptions: prepaidType,
       bookStatusOptions: bookStatus,
@@ -495,6 +495,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['schoolOptions']),
   },
   mounted() {
   },
@@ -503,7 +504,7 @@ export default {
     // creatNewBook() {},
     // 查询预约用户 
     searchBookList() {
-      console.log(this.form, this.currentPage, this.limit);
+      console.log(JSON.parse(JSON.stringify(this.form)), this.currentPage, this.limit);
       // 调用查询预定信息接口
     },
     // 查看单条信息
