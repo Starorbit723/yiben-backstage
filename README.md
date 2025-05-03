@@ -116,6 +116,17 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 5. 创建预约单时间  [startTime, endTime]
 
 
+#资源管理
+记录通过对象存储api上传的资源文件的信息
+## 字段
+1. url 资源地址
+2. fileId 文件id
+3. createTime 上传时间
+4. type 资源类型
+5. name 资源名称
+
+
+
 
 
 
