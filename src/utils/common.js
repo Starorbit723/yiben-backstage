@@ -13,6 +13,11 @@ export const userType = [
   { label: '员工', value: 2 },
 ];
 
+export const resourceType = [
+  { label: '图片', value: 1 },
+  { label: '视频', value: 2 },
+];
+
 export const gender = [
   { label: '未知', value: 0 },
   { label: '男', value: 1 },

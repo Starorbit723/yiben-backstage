@@ -91,6 +91,11 @@ const routes = [
 				name: "OperationManagement",
 				path: 'operationmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/OperationManagement')), 'OperationManagement'),
+			},
+			{
+				name: "ResourceManagement",
+				path: 'resourcemanagement',
+				component: r => require.ensure([], () => r(require('@/pages/ResourceManagement')), 'ResourceManagement'),
 			}
 		]
 	},

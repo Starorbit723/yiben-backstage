@@ -13,6 +13,7 @@
     <el-menu-item index="bookmanagement">预约管理</el-menu-item>
     <el-menu-item index="timetable">课程管理</el-menu-item>
     <el-menu-item index="operationmanagement">运营管理</el-menu-item>
+    <el-menu-item index="resourcemanagement">资源管理</el-menu-item>
     <!-- <el-submenu index="worktable">
       <template slot="title">工作台</template>
       <el-menu-item index="bookconfig">预约配置</el-menu-item>
