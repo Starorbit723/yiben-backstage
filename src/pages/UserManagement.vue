@@ -41,7 +41,7 @@
           <el-button class="yb-button" type="success" size="small">添加用户</el-button>
         </el-col>
         <el-col :span="2">
-          <el-button class="yb-button" type="primary" size="small" @click="searchUserList()">查询用户</el-button>
+          <el-button class="yb-button" type="primary" size="small" @click="searchUserList(0)">查询用户</el-button>
         </el-col>
       </el-row>
     </div>
@@ -55,13 +55,16 @@
         <el-table-column fixed prop="parentName" label="父母姓名" width="100"></el-table-column>
         <el-table-column prop="nickName" label="微信昵称" width="120"></el-table-column>
         <el-table-column prop="phoneNumber" label="手机号" width="120"></el-table-column>
-        <el-table-column prop="avatarUrl" label="头像" width="100"></el-table-column>
+        <el-table-column prop="avatarUrl" label="头像" width="100">
+          <template slot-scope="scope">
+            <img class="yb-headpic" :src="scope.row.avatarUrl" />
+          </template>
+        </el-table-column>
         <el-table-column prop="point" label="积分" width="100"></el-table-column>
         <el-table-column prop="userType" label="用户类型" width="100">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.userType === 0" type="primary" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
-            <el-tag v-if="scope.row.userType === 1" type="success" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
-            <el-tag v-if="scope.row.userType === 2" type="warning" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
+            <el-tag v-if="scope.row.userType === 1" type="primary" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
+            <el-tag v-if="scope.row.userType === 2" type="success" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="children" label="学生信息">
@@ -236,59 +239,9 @@ export default {
         yibenid: '',
         nickName: '',
         phoneNumber: '',
-        userType: 0,
+        userType: 1,
       },
-      tableData: [{
-        yibenid: 'yb123456789',
-        openid: '121312313',
-        unionid: '123123123123',
-        nickName: '123123123123',
-        parentName: '啊啊啊',
-        phoneNumber: '13012345678',
-        point: '900000',
-        avatarUrl: '',
-        city: '',
-        country: '',
-        province: '',
-        gender: 0,
-        language: '',
-        age: '',
-        userType: 0,
-        children: [{
-          name: '12312312',
-          age: '12',
-          gender: 1,
-        }, {
-          name: '12312312',
-          age: '12',
-          gender: 2,
-        }]
-      },{
-        yibenid: 'yb123456789',
-        openid: '121312313',
-        unionid: '123123123123',
-        nickName: '123123123123',
-        parentName: '啊啊啊',
-        phoneNumber: '13012345678',
-        point: '900000',
-        avatarUrl: '',
-        city: '',
-        country: '',
-        province: '',
-        gender: '',
-        language: '',
-        age: '',
-        userType: 2,
-        children: [{
-          name: '12312312',
-          age: '12',
-          gender: 1,
-        }, {
-          name: '12312312',
-          age: '12',
-          gender: 2,
-        }]
-      }],
+      tableData: [],
       // 分页器
       currentPage: 1,
       totalCount: 0,
@@ -298,14 +251,14 @@ export default {
     }
   },
   mounted() {
-    
+    this.searchUserList(0);
   },
   methods:{
-    async searchUserList() {
+    async searchUserList(type) {
       console.log(JSON.stringify(this.form), this.currentPage, this.limit);
       // 调用查询预定信息接口
       const params = {
-        pageNo: this.currentPage,
+        pageNo: type === 0 ? 1 : this.currentPage,
         pageSize: this.limit,
         condition: this.form,
       };
@@ -363,7 +316,28 @@ export default {
       this.dialogVisible = false;
     },
     async handleDialogEnsure() {
-
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'userInfoModify',
+          data: this.formItem,
+        }
+      }).then(res => {
+        console.log('userInfoModify result:', res);
+        if (res.result.success) {
+          this.$message({
+            message: `修改成功`,
+            type: 'success'
+          });
+          this.searchUserList(1);
+        }
+      }).catch(err => {
+        this.$message({
+          message: `修改失败`,
+          type: 'warning'
+        });
+        console.error('userInfoModify error:', err)
+      });
       this.dialogVisible = false;
     },
     genderShow(val) {

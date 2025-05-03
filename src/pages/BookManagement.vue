@@ -78,7 +78,7 @@
         size="small"
         :data="tableData"
         style="width: 100%">
-        <el-table-column fixed prop="ownerName" label="预约人" width="90"></el-table-column>
+        <el-table-column fixed prop="ownerName" label="预约人" width="110"></el-table-column>
         <el-table-column prop="ownerPhone" label="预约手机号" width="110"></el-table-column>
         <el-table-column prop="bookType" label="预约类型" width="110">
           <template slot-scope="scope">
@@ -96,11 +96,19 @@
             <el-tag v-if="scope.row.status === 5" type="warning" disable-transitions>{{filterTag(scope.row.status)}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="lessonTime" label="上课时间" width="160"></el-table-column>
+        <el-table-column prop="lessonTime" label="上课时间" width="160">
+          <template slot-scope="scope">
+            <div>{{formatDateToShow(scope.row.lessonTime)}}</div>
+          </template>
+        </el-table-column>
         <el-table-column prop="lessonRoom" label="教室" width="100"></el-table-column>
         <el-table-column prop="originYibenid" label="原始发起人id" width="100"></el-table-column>
         <el-table-column prop="prevYibenid" label="转发关联人id" width="100"></el-table-column>
-        <el-table-column prop="createTime" label="预约创建时间" width="160"></el-table-column>
+        <el-table-column prop="createTime" label="预约创建时间" width="160">
+          <template slot-scope="scope">
+            <div>{{formatDateToShow(scope.row.createTime)}}</div>
+          </template>
+        </el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
@@ -243,7 +251,7 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="预约校区">
-              <el-select class="yb-select" v-model="formItem.schoolid" size="small" :disabled="dialogType === 'look'">
+              <el-select class="yb-select" v-model="formItem.schoolid" size="small" disabled>
                 <el-option
                   v-for="item in schoolOptions"
                   :key="item.value"
@@ -255,7 +263,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="主预约人">
-              <el-input v-model="formItem.ownerName" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+              <el-input v-model="formItem.ownerName" size="small" disabled clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -265,7 +273,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="主预约人电话">
-              <el-input v-model="formItem.ownerPhone" placeholder="请输入手机号" maxlength="11" size="small" :disabled="dialogType === 'look'" clearable></el-input>
+              <el-input v-model="formItem.ownerPhone" placeholder="请输入手机号" maxlength="11" size="small" disabled clearable></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -276,14 +284,14 @@
                 v-model="formItem.ownerChildrenShow"
                 size="small"
                 placeholder="多个学生请用英文输入法“#”分割开填写，例如：“小明#小红”"
-                :disabled="dialogType === 'look'"></el-input>
+                disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <!--拼团信息-->
         <div class="member-zone" v-if="formItem.bookType === 2">
           <div class="member-zone-title">拼团信息</div>
-          <div class="group-member" v-for="(gitem, gindex) in groupInfoList" :key="gindex">
+          <div class="group-member" v-for="(gitem, gindex) in formItem.groupInfoList" :key="gindex">
             <el-row :gutter="20">
               <el-col :span="6">
                 <el-form-item label="拼团人">
@@ -298,7 +306,7 @@
               <el-col :span="9">
                 <el-form-item label="拼团人学生">
                   <el-input
-                    v-model="gitem.ownerChildrenShow"
+                    v-model="gitem.memberChildrenShow"
                     size="small"
                     placeholder="多个学生请用英文输入法“#”分割开填写，例如：“小明#小红”"
                     disabled></el-input>
@@ -324,7 +332,7 @@
 <script>
 import { mapState } from 'vuex';
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, gender, bookType, bookStatus, presentType, prepaidType, arrayToString } from '@/utils/common';
+import { userType, gender, bookType, bookStatus, presentType, prepaidType, arrayToString, formatDate } from '@/utils/common';
 
 export default {
   name: 'BookManagement',
@@ -345,49 +353,7 @@ export default {
         ownerPhone: '',
         bookTimeRanger: []
       },
-      tableData: [{
-        bookid: '123123123131312231',
-        bookType: 2,
-        originYibenid: '213123123123312',
-        originOpenid: '213123123123312',
-        prevYibenid: '213123123123312',
-        prevOpenid: '213123123123312',
-        ownerName: '张先生',
-        ownerPhone: '13012345678',
-        ownerOpenid: '123123123231312',
-        ownerYibenid: 'yb1234123123',
-        schoolid: 1,
-        ownerChildren: ['name', 'name2'],
-        ifPrepaid: '0',
-        matchTeacher: 'Tracy',
-        ifPresent: '0',
-        receptionTeacherPhone: '13012345678',
-        createTime: '2025-11-28 15:23:46',
-        lessonTime: '2025-12-28 15:00:00',
-        lessonRoom: '第五教室',
-        status: 1
-      },{
-        bookid: '66666666666',
-        bookType: 1,
-        originYibenid: '213123123123312',
-        originOpenid: '213123123123312',
-        prevYibenid: '213123123123312',
-        prevOpenid: '213123123123312',
-        ownerName: '张先生',
-        ownerPhone: '13012345678',
-        ownerOpenid: '123123123231312',
-        ownerYibenid: 'yb1234123123',
-        schoolid: 1,
-        ownerChildren: ['name', 'name2'],
-        ifPrepaid: '0',
-        matchTeacher: 'Tracy',
-        ifPresent: '0',
-        receptionTeacherPhone: '13012345678',
-        createTime: '2025-11-28 15:23:46',
-        lessonTime: '2025-12-28 15:00:00',
-        lessonRoom: '第五教室',
-        status: 1
-      }],
+      tableData: [],
       // 分页器
       currentPage: 1,
       totalCount: 0,
@@ -451,16 +417,7 @@ export default {
         memberName: '',
         memberPhone: '',
         memberChildren: [],
-        ownerChildrenShow: '',
-      },{
-        groupInfoid: '',
-        bookid: '',
-        memberOpenid: '',
-        memberYibenid: '',
-        memberName: '',
-        memberPhone: '',
-        memberChildren: [],
-        ownerChildrenShow: '',
+        memberChildrenShow: '',
       }],
       // 用于初始化数据格式
       groupInfoItem: {
@@ -471,7 +428,7 @@ export default {
         memberName: '',
         memberPhone: '',
         memberChildren: [],
-        ownerChildrenShow: '',
+        memberChildrenShow: '',
       },
     }
   },
@@ -479,6 +436,7 @@ export default {
     ...mapState(['schoolOptions']),
   },
   mounted() {
+    this.searchBookList(0);
   },
   methods:{
     // 添加新预约
@@ -518,28 +476,24 @@ export default {
     handleLook(row) {
       this.formItem = JSON.parse(JSON.stringify(row));
       this.formItem.ownerChildrenShow = arrayToString(this.formItem.ownerChildren);
-      this.dialogType = 'look';
-      // 如果是拼团，需要再请求成员接口
       if (this.formItem.bookType === 2) {
-        // this.groupInfo = XXXX;
-        
-        this.dialogVisible = true;
-      } else {
-        this.dialogVisible = true;
+        this.formItem.groupInfoList.forEach(ele => {
+          ele.memberChildrenShow = arrayToString(ele.memberChildren);
+        });
       }
+      this.dialogType = 'look';
+      this.dialogVisible = true;
     },
     handleEdit(row) {
       this.formItem = JSON.parse(JSON.stringify(row));
       this.formItem.ownerChildrenShow = arrayToString(this.formItem.ownerChildren);
-      this.dialogType = 'edit';
-      // 如果是拼团，需要再请求成员接口
       if (this.formItem.bookType === 2) {
-        // this.groupInfo = XXXX;
-        
-        this.dialogVisible = true;
-      } else {
-        this.dialogVisible = true;
+        this.formItem.groupInfoList.forEach(ele => {
+          ele.memberChildrenShow = arrayToString(ele.memberChildren);
+        });
       }
+      this.dialogType = 'edit';
+      this.dialogVisible = true;
     },
     // addMenber() {
     // },
@@ -587,6 +541,9 @@ export default {
     handleCurrentChange(val) {
       console.log(`currentPage ${val}`);
       this.currentPage = val;
+    },
+    formatDateToShow(timeStr) {
+      return formatDate(timeStr);
     },
     filterTag(type) {
       let _text = '';
