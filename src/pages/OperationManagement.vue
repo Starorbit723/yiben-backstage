@@ -16,6 +16,10 @@
     <div v-if="previewUrl" class="preview-container">
       <img :src="previewUrl" class="preview-image" />
     </div>
+    
+    <div class="resource-actions" v-if="fileId">
+      <el-button type="danger" @click="deleteResource">删除资源</el-button>
+    </div>
   </div>
 </template>
 
@@ -26,7 +30,8 @@ export default {
     return {
       fileList: [],
       previewUrl: '',
-      currentFile: null
+      currentFile: null,
+      fileId: '' // 存储上传后得到的fileId
     }
   },
   mounted() {
@@ -54,11 +59,10 @@ export default {
         })
         .then(res => {
           console.log('上传成功:', res);
-          /* {
-              "fileID": "cloud://cloud1-0gvvdaq4c40b8f74.636c-cloud1-0gvvdaq4c40b8f74-1351667792/uploads/1746257971848-layer-example9.a574f6d1.png",
-              "download_url": "https://636c-cloud1-0gvvdaq4c40b8f74-1351667792.tcb.qcloud.la/uploads/1746257971848-layer-example9.a574f6d1.png?sign=b23c83f2eef404a90c2d1b6536d0cc1f&t=1746257974",
-              "requestId": "66874cfcc5ead"
-          } */
+          // 存储上传成功后返回的fileId
+          if (res && res.fileID) {
+            this.fileId = res.fileID;
+          }
           this.$message.success('文件上传成功');
         })
         .catch(err => {
@@ -66,6 +70,26 @@ export default {
           this.$message.error('文件上传失败');
         });
       }
+    },
+    deleteResource() {
+      this.$confirm('确定要删除该资源吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 调用云开发 deleteFile 方法删除文件
+        this.$cloudbase.deleteFile({
+          fileList: ['cloud://cloud1-0gvvdaq4c40b8f74.636c-cloud1-0gvvdaq4c40b8f74-1351667792/uploads/1746257971848-layer-example9.a574f6d1.png', 'cloud://cloud1-0gvvdaq4c40b8f74.636c-cloud1-0gvvdaq4c40b8f74-1351667792/uploads/1746281655185-11111111111111.png']
+        })
+        .then(res => {
+          console.log('删除成功:', res);
+        })
+        .catch(err => {
+          console.error('删除失败:', err);
+        });
+      }).catch(() => {
+        this.$message.info('已取消删除');
+      });
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -116,6 +140,9 @@ export default {
       max-height: 300px;
       object-fit: contain;
     }
+  }
+  .resource-actions {
+    margin-top: 20px;
   }
 }
 </style>
