@@ -21,7 +21,8 @@ export const RightMixin = {
   },
   beforeRouteEnter (to, from, next) {
     if (!store.getters.getUserTag && from.path !== '/login') {
-      next({ name: 'login', replace: true });
+      // store.dispatch('doLogout');
+      next({ name: 'Home', replace: true });
       return;
     }
     if (to.meta.creat.indexOf(store.getters.getUserTag) !== -1) {
@@ -51,6 +52,5 @@ export const RightMixin = {
   methods: {
   },
   created() {
-    
   }
 };

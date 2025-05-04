@@ -45,6 +45,7 @@ export default {
       try {
           const result = await this.$auth.signOut();
           console.log('退出登录成功:', result);
+          sessionStorage.clear();
           this.$router.push('/login');
         } catch (error) {
           console.error('退出登录失败:', error);

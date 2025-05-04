@@ -67,7 +67,7 @@
           <el-button class="yb-button" type="success" size="small" @click="creatNewBook()">添加预约</el-button>
         </el-col> -->
         <el-col :offset="22" :span="2">
-          <el-button class="yb-button" type="primary" size="small" @click="searchBookList(0)">查询用户</el-button>
+          <el-button v-if="Rlook" class="yb-button" type="primary" size="small" @click="searchBookList(0)">查询用户</el-button>
         </el-col>
       </el-row>
     </div>
@@ -114,8 +114,8 @@
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleLook(scope.row)" type="text" size="small">查看</el-button>
-            <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button v-if="Rlook" @click="handleLook(scope.row)" type="text" size="small">查看</el-button>
+            <el-button v-if="Redit" @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -323,7 +323,7 @@
       <span slot="footer" class="dialog-footer" v-if="dialogType === 'creat' || dialogType === 'edit'">
         <el-button @click="handleDialogClose" size="small">取 消</el-button>
         <!-- <el-button v-if="formItem.bookType === 2" type="primary" size="small" @click="addMenber()" >添加拼团人</el-button> -->
-        <el-button type="primary" @click="handleDialogEnsure" size="small">确认并保存</el-button>
+        <el-button v-if="Redit" type="primary" @click="handleDialogEnsure" size="small">确认并保存</el-button>
       </span>
     </el-dialog>
   </div>

@@ -55,7 +55,12 @@
         :data="tableData"
         style="width: 100%">
         <el-table-column prop="name" label="资源名称" width="150"></el-table-column>
-        <el-table-column prop="type" label="资源类型" width="120"></el-table-column>
+        <el-table-column prop="type" label="资源类型" width="120">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.type === 1" type="primary" disable-transitions>{{filterTag(scope.row.type)}}</el-tag>
+            <el-tag v-if="scope.row.type === 2" type="success" disable-transitions>{{filterTag(scope.row.type)}}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="上传时间" width="160">
           <template slot-scope="scope">
             <div>{{formatDateToShow(scope.row.createTime)}}</div>
@@ -372,6 +377,15 @@ export default {
         name: '',
         type: 1,
       };
+    },
+    filterTag(type) {
+      let _text = '';
+      resourceType.forEach(ele => {
+        if (ele.value === type) {
+          _text = ele.label;
+        }
+      });
+      return _text;
     },
   }
 }

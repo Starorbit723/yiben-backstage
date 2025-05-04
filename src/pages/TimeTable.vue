@@ -23,10 +23,10 @@
     <div class="yb-common-btnzone">
       <el-row :gutter="20">
         <el-col :offset="20" :span="2">
-          <el-button class="yb-button" type="primary" size="small" @click="getTimeTableBySchoolId()">查询</el-button>
+          <el-button v-if="Rlook" class="yb-button" type="primary" size="small" @click="getTimeTableBySchoolId()">查询</el-button>
         </el-col>
         <el-col :span="2">
-          <el-button class="yb-button" type="success" size="small" @click="saveTimeTableBySchoolId()">保存修改</el-button>
+          <el-button v-if="Redit" class="yb-button" type="success" size="small" @click="saveTimeTableBySchoolId()">保存修改</el-button>
         </el-col>
       </el-row>
     </div>
@@ -36,7 +36,7 @@
         <div class="title">
           <div class="text">{{item.title}}</div>
           <div class="select">
-            <el-select class="yb-select" v-model="item.isWorkDay" size="small">
+            <el-select class="yb-select" v-model="item.isWorkDay" size="small" :disabled="!Redit">
               <el-option
                 v-for="item in workDayTypeOptions"
                 :key="item.value"
@@ -45,7 +45,7 @@
               </el-option>
             </el-select>
           </div>
-          <el-button type="primary" style="width:100%" @click="addTeacher(index)" size="small">添加老师</el-button>
+          <el-button v-if="Redit" type="primary" style="width:100%" @click="addTeacher(index)" size="small">添加老师</el-button>
         </div>
         <div class="timeline">
           <div class="step">08:00</div>
@@ -73,10 +73,10 @@
               <div class="schedule-item-title" :style="{'backgroundColor': titleColorStep[indext]}">{{items.startTime}} ~ {{items.endTime}}</div>
               <div class="teacher-room">{{itemt.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{items.room}}</div>
               <div class="lessonname">{{items.lesson}}</div>
-              <div class="del-btn" @click="delSchdule(index, indext, indexs)">删除</div>
+              <div v-if="Redit" class="del-btn" @click="delSchdule(index, indext, indexs)">删除</div>
             </div>
-            <el-button class="addSchdule-btn" type="primary" @click="addSchdule(index, indext)">添加日程</el-button>
-            <el-button class="deleteSchdule-btn" type="danger" @click="deleteTeacher(index, indext)">删除老师</el-button>
+            <el-button v-if="Redit" class="addSchdule-btn" type="primary" @click="addSchdule(index, indext)">添加日程</el-button>
+            <el-button v-if="Redit" class="deleteSchdule-btn" type="danger" @click="deleteTeacher(index, indext)">删除老师</el-button>
           </div>
           <div class="clearfix"></div>
         </div>

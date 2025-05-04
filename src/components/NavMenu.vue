@@ -8,12 +8,13 @@
     text-color="#FFFFFF"
     active-text-color="#FFD04B"
     @select="handleSelect">
-    <el-menu-item index="home">首页</el-menu-item>
+    <el-menu-item v-for="item in menuData" :key="item.index" :index="item.index">{{item.name}}</el-menu-item>
+    <!-- <el-menu-item index="Home">首页</el-menu-item>
     <el-menu-item index="UserManagement">用户管理</el-menu-item>
     <el-menu-item index="BookManagement">预约管理</el-menu-item>
     <el-menu-item index="TimeTable">课程管理</el-menu-item>
     <el-menu-item index="OperationManagement">运营管理</el-menu-item>
-    <el-menu-item index="ResourceManagement">资源管理</el-menu-item>
+    <el-menu-item index="ResourceManagement">资源管理</el-menu-item> -->
     <!-- <el-submenu index="worktable">
       <template slot="title">工作台</template>
       <el-menu-item index="bookconfig">预约配置</el-menu-item>
@@ -31,8 +32,9 @@ export default {
   },
   data() {
     return {
-      activeIndex: 'home',
+      activeIndex: 'Home',
       routerPath: pathData,
+      menuData: [],
     }
   },
   // watch: {
@@ -44,6 +46,7 @@ export default {
   // },
   mounted() {
     this.activeIndex = this.$route.name;
+    this.creatNav()
   },
   computed: {
     cRouter() {
@@ -51,6 +54,24 @@ export default {
     },
   },
   methods: {
+    creatNav() {
+      // console.log(JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups);
+      // console.log(this.$router.options.routes[2].children);
+      const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
+      const navArr = [];
+      this.$router.options.routes[2].children.forEach(ele => {
+        rights.forEach(r => {
+          // console.log(r.id, ele.meta.look, ele.meta.look.indexOf(r.id));
+          if (ele.meta.look.indexOf(r.id) !== -1){
+            navArr.push({
+              name: ele.meta.name,
+              index: ele.name
+            });
+          }
+        });
+      });
+      this.menuData = navArr;
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       this.activeIndex = key;

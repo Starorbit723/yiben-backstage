@@ -30,6 +30,7 @@ const routes = [
 		name: 'login',
 		component: r => require.ensure([], () => r(require('@/pages/LoginPage')), 'LoginPage'),
 		meta: {
+			name: '登录',
 			look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 			creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 			edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
@@ -46,6 +47,7 @@ const routes = [
 				path: 'home',
 				component: r => require.ensure([], () => r(require('@/pages/HomePage')), 'HomePage'),
 				meta: {
+					name: '首页',
 					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 					creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 					edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
@@ -57,6 +59,7 @@ const routes = [
 				path: 'usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement'),
 				meta: {
+					name: '用户管理',
 					look: ['superadmin', 'admin', 'educator'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
@@ -68,29 +71,32 @@ const routes = [
 				path: 'bookmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/BookManagement')), 'BookManagement'),
 				meta: {
-					look: ['superadmin', 'admin', 'educator'],
+					name: '预约管理',
+					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
 					delete: ['superadmin', 'admin']
 				},
 			},
-			{
-				name: "BookConfig",
-				path: 'bookconfig',
-				component: r => require.ensure([], () => r(require('@/pages/BookConfig')), 'BookConfig'),
-				meta: {
-					look: ['superadmin', 'admin', 'educator'],
-					creat: ['superadmin', 'admin', 'educator'],
-					edit: ['superadmin', 'admin', 'educator'],
-					delete: ['superadmin', 'admin']
-				},
-			},
+			// {
+			// 	name: "BookConfig",
+			// 	path: 'bookconfig',
+			// 	component: r => require.ensure([], () => r(require('@/pages/BookConfig')), 'BookConfig'),
+			// 	meta: {
+			// 		name: '预约配置',
+			// 		look: ['superadmin', 'admin', 'educator'],
+			// 		creat: ['superadmin', 'admin', 'educator'],
+			// 		edit: ['superadmin', 'admin', 'educator'],
+			// 		delete: ['superadmin', 'admin']
+			// 	},
+			// },
 			{
 				name: "TimeTable",
 				path: 'timetable',
 				component: r => require.ensure([], () => r(require('@/pages/TimeTable')), 'TimeTable'),
 				meta: {
-					look: ['superadmin', 'admin', 'educator'],
+					name: '课程管理',
+					look: ['superadmin', 'admin', 'educator', 'teacher'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
 					delete: ['superadmin', 'admin']
@@ -101,9 +107,10 @@ const routes = [
 				path: 'operationmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/OperationManagement')), 'OperationManagement'),
 				meta: {
-					look: ['superadmin', 'admin', 'educator'],
-					creat: ['superadmin', 'admin', 'educator'],
-					edit: ['superadmin', 'admin', 'educator'],
+					name: '运营管理',
+					look: ['superadmin', 'admin', 'educator', 'operation'],
+					creat: ['superadmin', 'admin', 'educator', 'operation'],
+					edit: ['superadmin', 'admin', 'educator', 'operation'],
 					delete: ['superadmin', 'admin']
 				},
 			},
@@ -112,9 +119,10 @@ const routes = [
 				path: 'resourcemanagement',
 				component: r => require.ensure([], () => r(require('@/pages/ResourceManagement')), 'ResourceManagement'),
 				meta: {
-					look: ['superadmin', 'admin', 'educator'],
-					creat: ['superadmin', 'admin', 'educator'],
-					edit: ['superadmin', 'admin', 'educator'],
+					name: '资源管理',
+					look: ['superadmin', 'admin', 'educator', 'operation'],
+					creat: ['superadmin', 'admin', 'operation'],
+					edit: ['superadmin', 'admin', 'operation'],
 					delete: ['superadmin', 'admin']
 				},
 			}

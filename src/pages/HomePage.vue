@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { userTags } from '@/utils/common';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
@@ -38,6 +39,7 @@ export default {
     }
   },
   created() {
+    this.getUserTag();
     this.getDay();
     this.fetchSchoolOptions();
   },
@@ -45,8 +47,17 @@ export default {
   },
   methods:{
     ...mapMutations([
+      'setUserTag',
       'setSchoolOptions',
     ]),
+    getUserTag() {
+      const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
+      rights.forEach(ele => {
+        if (userTags.indexOf(ele.id) !== -1) {
+          this.setUserTag(ele.id);
+        }
+      });
+    },
     async fetchSchoolOptions() {
       this.$cloudbase.callFunction({
         name: 'operations',
@@ -64,6 +75,7 @@ export default {
               value: ele.schoolid
             });
           });
+          sessionStorage.setItem('schoolOptions', JSON.stringify(arr));
           this.setSchoolOptions(arr);
         }
       }).catch(err => {

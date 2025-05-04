@@ -8,12 +8,12 @@ const store = new Vuex.Store({
     cache: {},
     oauthInstance: {},
     userInfo: {},
-    userTag: 'admin',
+    userTag: '',
     Rlook: false,
     Rcreat: false,
     Redit: false,
     Rdelete: false,
-    schoolOptions: [],
+    schoolOptions: JSON.parse(sessionStorage.getItem('schoolOptions')) || [],
   },
   mutations: {
     setLoginCache(state, data) {
@@ -60,6 +60,9 @@ const store = new Vuex.Store({
     },
   },
   actions: {
+    doLogout() {
+      console.log('doLogout');
+    },
   }
 });
 

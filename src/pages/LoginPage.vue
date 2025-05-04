@@ -22,8 +22,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { isValidPhoneNumber, isValidSMSCode } from '@/utils/common.js'
-
+import { userTags, isValidPhoneNumber, isValidSMSCode } from '@/utils/common.js'
 
 export default {
   name: 'LoginPage',
@@ -57,6 +56,7 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setUserTag',
       'setLoginCache',
       'setOauthInstance',
       'setUserInfo',
@@ -139,7 +139,13 @@ export default {
           // username: "happysca",
         });
         console.log('登录成功:', signUpRes);
-        this.$router.push('/manage/home');
+        const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
+        rights.forEach(ele => {
+          if (userTags.indexOf(ele.id) !== -1) {
+            this.setUserTag(ele.id);
+          }
+        });
+        this.$router.push('/manage/Home');
       } catch (e) {
         console.log('登录失败:', e);
       }

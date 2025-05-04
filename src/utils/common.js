@@ -8,6 +8,8 @@ export const isValidSMSCode = (code) => {
   return regex.test(code);
 }
 
+export const userTags = ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'];
+
 export const userType = [
   { label: '客户', value: 1 },
   { label: '员工', value: 2 },
