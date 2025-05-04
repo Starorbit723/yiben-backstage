@@ -543,7 +543,10 @@ export default {
       this.currentPage = val;
     },
     formatDateToShow(timeStr) {
-      return formatDate(timeStr);
+      if (timeStr) {
+        return formatDate(timeStr);
+      }
+      return '';
     },
     filterTag(type) {
       let _text = '';

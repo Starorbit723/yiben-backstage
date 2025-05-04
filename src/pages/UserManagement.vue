@@ -52,10 +52,11 @@
         size="small"
         :data="tableData"
         style="width: 100%">
-        <el-table-column fixed prop="parentName" label="父母姓名" width="100"></el-table-column>
+        <el-table-column fixed prop="yibenid" label="壹本ID" width="110"></el-table-column>
+        <el-table-column fixed prop="parentName" label="父母姓名" width="120"></el-table-column>
         <el-table-column prop="nickName" label="微信昵称" width="120"></el-table-column>
         <el-table-column prop="phoneNumber" label="手机号" width="120"></el-table-column>
-        <el-table-column prop="avatarUrl" label="头像" width="100">
+        <el-table-column prop="avatarUrl" label="头像" width="80">
           <template slot-scope="scope">
             <img class="yb-headpic" :src="scope.row.avatarUrl" />
           </template>
@@ -69,8 +70,8 @@
         </el-table-column>
         <el-table-column prop="children" label="学生信息">
           <template slot-scope="scope">
-            <div style="display:inline; margin-right:30px;" v-for="(item, index) in scope.row.children" :key="index">
-              姓名：{{item.name}}&nbsp;&nbsp;年龄：{{item.age}}&nbsp;&nbsp;性别：{{genderShow(item.gender)}}
+            <div v-for="(item, index) in scope.row.children" :key="index">
+              <div style="line-height: 20px;">姓名：{{item.name}}&nbsp;&nbsp;年龄：{{item.age}}&nbsp;&nbsp;性别：{{genderShow(item.gender)}}</div>
             </div>
           </template>
         </el-table-column>
@@ -225,10 +226,12 @@
 </template>
 
 <script>
+import { RightMixin } from "@/plugins/mixin.js";
 import { userType, gender } from '@/utils/common';
 
 export default {
   name: 'UserManagement',
+  mixins: [ RightMixin ],
   data() {
     return {
       userTypeOptions: userType,

@@ -42,8 +42,8 @@ const routes = [
 		component: r => require.ensure([], () => r(require('@/pages/ManagePage')), 'ManagePage'),
 		children: [
 			{
+				name: "Home",
 				path: 'home',
-				name: "home",
 				component: r => require.ensure([], () => r(require('@/pages/HomePage')), 'HomePage'),
 				meta: {
 					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
@@ -78,24 +78,45 @@ const routes = [
 				name: "BookConfig",
 				path: 'bookconfig',
 				component: r => require.ensure([], () => r(require('@/pages/BookConfig')), 'BookConfig'),
+				meta: {
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
+				},
 			},
 			{
 				name: "TimeTable",
 				path: 'timetable',
 				component: r => require.ensure([], () => r(require('@/pages/TimeTable')), 'TimeTable'),
 				meta: {
-					rights: ['superadmin', 'admin', 'educator','hr']
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
 				},
 			},
 			{
 				name: "OperationManagement",
 				path: 'operationmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/OperationManagement')), 'OperationManagement'),
+				meta: {
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
+				},
 			},
 			{
 				name: "ResourceManagement",
 				path: 'resourcemanagement',
 				component: r => require.ensure([], () => r(require('@/pages/ResourceManagement')), 'ResourceManagement'),
+				meta: {
+					look: ['superadmin', 'admin', 'educator'],
+					creat: ['superadmin', 'admin', 'educator'],
+					edit: ['superadmin', 'admin', 'educator'],
+					delete: ['superadmin', 'admin']
+				},
 			}
 		]
 	},

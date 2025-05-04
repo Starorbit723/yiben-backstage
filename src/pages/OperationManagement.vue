@@ -24,8 +24,11 @@
 </template>
 
 <script>
+import { RightMixin } from "@/plugins/mixin.js";
+
 export default {
   name: 'OperationManagement',
+  mixins: [ RightMixin ],
   data() {
     return {
       fileList: [],

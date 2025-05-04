@@ -154,11 +154,13 @@
 </template>
 
 <script>
+import { RightMixin } from "@/plugins/mixin.js";
 import { mapState } from 'vuex';
 import { workDayType } from '@/utils/common';
 
 export default {
   name: 'TimeTable',
+  mixins: [ RightMixin ],
   data() {
     return {
       workDayTypeOptions: workDayType,
@@ -229,7 +231,7 @@ export default {
           },
         }
       }).then(res => {
-        console.log('schoolRead result:', res);
+        console.log('schoolRead result', res);
         if (res.result.success) {
           // 先把detail 整个保存
           this.detail = res.result.data[0].detail;

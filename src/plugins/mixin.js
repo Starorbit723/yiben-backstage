@@ -51,5 +51,6 @@ export const RightMixin = {
   methods: {
   },
   created() {
+    
   }
 };

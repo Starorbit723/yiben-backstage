@@ -11,7 +11,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="资源类型">
-              <el-select class="yb-select" v-model="form.type" size="small" placeholder="请选择资源类型">
+              <el-select class="yb-select" v-model="form.type" size="small" placeholder="请选择资源类型" clearable>
                 <el-option
                   v-for="item in resourceTypeOptions"
                   :key="item.value"
@@ -40,7 +40,7 @@
     <div class="yb-common-btnzone">
       <el-row :gutter="20">
         <el-col :offset="20" :span="2">
-          <el-button class="yb-button" type="success" size="small" @click="openUploadDialog">上传资源</el-button>
+          <el-button class="yb-button" type="success" size="small" @click="openUploadDialog()">上传资源</el-button>
         </el-col>
         <el-col :span="2">
           <el-button class="yb-button" type="primary" size="small" @click="searchResourceList(0)">查询资源</el-button>
@@ -65,10 +65,10 @@
         <el-table-column
           fixed="right"
           label="操作"
-          width="100">
+          width="120">
           <template slot-scope="scope">
             <el-button @click="handleCpoy(scope.row)" type="text" size="small">复制链接</el-button>
-            <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="handleDelete(scope.row)" type="text" size="small" class="yiben-danger-color">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,10 +136,12 @@
 </template>
 
 <script>
+import { RightMixin } from "@/plugins/mixin.js";
 import { resourceType, formatDate} from '@/utils/common';
 
 export default {
   name: 'ResourceManagement',
+  mixins: [ RightMixin ],
   data() {
     return {
       resourceTypeOptions: resourceType,
@@ -165,7 +167,7 @@ export default {
     }
   },
   mounted() {
-    
+    this.searchResourceList(0);
   },
   methods: {
     async searchResourceList(type) {
@@ -248,6 +250,7 @@ export default {
         console.log('resourceSave result:', res);
         if (res.result.success) {
           this.$message.success('上传成功');
+          this.searchResourceList(1);
           this.handleDialogClose();
         }
       }).catch(err => {
@@ -286,11 +289,79 @@ export default {
     formatDateToShow(timeStr) {
       return formatDate(timeStr);
     },
-    handleCpoy(row) {
-      console.log(row);
+    async handleCpoy(item) {
+      console.log(item);
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(item.url);
+          this.$message({
+            message: `成功复制链接到剪贴板`,
+            type: 'success'
+          });
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          this.$message({
+            message: `复制链接失败`,
+            type: 'warning'
+          });
+        }
+      } else {
+        console.log('Clipboard API not supported');
+        this.$message({
+          message: `复制链接失败`,
+          type: 'warning'
+        });
+      }
     },
     handleDelete(row) {
       console.log(row);
+      this.$confirm('确定要删除该资源吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 调用云开发 deleteFile 方法删除文件
+        this.$cloudbase.deleteFile({
+          fileList: [row.fileId]
+        })
+        .then(res => {
+          console.log('云删除成功:', res);
+          this.deleteResourceData(row);
+        })
+        .catch(err => {
+          this.$message({
+            message: `删除失败`,
+            type: 'warning'
+          });
+          console.error('删除失败:', err);
+        });
+      }).catch(() => {
+        console.info('已取消删除');
+      });
+    },
+    deleteResourceData(row) {
+      console.log('resourceDelete', row);
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'resourceDelete',
+          data: {
+            fileIds: [row.fileId]
+          }
+        }
+      }).then(res => {
+        console.log('resourceDelete result:', res);
+        if (res.result.success) {
+          this.$message.success('删除成功');
+          this.searchResourceList(1);
+        }
+      }).catch(err => {
+        this.$message({
+          message: `删除成功`,
+          type: 'warning'
+        });
+        console.error('resourceDelete error:', err)
+      });
     },
     handleDialogClose() {
       this.dialogVisible = false;
