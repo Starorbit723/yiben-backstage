@@ -21,7 +21,6 @@ export const RightMixin = {
   },
   beforeRouteEnter (to, from, next) {
     if (!store.getters.getUserTag && from.path !== '/login') {
-      // store.dispatch('doLogout');
       next({ name: 'Home', replace: true });
       return;
     }
@@ -50,7 +49,11 @@ export const RightMixin = {
     }
   },
   methods: {
+    eventBus() {
+      this.$bus.emit("checkTime");
+    },
   },
   created() {
+    this.eventBus()
   }
 };

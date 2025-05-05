@@ -125,7 +125,7 @@ const routes = [
 					edit: ['superadmin', 'admin', 'operation'],
 					delete: ['superadmin', 'admin']
 				},
-			}
+			},
 		]
 	},
 ]
@@ -135,10 +135,5 @@ const router = new Router({
 	mode: 'history',
 	strict: process.env.NODE_ENV !== 'production',
 });
-
-router.beforeEach((to, from, next) => {
-  console.log(to, from);
-  next();
-})
 
 export default router;

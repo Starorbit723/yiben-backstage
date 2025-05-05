@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      
     }
   },
   computed: {
@@ -34,6 +33,10 @@ export default {
     }
   },
   created() {
+    this.creatSessionTime();
+    this.$bus.on("checkTime", () => {
+      this.checkSessionTime();
+    });
   },
   mounted() {
   },
@@ -41,6 +44,14 @@ export default {
     ...mapMutations([
       'clearAllLoginCache',
     ]),
+    creatSessionTime() {
+      sessionStorage.setItem('limitSessionTime', new Date().getTime() + 50400000);
+    },
+    checkSessionTime() {
+      if (new Date().getTime() > parseFloat(sessionStorage.getItem('limitSessionTime'))) {
+        this.loginout();
+      }
+    },
     async loginout() {
       try {
           const result = await this.$auth.signOut();

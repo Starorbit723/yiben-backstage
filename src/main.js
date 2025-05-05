@@ -4,6 +4,7 @@ import ElementUI from 'element-ui';
 import cloudbase from "@cloudbase/js-sdk";
 import router from './router';
 import store from './store';
+import eventBus from "./utils/eventBus.js";
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
@@ -14,6 +15,7 @@ Vue.prototype.$cloudbase = cloudbase.init({
 	clientId: "AAU5PwABE-ooYTmgFWo" // 应用ID
 });
 Vue.prototype.$auth = Vue.prototype.$cloudbase.auth();
+Vue.prototype.$bus = eventBus;
 
 new Vue({
 	el: '#app',

@@ -66,7 +66,6 @@ export default {
           data: {},
         }
       }).then(res => {
-        console.log('schoolList result:', res);
         if (res.result.data) {
           const arr = [];
           res.result.data.forEach(ele => {
