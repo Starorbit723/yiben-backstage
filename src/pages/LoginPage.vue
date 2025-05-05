@@ -162,6 +162,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+  background: url('https://636c-cloud1-0gvvdaq4c40b8f74-1351667792.tcb.qcloud.la/uploads/1746441020350-09a9f7c93081fdbfa639f484dc3ec965.jpeg?sign=6b70fc4341aa7532af3d60f96ba4893b&t=1746441021') no-repeat center;
   .login-zone{
     position: absolute;
     padding: 30px 30px 0;
