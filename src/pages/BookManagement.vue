@@ -2,13 +2,8 @@
   <div class="bookmanagement-page">
     <!--查询条件-->
     <div class="yb-common-searchzone">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="90px">
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="预约单号">
-              <el-input v-model="form.bookid" size="small" clearable></el-input>
-            </el-form-item>
-          </el-col>
           <el-col :span="6">
             <el-form-item label="主预约人">
               <el-input v-model="form.ownerName" size="small" clearable></el-input>
@@ -31,8 +26,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
           <el-col :span="6"> 
             <el-form-item label="预约类型">
               <el-select class="yb-select" v-model="form.bookType" size="small" clearable>
@@ -43,6 +36,18 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="原始发起人">
+              <el-input placeholder="请输入原始发起人id" v-model="form.originYibenid" size="small" clearable></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="转发关联人">
+              <el-input placeholder="请输入转发关联人id" v-model="form.prevYibenid" size="small" clearable></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -102,9 +107,10 @@
           </template>
         </el-table-column>
         <el-table-column prop="lessonRoom" label="教室" width="100"></el-table-column>
-        <el-table-column prop="originYibenid" label="原始发起人id" width="100"></el-table-column>
-        <el-table-column prop="prevYibenid" label="转发关联人id" width="100"></el-table-column>
-        <el-table-column prop="createTime" label="预约创建时间" width="160">
+        <el-table-column prop="lessonRoom" label="教室" width="100"></el-table-column>
+        <el-table-column prop="matchTeacher" label="分配老师" width="110"></el-table-column>
+        <el-table-column prop="prevYibenid" label="转发关联人id" width="110"></el-table-column>
+        <el-table-column prop="createTime" label="预约创建时间">
           <template slot-scope="scope">
             <div>{{formatDateToShow(scope.row.createTime)}}</div>
           </template>
@@ -347,10 +353,11 @@ export default {
       bookStatusOptions: bookStatus,
       form: {
         schoolid: 1,
-        bookid: '',
         bookType: '',
         ownerName: '',
         ownerPhone: '',
+        originYibenid: '',
+        prevYibenid: '',
         bookTimeRanger: []
       },
       tableData: [],
