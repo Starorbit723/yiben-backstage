@@ -236,6 +236,7 @@ export default {
           // 先把detail 整个保存
           this.detail = res.result.data[0].detail;
           this.timetableConfig = res.result.data[0].detail.timetableConfig || this.timetableClass;
+          console.log(JSON.stringify(this.timetableConfig));
         }
       }).catch(err => {
         console.error('schoolRead error:', err)
