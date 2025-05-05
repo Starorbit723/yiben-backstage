@@ -256,7 +256,7 @@ export default {
         console.log('schoolSave result:', res);
         if (res.result.success) {
           this.$message({
-            message: '课程表保存车成功',
+            message: '课程表保存成功',
             type: 'success'
           });
           this.getTimeTableBySchoolId();

@@ -66,6 +66,11 @@
             <div>{{formatDateToShow(scope.row.createTime)}}</div>
           </template>
         </el-table-column>
+        <el-table-column prop="url" label="预览图" width="120">
+          <template slot-scope="scope">
+            <img class="yb-preview-pic" :src="scope.row.url" />
+          </template>
+        </el-table-column>
         <el-table-column prop="url" label="资源地址"></el-table-column>
         <el-table-column
           fixed="right"
@@ -301,20 +306,23 @@ export default {
           await navigator.clipboard.writeText(item.url);
           this.$message({
             message: `成功复制链接到剪贴板`,
-            type: 'success'
+            type: 'success',
+            duration: 500
           });
         } catch (err) {
           console.error('Failed to copy: ', err);
           this.$message({
             message: `复制链接失败`,
-            type: 'warning'
+            type: 'warning',
+            duration: 500
           });
         }
       } else {
         console.log('Clipboard API not supported');
         this.$message({
           message: `复制链接失败`,
-          type: 'warning'
+          type: 'warning',
+          duration: 500
         });
       }
     },
