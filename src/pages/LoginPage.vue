@@ -1,7 +1,7 @@
 <template>
   <div class="loginpage-wrapper">
     <div class="login-zone">
-      <div class="login-title">XXXXXXXXXXXXXXXXXX</div>
+      <div class="login-title">欢迎使用壹本后台管理系统</div>
       <div class="input-zone">
         <div class="label">账&nbsp;&nbsp;&nbsp;号</div>
         <el-input class="phone" placeholder="请输入您注册的手机号" maxlength="11" v-model="phoneNumber" clearable>
