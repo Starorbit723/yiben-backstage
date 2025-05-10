@@ -80,7 +80,7 @@
         <el-form ref="form" label-width="80px">
           <el-row :gutter="20" v-for="(item,index) in activityData" :key="index">
             <el-col :span="4">
-              <el-form-item label="轮播位置">
+              <el-form-item label="展示位置">
                 <el-input v-model="item.id" size="small" disabled></el-input>
               </el-form-item>
             </el-col>
