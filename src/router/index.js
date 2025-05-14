@@ -126,6 +126,18 @@ const routes = [
 					delete: ['superadmin', 'admin']
 				},
 			},
+			{
+				name: "QuestionnaireManagement",
+				path: 'questionnairemanagement',
+				component: r => require.ensure([], () => r(require('@/pages/QuestionnaireManagement')), 'QuestionnaireManagement'),
+				meta: {
+					name: '问卷管理',
+					look: ['superadmin', 'admin', 'educator', 'operation'],
+					creat: ['superadmin', 'admin', 'operation'],
+					edit: ['superadmin', 'admin', 'operation'],
+					delete: ['superadmin', 'admin']
+				},
+			},
 		]
 	},
 ]
