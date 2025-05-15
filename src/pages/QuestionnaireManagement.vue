@@ -65,10 +65,11 @@
         <el-table-column
           fixed="right"
           label="操作"
-          width="170">
+          width="250">
           <template slot-scope="scope">
-            <el-button v-if="Rlook" @click="handleLook(scope.row)" type="text" size="small">查看</el-button>
+            <el-button v-if="Rlook" @click="handleLook(scope.row)" type="text" size="small">查看题目</el-button>
             <el-button v-if="Redit" @click="handleCopy(scope.row)" type="text" size="small">复制问卷id</el-button>
+            <el-button v-if="Rlook" @click="handleLookDetail(scope.row)" type="text" size="small">查看调研结果</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -153,7 +154,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="3">
-                  <el-button style="margin-top: 5px;" type="primary" class="yb-button" size="small" @click="addSingleChoice(index)">添加选项</el-button>
+                  <el-button style="margin-top: 5px;" type="primary" class="yb-button" size="small" @click="addMutiChoice(index)">添加选项</el-button>
                 </el-col>
                 <el-col :span="3">
                   <el-button style="margin-top: 5px;" type="danger" class="yb-button" size="small" @click="deleteQuestion(index)">删除题目</el-button>
@@ -165,15 +166,31 @@
                   <el-input v-model="itemq.name" size="small" maxlength="10" placeholder="限10字以内" clearable></el-input>
                 </el-col>
                 <el-col :offset="0" :span="2" style="line-height: 32px; margin-bottom: 5px;">
-                  <el-button type="danger" class="yb-button" size="small" @click="deleteSingleChoice(index, indexq)">删除选项</el-button>
+                  <el-button type="danger" class="yb-button" size="small" @click="deleteMutiChoice(index, indexq)">删除选项</el-button>
+                </el-col>
+              </el-row>
+            </div>
+            <!--主观类型-->
+            <div class="radio-group-type" v-if="item.type === 'textarea'">
+              <el-row :gutter="20">
+                <el-col :span="18">
+                  <el-form-item label="主观题目">
+                    <el-input v-model="item.title" size="small" maxlength="20" placeholder="限20字以内" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="3">
+                  <el-button style="margin-top: 5px;" type="danger" class="yb-button" size="small" @click="deleteQuestion(index)">删除题目</el-button>
                 </el-col>
               </el-row>
             </div>
           </div>
         </div>
-
       </el-form>
-      
+      <span slot="footer" class="dialog-footer" v-if="dialogType === 'creat' || dialogType === 'edit'">
+        <el-button @click="handleDialogClose" size="small">取 消</el-button>
+        <!-- <el-button v-if="formItem.bookType === 2" type="primary" size="small" @click="addMenber()" >添加拼团人</el-button> -->
+        <el-button v-if="Redit" type="primary" @click="handleDialogEnsure" size="small">确认并创建</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -199,21 +216,12 @@ export default {
       totalCount: 0,
       limit: 20,
       // 对话框
-      dialogVisible: true,
+      dialogVisible: false,
       dialogType: 'creat', // creat look edit
       questionConfig: {
         title: '',
         desc: '',
-        list: [
-          {
-            type: 'radio-group',
-            title: '',
-            answer: [
-              { id: '', name: '', checked: 'true' },
-              { id: '', name: '', checked: 'false' },
-            ]
-          }
-        ]
+        list: []
       },
     }
   },
@@ -245,6 +253,10 @@ export default {
     handleCopy(row) {
       console.log(row);
     },
+    handleLookDetail(row) {
+      console.log(row);
+      this.$router.push(`/manage/questionnairedetail/1234`);
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.limit = val;
@@ -259,7 +271,89 @@ export default {
       }
       return '';
     },
-    // 添加单选题
+    handleDialogEnsure() {
+      // 检查填写完整度
+      if (!this.questionConfig.title.trim() || !this.questionConfig.desc.trim()) {
+        this.$message({
+          message: '请填写标题以及用途描述',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
+      if (this.questionConfig.list.length === 0) {
+        this.$message({
+          message: '请至少创建一个问题',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
+      let _check = true;
+      this.questionConfig.list.forEach(ele => {
+        if (ele.type === 'radio-group' || ele.type === 'checkbox-group') {
+          if (!ele.title.trim()) {
+            _check = false;
+          }
+          ele.answer.forEach(ele2 => {
+            if (!ele2.name.trim()) {
+              _check = false;
+            }
+          })
+        }
+        if (ele.type === 'textarea' && !ele.title.trim()) {
+          _check = false;
+        }
+      });
+      if (!_check) {
+        this.$message({
+          message: '请检查题目是否填写完整，是否有空项',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
+      console.log('check ok start submit');
+    },
+    // 删除多选题选项
+    deleteMutiChoice(index, indexq) {
+      if (this.questionConfig.list[index].answer.length >= 3) {
+        this.questionConfig.list[index].answer.splice(indexq, 1);
+        this.questionConfig.list[index].answer.forEach((ele, index) => {
+          ele.id = index + 1;
+        });
+        console.log(this.questionConfig.list[index].answer);
+      } else {
+        this.$message({
+          message: '题目最少2个选项',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
+    },
+    // 添加多选题选项
+    addMutiChoice(index) {
+      if (this.questionConfig.list[index].answer.length <= 7) {
+        this.questionConfig.list[index].answer.push({
+          id: '',
+          name: '',
+          checked: false,
+        });
+        this.questionConfig.list[index].answer.forEach((ele, index) => {
+          ele.id = index + 1;
+        });
+        console.log(this.questionConfig.list[index].answer);
+      } else {
+        this.$message({
+          message: '多选题目最多8个选项',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
+    },
+    // 添加单选题选项
     addSingleChoice(index) {
       if (this.questionConfig.list[index].answer.length <= 3) {
         this.questionConfig.list[index].answer.push({
@@ -281,7 +375,7 @@ export default {
         return;
       }
     },
-    // 删除单选题
+    // 删除单选题选项
     deleteSingleChoice(index, indexq) {
       if (this.questionConfig.list[index].answer.length >= 3) {
         this.questionConfig.list[index].answer.splice(indexq, 1);
@@ -349,11 +443,10 @@ export default {
     addTextarea() {
       if (this.questionConfig.list.length <= 9) {
         this.questionConfig.list.push({
-        type: 'textarea',
-        title: '',
-        value: '',
-        placeholder: ''
-      })
+          type: 'textarea',
+          title: '',
+          value: '',
+        })
       } else {
         this.$message({
           message: `为了避免用户反感时间占用过多 题目最多创建10道`,

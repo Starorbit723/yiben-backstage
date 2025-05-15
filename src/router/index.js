@@ -44,10 +44,11 @@ const routes = [
 		children: [
 			{
 				name: "Home",
-				path: 'home',
+				path: '/manage/home',
 				component: r => require.ensure([], () => r(require('@/pages/HomePage')), 'HomePage'),
 				meta: {
 					name: '首页',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 					creat: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 					edit: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
@@ -56,10 +57,11 @@ const routes = [
 			},
 			{
 				name: "UserManagement",
-				path: 'usermanagement',
+				path: '/manage/usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement'),
 				meta: {
 					name: '用户管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
@@ -68,10 +70,11 @@ const routes = [
 			},
 			{
 				name: "BookManagement",
-				path: 'bookmanagement',
+				path: '/manage/bookmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/BookManagement')), 'BookManagement'),
 				meta: {
 					name: '预约管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
@@ -92,10 +95,11 @@ const routes = [
 			// },
 			{
 				name: "TimeTable",
-				path: 'timetable',
+				path: '/manage/timetable',
 				component: r => require.ensure([], () => r(require('@/pages/TimeTable')), 'TimeTable'),
 				meta: {
 					name: '课程管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'teacher'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
@@ -104,10 +108,11 @@ const routes = [
 			},
 			{
 				name: "OperationManagement",
-				path: 'operationmanagement',
+				path: '/manage/operationmanagement',
 				component: r => require.ensure([], () => r(require('@/pages/OperationManagement')), 'OperationManagement'),
 				meta: {
 					name: '运营管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'operation'],
 					creat: ['superadmin', 'admin', 'educator', 'operation'],
 					edit: ['superadmin', 'admin', 'educator', 'operation'],
@@ -116,10 +121,11 @@ const routes = [
 			},
 			{
 				name: "ResourceManagement",
-				path: 'resourcemanagement',
+				path: '/manage/resourcemanagement',
 				component: r => require.ensure([], () => r(require('@/pages/ResourceManagement')), 'ResourceManagement'),
 				meta: {
 					name: '资源管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'operation'],
 					creat: ['superadmin', 'admin', 'operation'],
 					edit: ['superadmin', 'admin', 'operation'],
@@ -128,16 +134,31 @@ const routes = [
 			},
 			{
 				name: "QuestionnaireManagement",
-				path: 'questionnairemanagement',
+				path: '/manage/questionnairemanagement',
 				component: r => require.ensure([], () => r(require('@/pages/QuestionnaireManagement')), 'QuestionnaireManagement'),
 				meta: {
 					name: '问卷管理',
+					showOnMenu: true,
 					look: ['superadmin', 'admin', 'educator', 'operation'],
 					creat: ['superadmin', 'admin', 'operation'],
 					edit: ['superadmin', 'admin', 'operation'],
 					delete: ['superadmin', 'admin']
 				},
 			},
+			{
+				name: "QuestionnaireDetail",
+				path: '/manage/questionnairedetail/:questionnaireId',
+				component: r => require.ensure([], () => r(require('@/pages/QuestionnaireDetail')), 'QuestionnaireDetail'),
+				meta: {
+					name: '问卷详情',
+					showOnMenu: false,
+					look: ['superadmin', 'admin', 'educator', 'operation'],
+					creat: ['superadmin', 'admin', 'operation'],
+					edit: ['superadmin', 'admin', 'operation'],
+					delete: ['superadmin', 'admin']
+				},
+			},
+			
 		]
 	},
 ]
