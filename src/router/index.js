@@ -147,7 +147,7 @@ const routes = [
 			},
 			{
 				name: "QuestionnaireDetail",
-				path: '/manage/questionnairedetail/:questionnaireId',
+				path: '/manage/questionnairedetail/:questionnaireid',
 				component: r => require.ensure([], () => r(require('@/pages/QuestionnaireDetail')), 'QuestionnaireDetail'),
 				meta: {
 					name: '问卷详情',
