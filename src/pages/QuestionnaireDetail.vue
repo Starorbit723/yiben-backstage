@@ -9,6 +9,18 @@
               <el-input v-model="form.yibenid" size="small" clearable></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="6"> 
+            <el-form-item label="校区">
+              <el-select class="yb-select" v-model="form.schoolid" size="small">
+                <el-option
+                  v-for="item in schoolOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="提交时间">
               <el-date-picker
@@ -39,7 +51,7 @@
         size="small"
         :data="tableData"
         style="width: 100%">
-        <el-table-column prop="questionnaireid" label="问卷id"></el-table-column>
+        <el-table-column prop="answerid" label="问卷答案id"></el-table-column>
         <el-table-column prop="yibenid" label="壹本id"></el-table-column>
         <el-table-column prop="createTime" label="提交时间">
           <template slot-scope="scope">
@@ -98,6 +110,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { RightMixin } from "@/plugins/mixin.js";
 import { formatDate } from '@/utils/common';
 
@@ -110,6 +123,7 @@ export default {
       form: {
         submitTimeRanger: [],
         yibenid: '',
+        schoolid: 1,
       },
       tableData: [{}],
       // 分页器
@@ -122,6 +136,9 @@ export default {
       // 详情
       answerDetail: [],
     }
+  },
+  computed: {
+    ...mapState(['schoolOptions']),
   },
   created() {
     this.questionnaireid = this.$route.params.questionnaireid;
