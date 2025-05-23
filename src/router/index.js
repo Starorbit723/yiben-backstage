@@ -56,6 +56,19 @@ const routes = [
 				},
 			},
 			{
+				name: "RoleManagement",
+				path: '/manage/rolemanagement',
+				component: r => require.ensure([], () => r(require('@/pages/RoleManagement')), 'RoleManagement'),
+				meta: {
+					name: '用户管理',
+					showOnMenu: true,
+					look: ['superadmin', 'admin'],
+					creat: ['superadmin', 'admin'],
+					edit: ['superadmin', 'admin'],
+					delete: ['superadmin', 'admin']
+				},
+			},
+			{
 				name: "UserManagement",
 				path: '/manage/usermanagement',
 				component: r => require.ensure([], () => r(require('@/pages/UserManagement')), 'UserManagement'),
