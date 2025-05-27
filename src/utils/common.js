@@ -10,6 +10,16 @@ export const isValidSMSCode = (code) => {
 
 export const userTags = ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'];
 
+export const roleType = [
+  { label: '超级管理员', value: 'superadmin' },
+  { label: '管理员', value: 'admin' },
+  { label: '教务', value: 'educator' },
+  { label: '老师', value: 'teacher' },
+  { label: '运营', value: 'operation' },
+  { label: '销售', value: 'saler' },
+  { label: '人力资源', value: 'hr' },
+];
+
 export const userType = [
   { label: '客户', value: 1 },
   { label: '员工', value: 2 },

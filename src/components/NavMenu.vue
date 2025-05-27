@@ -62,6 +62,7 @@ export default {
         });
       });
       this.menuData = navArr;
+      console.log('this.menuData', this.menuData);
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

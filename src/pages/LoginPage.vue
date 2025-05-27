@@ -119,32 +119,62 @@ export default {
           });
           console.log('验证SMS成功:', verificationTokenRes);
           this.verification_token = verificationTokenRes.verification_token;
-          this.signIn();
+          if (this.smsResult && this.smsResult.is_user) {
+            console.log('isnew', this.smsResult.is_user);
+            this.signIn();
+          } else {
+            console.log('isnew', this.smsResult.is_user);
+            this.signUp();
+          }
         } catch (e) {
           console.log('验证SMS失败:', e);
         }
       }
     },
+    // 登录
     async signIn() {
       try {
         const signUpRes = await this.$auth.signIn({
           phone_number: `+86 ${this.phoneNumber}`,
           verification_code: this.verfySMSCode,
           verification_token: this.verification_token,
-          // // 可选，设置昵称
-          // name: "史长安",
-          // // 可选，设置密码
-          // password: "1234567890",
-          // // 可选，设置登录用户名
-          // username: "happysca",
         });
         console.log('登录成功:', signUpRes);
         const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
-        rights.forEach(ele => {
-          if (userTags.indexOf(ele.id) !== -1) {
-            this.setUserTag(ele.id);
-          }
+        console.log('rights', rights);
+        if (rights) {
+          rights.forEach(ele => {
+            if (userTags.indexOf(ele.id) !== -1) {
+              this.setUserTag(ele.id);
+            }
+          });
+        }
+        this.$router.push('/manage/Home');
+      } catch (e) {
+        console.log('登录失败:', e);
+      }
+    },
+    // 注册
+    async signUp() {
+      try {
+        const signUpRes = await this.$auth.signUp({
+          phone_number: `+86 ${this.phoneNumber}`,
+          verification_code: this.verfySMSCode,
+          verification_token: this.verification_token,
+          // // 可选，设置昵称
+          name: "newuser7234",
+          // // 可选，设置密码
+          password: "1234567890",
+          // // 可选，设置登录用户名
+          username: "newusername7000",
         });
+        console.log('登录成功:', signUpRes);
+        // const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
+        // rights.forEach(ele => {
+        //   if (userTags.indexOf(ele.id) !== -1) {
+        //     this.setUserTag(ele.id);
+        //   }
+        // });
         this.$router.push('/manage/Home');
       } catch (e) {
         console.log('登录失败:', e);

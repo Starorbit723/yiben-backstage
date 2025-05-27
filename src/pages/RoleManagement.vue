@@ -5,11 +5,6 @@
       <el-form ref="form" :model="form" label-width="80px">
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-form-item label="壹本ID">
-              <el-input v-model="form.yibenid" size="small" clearable></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
             <el-form-item label="用户名">
               <el-input v-model="form.name" size="small" clearable></el-input>
             </el-form-item>
@@ -25,8 +20,11 @@
     <!--按钮区域-->
     <div class="yb-common-btnzone">
       <el-row :gutter="20">
-        <el-col :offset="22" :span="2">
-          <el-button class="yb-button" type="primary" size="small" @click="searchRoleList(0)">查询用户</el-button>
+        <el-col :offset="20" :span="2">
+          <el-button class="yb-button" type="success" size="small" @click="creatNewAccount(0)">创建账号</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button class="yb-button" type="primary" size="small" @click="searchRoleList(0)">查询账号</el-button>
         </el-col>
       </el-row>
     </div>
@@ -37,21 +35,8 @@
         size="small"
         :data="tableData"
         style="width: 100%">
-        <el-table-column fixed prop="yibenid" label="壹本ID" width="110"></el-table-column>
-        <el-table-column prop="phoneNumber" label="手机号" width="120"></el-table-column>
-        <el-table-column prop="userType" label="用户类型" width="100">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.userType === 1" type="primary" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
-            <el-tag v-if="scope.row.userType === 2" type="success" disable-transitions>{{filterTag(scope.row.userType)}}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="children" label="学生信息">
-          <template slot-scope="scope">
-            <div v-for="(item, index) in scope.row.children" :key="index">
-              <div style="line-height: 20px;">姓名：{{item.name}}&nbsp;&nbsp;年龄：{{item.age}}&nbsp;&nbsp;性别：{{genderShow(item.gender)}}</div>
-            </div>
-          </template>
-        </el-table-column>
+        <el-table-column prop="name" label="用户名"></el-table-column>
+        <el-table-column prop="phoneNumber" label="手机号"></el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
@@ -76,78 +61,27 @@
       </el-pagination>
     </div>
     <el-dialog
-      :title="dialogType === 'look' ? '查看信息': '编辑信息'"
+      :title="dialogType === 'creat' ? '创建账号': '编辑账号'"
       :visible.sync="dialogVisible"
       @close="handleDialogClose"
       width="80%">
       <el-form ref="form" :model="formItem" label-width="80px">
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="壹本ID">
-              <el-input v-model="formItem.yibenid" size="small" disabled></el-input>
+          <el-col :span="8">
+            <el-form-item label="用户名">
+              <el-input v-model="formItem.name" maxlength="12" size="small"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="openid">
-              <el-input v-model="formItem.openid" size="small" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="unionid">
-              <el-input v-model="formItem.unionid" size="small" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6"> 
-            <el-form-item label="用户类型">
-              <el-select class="yb-select" v-model="formItem.userType" size="small" :disabled="dialogType === 'look'">
-                <el-option
-                  v-for="item in userTypeOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="微信昵称">
-              <el-input v-model="formItem.nickName" size="small" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="父母姓名">
-              <el-input v-model="formItem.parentName" size="small" :disabled="dialogType === 'look'"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-form-item label="手机号">
-              <el-input placeholder="请输入用户手机号" maxlength="11" v-model="formItem.phoneNumber" size="small" :disabled="dialogType === 'look'"></el-input>
+              <el-input v-model="formItem.phoneNumber" maxlength="11" size="small"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="积分">
-              <el-input v-model="formItem.point" size="small" :disabled="dialogType === 'look'"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="省">
-              <el-input v-model="formItem.province" size="small" :disabled="dialogType === 'look'"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="市">
-              <el-input v-model="formItem.city" size="small" :disabled="dialogType === 'look'"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="性别">
-              <el-select class="yb-select" v-model="formItem.gender" size="small" :disabled="dialogType === 'look'">
+          <el-col :span="8"> 
+            <el-form-item label="账号权限">
+              <el-select class="yb-select" v-model="formItem.role" size="small">
                 <el-option
-                  v-for="item in genderOptions"
+                  v-for="item in roleTypeOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -155,48 +89,13 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="年龄">
-              <el-input v-model="formItem.age" size="small" :disabled="dialogType === 'look'"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
-        <div class="children-zone">
-          <div class="children-zone-title">学生信息</div>
-          <el-row :gutter="20" v-for="(item,index) in formItem.children" :key="index">
-            <el-col :span="6">
-              <el-form-item label="姓名">
-                <el-input v-model="item.name" size="small" :disabled="dialogType === 'look'"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="年龄">
-                <el-input v-model="item.age" size="small" :disabled="dialogType === 'look'"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="性别">
-                <el-select class="yb-select" v-model="item.gender" size="small" :disabled="dialogType === 'look'">
-                  <el-option
-                    v-for="item in genderOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-button class="del-btn" v-if="dialogType === 'edit'" type="danger" size="small" @click="delChild(index)" >删除</el-button>
-            </el-col>
-          </el-row>
-        </div>
         <div class="clearfix"></div>
       </el-form>
-      <span slot="footer" class="dialog-footer" v-if="dialogType === 'edit'">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="handleDialogClose" size="small">取 消</el-button>
-        <el-button type="primary" size="small" @click="addChild()" >添加学生</el-button>
-        <el-button type="primary" @click="handleDialogEnsure" size="small">确认并保存</el-button>
+        <el-button type="primary" size="small" @click="addAccount()" v-if="dialogType === 'creat'">添加账号</el-button>
+        <el-button type="primary" @click="handleDialogEnsure" size="small" v-if="dialogType === 'edit'">确认并保存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -204,7 +103,7 @@
 
 <script>
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, gender } from '@/utils/common';
+import { userType, roleType, gender } from '@/utils/common';
 
 export default {
   name: 'RoleManagement',
@@ -213,13 +112,12 @@ export default {
     return {
       userTypeOptions: userType,
       genderOptions: gender,
+      roleTypeOptions: roleType,
       dialogVisible: false,
-      dialogType: 'look',
+      dialogType: 'creat',
       form: {
-        yibenid: '',
-        nickName: '',
+        name: '',
         phoneNumber: '',
-        userType: 1,
       },
       tableData: [],
       // 分页器
@@ -227,7 +125,12 @@ export default {
       totalCount: 0,
       limit: 20,
       // 对话框
-      formItem: {},
+      formItem: {
+        name: '',
+        phoneNumber: '',
+        role: '',
+        roleList: [],
+      },
     }
   },
   mounted() {
@@ -245,11 +148,11 @@ export default {
       this.$cloudbase.callFunction({
         name: 'operations',
         data: {
-          type: 'userManagePage',
+          type: 'roleConfigManagePage',
           data: params,
         }
       }).then(res => {
-        console.log('userManagePage result:', res);
+        console.log('roleConfigManagePage result:', res);
         if (res.result.success) {
           this.currentPage = res.result.data.pageNo;
           this.pageSize = res.result.data.pageSize;
@@ -261,8 +164,11 @@ export default {
           message: `查询失败`,
           type: 'warning'
         });
-        console.error('userManagePage error:', err)
+        console.error('roleConfigManagePage error:', err)
       });
+    },
+    creatNewAccount() {
+      this.dialogVisible = true;
     },
     filterTag(type) {
       let _text = '';
@@ -282,7 +188,7 @@ export default {
       this.currentPage = val;
     },
     handleLook(scope) {
-      this.dialogType = 'look';
+      this.dialogType = 'creat';
       this.formItem = JSON.parse(JSON.stringify(scope));
       this.dialogVisible = true;
     },
@@ -292,7 +198,7 @@ export default {
       this.dialogVisible = true;
     },
     handleDialogClose() {
-      this.dialogType = 'look';
+      this.dialogType = 'creat';
       this.dialogVisible = false;
     },
     async handleDialogEnsure() {
@@ -333,23 +239,31 @@ export default {
       console.log(index);
       this.formItem.children.splice(index, 1);
     },
-    addChild() {
+    addAccount() {
       let flag = true;
-      this.formItem.children.forEach((ele) => {
-        if (!ele.name || !ele.age) {
-          flag = false;
-        }
-      });
+      this.formItem.roleList = [this.formItem.role]
       if (flag) {
-        this.formItem.children.push({
-          name: '',
-          age: '',
-          gender: 0,
-        });
-      } else {
-        this.$message({
-          message: '请确认信息是否填写完成',
-          type: 'warning'
+        this.$cloudbase.callFunction({
+          name: 'operations',
+          data: {
+            type: 'roleConfigSave',
+            data: this.formItem,
+          }
+        }).then(res => {
+          console.log('roleConfigSave result:', res);
+          if (res.result.success) {
+            this.$message({
+              message: `创建成功`,
+              type: 'success'
+            });
+            this.searchRoleList(1);
+          }
+        }).catch(err => {
+          this.$message({
+            message: `创建失败`,
+            type: 'warning'
+          });
+          console.error('roleConfigSave error:', err)
         });
       }
     },

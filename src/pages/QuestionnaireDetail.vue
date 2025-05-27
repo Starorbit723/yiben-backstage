@@ -125,7 +125,7 @@ export default {
         yibenid: '',
         schoolid: 1,
       },
-      tableData: [{}],
+      tableData: [],
       // 分页器
       currentPage: 1,
       totalCount: 0,
@@ -144,7 +144,7 @@ export default {
     this.questionnaireid = this.$route.params.questionnaireid;
   },
   mounted() {
-    
+    this.searchQuestionList(0);
   },
   methods:{
     searchQuestionList(type) {
@@ -154,6 +154,27 @@ export default {
         condition: this.form,
       };
       console.log(params);
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'answerManagePage',
+          data: params,
+        }
+      }).then(res => {
+        console.log('questionnaireManagePage result:', res);
+        if (res.result.success) {
+          this.currentPage = res.result.data.pageNo;
+          this.pageSize = res.result.data.pageSize;
+          this.totalCount = res.result.data.total;
+          this.tableData = res.result.data.list;
+        }
+      }).catch(err => {
+        this.$message({
+          message: `查询失败`,
+          type: 'warning'
+        });
+        console.error('questionnaireManagePage error:', err)
+      });
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -170,32 +191,27 @@ export default {
       return '';
     },
     handleLookDetail(row){
-      this.answerDetail = row;
-      this.answerDetail = [{
-        type: 'radio-group',
-        title: '123123123123123',
-        answer: [
-          { id: 1, name: '12312312312', checked: true },
-          { id: 2, name: '123123123123', checked: false },
-        ]
-      },{
-        type: 'checkbox-group',
-        title: '3213123211312',
-        answer: [
-          { id: 1, name: '123123123', checked: false },
-          { id: 2, name: '1231231231', checked: true },
-          { id: 3, name: '1231231231', checked: true },
-          { id: 4, name: '1231231231', checked: false },
-          { id: 5, name: '123123123', checked: false },
-          { id: 6, name: '1231231231', checked: true },
-          { id: 7, name: '1231231231', checked: true },
-          { id: 8, name: '1231231231', checked: false },
-        ]
-      },{
-        type: 'textarea',
-        title: '2131231212312312',
-        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
-      }];
+      console.log('row', row);
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'answerOneInfo',
+          data: {
+            answerid: row.answerid
+          },
+        }
+      }).then(res => {
+        console.log('answerOneInfo result:', res);
+        if (res.result.success) {
+          this.answerDetail = JSON.parse(res.result.data.questionAnswer);
+        }
+      }).catch(err => {
+        this.$message({
+          message: `查询失败`,
+          type: 'warning'
+        });
+        console.error('answerOneInfo error:', err)
+      });
       this.dialogVisible = true;
     },
     handleDialogClose() {

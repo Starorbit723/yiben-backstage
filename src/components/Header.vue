@@ -83,20 +83,19 @@ export default {
   color: #fff;
   .title{
     float: left;
-    width: 350px;
+    width: 270px;
     font-size: 20px;
     font-weight: 700;
   }
   .nav{
     position: absolute;
-    left: 50%;
+    left: 280px;
     top: 0;
-    transform: translate(-50%, 0);
     height: 60px;
   }
   .user{
     float: right;
-    width: 200px;
+    width: 150px;
     text-align: right;
     font-size: 12px;
   }

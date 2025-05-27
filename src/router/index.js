@@ -60,7 +60,7 @@ const routes = [
 				path: '/manage/rolemanagement',
 				component: r => require.ensure([], () => r(require('@/pages/RoleManagement')), 'RoleManagement'),
 				meta: {
-					name: '用户管理',
+					name: '账号管理',
 					showOnMenu: true,
 					look: ['superadmin', 'admin'],
 					creat: ['superadmin', 'admin'],
