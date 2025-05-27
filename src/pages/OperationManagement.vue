@@ -104,6 +104,29 @@
         </el-row>
       </div>
     </div>
+    <div class="yb-separate-line"></div>
+    <!--配置区域 用户调查问卷-->
+    <div class="yb-selfconfig-zone">
+      <div class="yb-selfconfig-title">
+        <el-row>
+          <el-col :span="12">小程序首页 - 用户调查问卷</el-col>
+          <el-col :offset="9" :span="3">
+            <el-button v-if="Redit" class="yb-button" type="success" size="small" @click="saveAndSubmitQuestionnaire()">保存修改调查问卷</el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="yb-swiper-config">
+        <el-form ref="form" label-width="80px">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-form-item label="问卷id">
+                <el-input v-model="questionnaireid" size="small"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -122,6 +145,7 @@ export default {
       detail: {}, // 全部数据
       swiperData: [], // 轮播广告数据
       activityData: [], // 热门活动配置
+      questionnaireid: '', // 用户调查问卷id配置
     }
   },
   computed: {
@@ -147,6 +171,7 @@ export default {
           this.detail = res.result.data[0].detail;
           this.swiperData = res.result.data[0].detail.swiperData || this.swiperData;
           this.activityData = res.result.data[0].detail.activityData || this.activityData;
+          this.questionnaireid = res.result.data[0].detail.questionnaireid || this.questionnaireid;
         }
       }).catch(err => {
         console.error('schoolRead error:', err)
@@ -277,6 +302,36 @@ export default {
           console.error('schoolSave error:', err)
         });
       }
+    },
+    saveAndSubmitQuestionnaire() {
+      const params = {
+        schoolid: this.form.schoolid,
+        detail: Object.assign(this.detail, { questionnaireid: this.questionnaireid }),
+      }
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'schoolSave',
+          data: params,
+        }
+      }).then(res => {
+        console.log('schoolSave result:', res);
+        if (res.result.success) {
+          this.$message({
+            message: '调查问卷保存成功',
+            type: 'success',
+            duration: 1000
+          });
+          this.searchOperateList();
+        }
+      }).catch(err => {
+        this.$message({
+          message: '调查问卷保存失败',
+          type: 'error',
+          duration: 1000
+        });
+        console.error('schoolSave error:', err)
+      });
     },
   }
 };

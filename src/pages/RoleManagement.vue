@@ -21,7 +21,7 @@
     <div class="yb-common-btnzone">
       <el-row :gutter="20">
         <el-col :offset="20" :span="2">
-          <el-button class="yb-button" type="success" size="small" @click="creatNewAccount(0)">创建账号</el-button>
+          <el-button class="yb-button" type="success" size="small" @click="creatNewAccount()">创建账号</el-button>
         </el-col>
         <el-col :span="2">
           <el-button class="yb-button" type="primary" size="small" @click="searchRoleList(0)">查询账号</el-button>
@@ -42,8 +42,8 @@
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleLook(scope.row)" type="text" size="small">查看</el-button>
             <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="handleDelete(scope.row)" type="text" size="small" class="yiben-danger-color">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -119,7 +119,7 @@ export default {
         name: '',
         phoneNumber: '',
       },
-      tableData: [],
+      tableData: [{}],
       // 分页器
       currentPage: 1,
       totalCount: 0,
@@ -168,6 +168,7 @@ export default {
       });
     },
     creatNewAccount() {
+      this.dialogType = 'creat';
       this.dialogVisible = true;
     },
     filterTag(type) {
@@ -187,57 +188,54 @@ export default {
       console.log(`currentPage ${val}`);
       this.currentPage = val;
     },
-    handleLook(scope) {
-      this.dialogType = 'creat';
-      this.formItem = JSON.parse(JSON.stringify(scope));
-      this.dialogVisible = true;
+    handleDelete(scope) {
+      this.dialogType = 'delete';
+      console.log(scope);
     },
     handleEdit(scope) {
       this.dialogType = 'edit';
       this.formItem = JSON.parse(JSON.stringify(scope));
+      this.formItem.role = this.formItem.roleList[0];
       this.dialogVisible = true;
     },
     handleDialogClose() {
       this.dialogType = 'creat';
       this.dialogVisible = false;
+      this.formItem = {
+        name: '',
+        phoneNumber: '',
+        role: '',
+        roleList: [],
+      };
     },
     async handleDialogEnsure() {
       this.$cloudbase.callFunction({
         name: 'operations',
         data: {
-          type: 'userInfoModify',
+          type: 'roleConfigSave',
           data: this.formItem,
         }
       }).then(res => {
-        console.log('userInfoModify result:', res);
+        console.log('roleConfigSave result:', res);
         if (res.result.success) {
           this.$message({
             message: `修改成功`,
             type: 'success'
           });
           this.searchRoleList(1);
+          this.handleDialogClose();
+        } else {
+          this.handleDialogClose();
         }
       }).catch(err => {
         this.$message({
           message: `修改失败`,
           type: 'warning'
         });
-        console.error('userInfoModify error:', err)
+        this.handleDialogClose();
+        console.error('roleConfigSave error:', err)
       });
       this.dialogVisible = false;
-    },
-    genderShow(val) {
-      let res = '';
-      this.genderOptions.forEach((ele) => {
-        if (val === ele.value) {
-          res = ele.label;
-        }
-      });
-      return res;
-    },
-    delChild(index) {
-      console.log(index);
-      this.formItem.children.splice(index, 1);
     },
     addAccount() {
       let flag = true;
@@ -257,6 +255,9 @@ export default {
               type: 'success'
             });
             this.searchRoleList(1);
+            this.handleDialogClose();
+          } else {
+            this.handleDialogClose();
           }
         }).catch(err => {
           this.$message({
