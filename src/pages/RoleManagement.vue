@@ -37,6 +37,21 @@
         style="width: 100%">
         <el-table-column prop="name" label="用户名"></el-table-column>
         <el-table-column prop="phoneNumber" label="手机号"></el-table-column>
+        <el-table-column prop="roleList" label="用户权限">
+          <template slot-scope="scope">
+            <el-tag type="primary" v-if="scope.row.roleList" disable-transitions>{{filterRoleList(scope.row.roleList)}}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="创建时间">
+          <template slot-scope="scope">
+            <div>{{formatDateToShow(scope.row.createTime)}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="updateTime" label="更新时间">
+          <template slot-scope="scope">
+            <div>{{formatDateToShow(scope.row.updateTime)}}</div>
+          </template>
+        </el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
@@ -79,7 +94,7 @@
           </el-col>
           <el-col :span="8"> 
             <el-form-item label="账号权限">
-              <el-select class="yb-select" v-model="formItem.role" size="small">
+              <el-select class="yb-select" v-model="formItem.role" size="small" clearable>
                 <el-option
                   v-for="item in roleTypeOptions"
                   :key="item.value"
@@ -103,7 +118,7 @@
 
 <script>
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, roleType, gender } from '@/utils/common';
+import { userType, roleType, gender, formatDate } from '@/utils/common';
 
 export default {
   name: 'RoleManagement',
@@ -194,8 +209,10 @@ export default {
     },
     handleEdit(scope) {
       this.dialogType = 'edit';
-      this.formItem = JSON.parse(JSON.stringify(scope));
-      this.formItem.role = this.formItem.roleList[0];
+      let _temp = JSON.parse(JSON.stringify(scope));
+      _temp.role = _temp.roleList[0];
+      this.formItem = _temp;
+      console.log('edit', this.formItem);
       this.dialogVisible = true;
     },
     handleDialogClose() {
@@ -209,6 +226,7 @@ export default {
       };
     },
     async handleDialogEnsure() {
+      this.formItem.roleList = [this.formItem.role];
       this.$cloudbase.callFunction({
         name: 'operations',
         data: {
@@ -267,6 +285,21 @@ export default {
           console.error('roleConfigSave error:', err)
         });
       }
+    },
+    formatDateToShow(timeStr) {
+      if (timeStr) {
+        return formatDate(timeStr);
+      }
+      return '';
+    },
+    filterRoleList(roleList) {
+      let _text = '';
+      roleType.forEach(ele => {
+        if (ele.value === roleList[0]) {
+          _text = ele.label;
+        }
+      });
+      return _text;
     },
   }
 }
