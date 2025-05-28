@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import NavMenu from '@/components/NavMenu';
 
 export default {
@@ -25,12 +25,7 @@ export default {
     }
   },
   computed: {
-    userName() {
-      if (localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')) {
-        return JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.name;
-      }
-      return '';
-    }
+    ...mapState(['userName', 'userTag']),
   },
   created() {
     this.creatSessionTime();
@@ -45,7 +40,9 @@ export default {
       'clearAllLoginCache',
     ]),
     creatSessionTime() {
-      sessionStorage.setItem('limitSessionTime', new Date().getTime() + 50400000);
+      if (!sessionStorage.getItem('limitSessionTime')) {
+        sessionStorage.setItem('limitSessionTime', new Date().getTime() + 50400000);
+      }
     },
     checkSessionTime() {
       if (new Date().getTime() > parseFloat(sessionStorage.getItem('limitSessionTime'))) {

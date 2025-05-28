@@ -22,7 +22,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { userTags, isValidPhoneNumber, isValidSMSCode } from '@/utils/common.js'
+import { isValidPhoneNumber, isValidSMSCode } from '@/utils/common.js'
 
 export default {
   name: 'LoginPage',
@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setUserName',
       'setUserTag',
       'setLoginCache',
       'setOauthInstance',
@@ -140,15 +141,7 @@ export default {
           verification_token: this.verification_token,
         });
         console.log('登录成功:', signUpRes);
-        const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
-        console.log('rights', rights);
-        if (rights) {
-          rights.forEach(ele => {
-            if (userTags.indexOf(ele.id) !== -1) {
-              this.setUserTag(ele.id);
-            }
-          });
-        }
+        this.getRoleRight(signUpRes);
         this.$router.push('/manage/Home');
       } catch (e) {
         console.log('登录失败:', e);
@@ -168,17 +161,48 @@ export default {
           // // 可选，设置登录用户名
           username: "newusername7000",
         });
-        console.log('登录成功:', signUpRes);
-        // const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
-        // rights.forEach(ele => {
-        //   if (userTags.indexOf(ele.id) !== -1) {
-        //     this.setUserTag(ele.id);
-        //   }
-        // });
-        this.$router.push('/manage/Home');
+        console.log('注册成功:', signUpRes);
+        this.getRoleRight(signUpRes);
       } catch (e) {
         console.log('登录失败:', e);
       }
+    },
+    getRoleRight(res) {
+      const phoneNumber = res.user.phone_number.replace("+86", "").trim();
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'roleConfigManagePage',
+          data: {
+            pageNo: 1,
+            pageSize: 10,
+            condition: {
+              name: '',
+              phoneNumber: phoneNumber,
+            },
+          },
+        }
+      }).then(res => {
+        console.log('roleConfigManagePage result:', res);
+        if (res.result.success) {
+          sessionStorage.setItem('userName', res.result.data.list[0].name);
+          sessionStorage.setItem('userTag', res.result.data.list[0].roleList[0]);
+          this.setUserTag(res.result.data.list[0].roleList[0]);
+          this.setUserName(res.result.data.list[0].name);
+          this.$router.push('/manage/home');
+        } else {
+          this.$message({
+            message: `暂未分配权限，请联系管理员`,
+            type: 'warning'
+          });
+        }
+      }).catch(err => {
+        this.$message({
+          message: `暂未分配权限，请联系管理员`,
+          type: 'warning'
+        });
+        console.error('roleConfigManagePage error:', err)
+      });
     },
   },
 }

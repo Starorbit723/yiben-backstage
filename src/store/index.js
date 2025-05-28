@@ -5,10 +5,13 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    // 系统级别
     cache: {},
     oauthInstance: {},
     userInfo: {},
-    userTag: '',
+    // 权限级别
+    userName: sessionStorage.getItem('userName') || '',
+    userTag: sessionStorage.getItem('userTag') || '',
     Rlook: false,
     Rcreat: false,
     Redit: false,
@@ -24,6 +27,9 @@ const store = new Vuex.Store({
     },
     setUserInfo(state, data) {
       state.userInfo = data;
+    },
+    setUserName(state, data) {
+      state.userName = data;
     },
     setUserTag(state, data) {
       state.userTag = data;

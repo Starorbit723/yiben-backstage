@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import pathData from '@/router/routerPath.json';
 
 export default {
@@ -35,24 +36,26 @@ export default {
       // 路由变化时执行的逻辑
       console.log('Route Changed:', to, from);
       this.activeIndex = to.name;
+    },
+    'userTag'() {
+      this.creatNav();
     }
   },
   mounted() {
+    console.log('mounted');
     this.activeIndex = this.$route.name;
-    this.creatNav()
+    this.creatNav();
   },
   computed: {
+    ...mapState(['userTag']),
   },
   methods: {
     creatNav() {
-      // console.log(JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups);
-      // console.log(this.$router.options.routes[2].children);
-      const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
-      const navArr = [];
-      this.$router.options.routes[2].children.forEach(ele => {
-        rights.forEach(r => {
-          // console.log(r.id, ele.meta.look, ele.meta.look.indexOf(r.id));
-          if (ele.meta.look.indexOf(r.id) !== -1 && ele.meta.showOnMenu){
+      setTimeout(() => {
+        console.log('this.userTag', this.userTag);
+        const navArr = [];
+        this.$router.options.routes[2].children.forEach(ele => {
+          if (ele.meta.look.indexOf(this.userTag) !== -1 && ele.meta.showOnMenu){
             navArr.push({
               name: ele.meta.name,
               index: ele.name,
@@ -60,9 +63,9 @@ export default {
             });
           }
         });
-      });
-      this.menuData = navArr;
-      console.log('this.menuData', this.menuData);
+        this.menuData = navArr;
+        console.log('this.menuData', this.menuData);
+      }, 10);
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

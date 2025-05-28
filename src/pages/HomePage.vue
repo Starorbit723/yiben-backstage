@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { userTags } from '@/utils/common';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
@@ -18,13 +17,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userTag']),
-    userName() {
-      if (localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')) {
-        return JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.name;
-      }
-      return '';
-    },
+    ...mapState(['userTag', 'userName']),
     role() {
       const roleMap = {
         superadmin: '超级管理员',
@@ -39,7 +32,7 @@ export default {
     }
   },
   created() {
-    this.getUserTag();
+    this.getUserRoleInfo();
     this.getDay();
     this.fetchSchoolOptions();
   },
@@ -47,18 +40,63 @@ export default {
   },
   methods:{
     ...mapMutations([
+      'setUserName',
       'setUserTag',
       'setSchoolOptions',
     ]),
-    getUserTag() {
-      const rights = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.groups;
-      rights.forEach(ele => {
-        if (userTags.indexOf(ele.id) !== -1) {
-          this.setUserTag(ele.id);
+    getUserRoleInfo() {
+      const phoneNumber = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.phone_number.replace("+86", "").trim();
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'roleConfigManagePage',
+          data: {
+            pageNo: 1,
+            pageSize: 10,
+            condition: {
+              name: '',
+              phoneNumber: phoneNumber,
+            },
+          },
         }
+      }).then(res => {
+        console.log('roleConfigManagePage result:', res);
+        if (res.result.success) {
+          sessionStorage.setItem('userName', res.result.data.list[0].name);
+          sessionStorage.setItem('userTag', res.result.data.list[0].roleList[0]);
+          this.setUserTag(res.result.data.list[0].roleList[0]);
+          this.setUserName(res.result.data.list[0].name);
+        } else {
+          this.$message({
+            message: `暂未分配权限，请联系管理员`,
+            type: 'warning'
+          });
+        }
+      }).catch(err => {
+        this.$message({
+          message: `暂未分配权限，请联系管理员`,
+          type: 'warning'
+        });
+        console.error('roleConfigManagePage error:', err)
       });
     },
+    async loginout() {
+      try {
+        const result = await this.$auth.signOut();
+        console.log('退出登录成功:', result);
+        sessionStorage.clear();
+        this.$router.push('/login');
+      } catch (error) {
+        console.error('退出登录失败:', error);
+        this.$message({
+          message: '系统错误，请重新登录',
+          type: 'error'
+        });
+        this.$router.push('/login');
+      }
+    },
     async fetchSchoolOptions() {
+      console.log('schoolList call');
       this.$cloudbase.callFunction({
         name: 'operations',
         data: {
