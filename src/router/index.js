@@ -88,7 +88,7 @@ const routes = [
 				meta: {
 					name: '预约管理',
 					showOnMenu: true,
-					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler'],
+					look: ['superadmin', 'admin', 'educator', 'teacher', 'operation', 'saler', 'hr'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
 					delete: ['superadmin', 'admin']
@@ -113,7 +113,7 @@ const routes = [
 				meta: {
 					name: '课程管理',
 					showOnMenu: true,
-					look: ['superadmin', 'admin', 'educator', 'teacher'],
+					look: ['superadmin', 'admin', 'educator', 'teacher', 'hr'],
 					creat: ['superadmin', 'admin', 'educator'],
 					edit: ['superadmin', 'admin', 'educator'],
 					delete: ['superadmin', 'admin']

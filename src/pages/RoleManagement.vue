@@ -256,35 +256,32 @@ export default {
       this.dialogVisible = false;
     },
     addAccount() {
-      let flag = true;
       this.formItem.roleList = [this.formItem.role]
-      if (flag) {
-        this.$cloudbase.callFunction({
-          name: 'operations',
-          data: {
-            type: 'roleConfigSave',
-            data: this.formItem,
-          }
-        }).then(res => {
-          console.log('roleConfigSave result:', res);
-          if (res.result.success) {
-            this.$message({
-              message: `创建成功`,
-              type: 'success'
-            });
-            this.searchRoleList(1);
-            this.handleDialogClose();
-          } else {
-            this.handleDialogClose();
-          }
-        }).catch(err => {
+      this.$cloudbase.callFunction({
+        name: 'operations',
+        data: {
+          type: 'roleConfigSave',
+          data: this.formItem,
+        }
+      }).then(res => {
+        console.log('roleConfigSave result:', res);
+        if (res.result.success) {
           this.$message({
-            message: `创建失败`,
-            type: 'warning'
+            message: `创建成功`,
+            type: 'success'
           });
-          console.error('roleConfigSave error:', err)
+          this.searchRoleList(1);
+          this.handleDialogClose();
+        } else {
+          this.handleDialogClose();
+        }
+      }).catch(err => {
+        this.$message({
+          message: `创建失败`,
+          type: 'warning'
         });
-      }
+        console.error('roleConfigSave error:', err)
+      });
     },
     formatDateToShow(timeStr) {
       if (timeStr) {
