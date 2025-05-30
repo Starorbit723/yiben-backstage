@@ -110,7 +110,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleDialogClose" size="small">取 消</el-button>
         <el-button type="primary" size="small" @click="addAccount()" v-if="dialogType === 'creat'">添加账号</el-button>
-        <el-button type="primary" @click="handleDialogEnsure" size="small" v-if="dialogType === 'edit'">确认并保存</el-button>
+        <el-button type="primary" @click="handleDialogEnsure()" size="small" v-if="dialogType === 'edit'">确认并保存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -118,15 +118,15 @@
 
 <script>
 import { RightMixin } from "@/plugins/mixin.js";
-import { userType, roleType, gender, formatDate } from '@/utils/common';
+import { userType, roleType, formatDate } from '@/utils/common';
 
 export default {
   name: 'RoleManagement',
   mixins: [ RightMixin ],
   data() {
     return {
+      requestLock: true,
       userTypeOptions: userType,
-      genderOptions: gender,
       roleTypeOptions: roleType,
       dialogVisible: false,
       dialogType: 'creat',
@@ -226,62 +226,78 @@ export default {
       };
     },
     async handleDialogEnsure() {
-      this.formItem.roleList = [this.formItem.role];
-      this.$cloudbase.callFunction({
-        name: 'operations',
-        data: {
-          type: 'roleConfigSave',
-          data: this.formItem,
-        }
-      }).then(res => {
-        console.log('roleConfigSave result:', res);
-        if (res.result.success) {
+      if (this.requestLock) {
+        this.requestLock = false;
+        this.formItem.roleList = [this.formItem.role];
+        this.$cloudbase.callFunction({
+          name: 'operations',
+          data: {
+            type: 'roleConfigSave',
+            data: this.formItem,
+          }
+        }).then(res => {
+          console.log('roleConfigSave result:', res);
+          if (res.result.success) {
+            this.$message({
+              message: `修改成功`,
+              type: 'success'
+            });
+            this.searchRoleList(1);
+          } else {
+            this.$message({
+              message: `修改失败`,
+              type: 'warning'
+            });
+          }
+          this.handleDialogClose();
+          this.requestLock = true;
+        }).catch(err => {
           this.$message({
-            message: `修改成功`,
-            type: 'success'
+            message: `修改失败`,
+            type: 'warning'
           });
-          this.searchRoleList(1);
           this.handleDialogClose();
-        } else {
-          this.handleDialogClose();
-        }
-      }).catch(err => {
-        this.$message({
-          message: `修改失败`,
-          type: 'warning'
+          this.requestLock = true;
+          console.error('roleConfigSave error:', err)
         });
-        this.handleDialogClose();
-        console.error('roleConfigSave error:', err)
-      });
-      this.dialogVisible = false;
+      }
     },
     addAccount() {
-      this.formItem.roleList = [this.formItem.role]
-      this.$cloudbase.callFunction({
-        name: 'operations',
-        data: {
-          type: 'roleConfigSave',
-          data: this.formItem,
-        }
-      }).then(res => {
-        console.log('roleConfigSave result:', res);
-        if (res.result.success) {
+      if (this.requestLock) {
+        this.requestLock = false;
+        this.formItem.roleList = [this.formItem.role]
+        this.$cloudbase.callFunction({
+          name: 'operations',
+          data: {
+            type: 'roleConfigSave',
+            data: this.formItem,
+          }
+        }).then(res => {
+          console.log('roleConfigSave result:', res);
+          if (res.result.success) {
+            this.$message({
+              message: `创建成功`,
+              type: 'success'
+            });
+            this.searchRoleList(1);
+          } else {
+            this.$message({
+              message: `创建失败`,
+              type: 'warning'
+            });
+          }
+          this.handleDialogClose();
+          this.requestLock = true;
+        }).catch(err => {
           this.$message({
-            message: `创建成功`,
-            type: 'success'
+            message: `创建失败`,
+            type: 'warning'
           });
-          this.searchRoleList(1);
           this.handleDialogClose();
-        } else {
-          this.handleDialogClose();
-        }
-      }).catch(err => {
-        this.$message({
-          message: `创建失败`,
-          type: 'warning'
+          this.requestLock = true;
+          console.error('roleConfigSave error:', err);
         });
-        console.error('roleConfigSave error:', err)
-      });
+      }
     },
     formatDateToShow(timeStr) {
       if (timeStr) {

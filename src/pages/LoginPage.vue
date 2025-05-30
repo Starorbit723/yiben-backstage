@@ -155,11 +155,11 @@ export default {
           verification_code: this.verfySMSCode,
           verification_token: this.verification_token,
           // // 可选，设置昵称
-          name: "newuser7234",
+          name: "newuser" + new Date().getTime(),
           // // 可选，设置密码
           password: "1234567890",
           // // 可选，设置登录用户名
-          username: "newusername7000",
+          username: "newusername" + new Date().getTime(),
         });
         console.log('注册成功:', signUpRes);
         this.getRoleRight(signUpRes);

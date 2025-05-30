@@ -45,40 +45,50 @@ export default {
       'setSchoolOptions',
     ]),
     getUserRoleInfo() {
-      const phoneNumber = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.phone_number.replace("+86", "").trim();
-      this.$cloudbase.callFunction({
-        name: 'operations',
-        data: {
-          type: 'roleConfigManagePage',
+      try {
+        const phoneNumber = JSON.parse(localStorage.getItem('user_info_cloud1-0gvvdaq4c40b8f74')).content.phone_number.replace("+86", "").trim();
+        this.$cloudbase.callFunction({
+          name: 'operations',
           data: {
-            pageNo: 1,
-            pageSize: 10,
-            condition: {
-              name: '',
-              phoneNumber: phoneNumber,
+            type: 'roleConfigManagePage',
+            data: {
+              pageNo: 1,
+              pageSize: 10,
+              condition: {
+                name: '',
+                phoneNumber: phoneNumber,
+              },
             },
-          },
-        }
-      }).then(res => {
-        console.log('roleConfigManagePage result:', res);
-        if (res.result.success) {
-          sessionStorage.setItem('userName', res.result.data.list[0].name);
-          sessionStorage.setItem('userTag', res.result.data.list[0].roleList[0]);
-          this.setUserTag(res.result.data.list[0].roleList[0]);
-          this.setUserName(res.result.data.list[0].name);
-        } else {
+          }
+        }).then(res => {
+          console.log('roleConfigManagePage result:', res);
+          if (res.result.success) {
+            sessionStorage.setItem('userName', res.result.data.list[0].name);
+            sessionStorage.setItem('userTag', res.result.data.list[0].roleList[0]);
+            this.setUserTag(res.result.data.list[0].roleList[0]);
+            this.setUserName(res.result.data.list[0].name);
+          } else {
+            this.$message({
+              message: `暂未分配权限，请联系管理员`,
+              type: 'warning'
+            });
+          }
+        }).catch(err => {
           this.$message({
             message: `暂未分配权限，请联系管理员`,
             type: 'warning'
           });
-        }
-      }).catch(err => {
+          console.error('roleConfigManagePage error:', err)
+        });
+      } catch (e) {
+        console.error('Error in role, back to login', e);
         this.$message({
-          message: `暂未分配权限，请联系管理员`,
+          message: `登录失效，请重新登录`,
           type: 'warning'
         });
-        console.error('roleConfigManagePage error:', err)
-      });
+        sessionStorage.clear();
+        this.$router.push('/login');
+      }
     },
     async loginout() {
       try {
