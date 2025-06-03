@@ -58,7 +58,14 @@
           width="100">
           <template slot-scope="scope">
             <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="handleDelete(scope.row)" type="text" size="small" class="yiben-danger-color">删除</el-button>
+            <el-popconfirm
+              title="确认要删除该用户权限吗？"
+              style="margin-left: 10px;"
+              icon="el-icon-info"
+              icon-color="red"
+              @confirm="handleDelete(scope.row)">
+              <el-button slot="reference" type="text" size="small" class="yiben-danger-color">删除</el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -204,8 +211,40 @@ export default {
       this.currentPage = val;
     },
     handleDelete(scope) {
-      this.dialogType = 'delete';
-      console.log(scope);
+      const params = JSON.parse(JSON.stringify(scope));
+      params.roleList = [];
+      if (this.requestLock) {
+        this.requestLock = false;
+        this.$cloudbase.callFunction({
+          name: 'operations',
+          data: {
+            type: 'roleConfigSave',
+            data: params,
+          }
+        }).then(res => {
+          console.log('roleConfigSave result:', res);
+          if (res.result.success) {
+            this.$message({
+              message: `删除成功`,
+              type: 'success'
+            });
+            this.searchRoleList(1);
+          } else {
+            this.$message({
+              message: `删除失败`,
+              type: 'warning'
+            });
+          }
+          this.requestLock = true;
+        }).catch(err => {
+          this.$message({
+            message: `删除失败`,
+            type: 'warning'
+          });
+          this.requestLock = true;
+          console.error('roleConfigSave error:', err)
+        });
+      }
     },
     handleEdit(scope) {
       this.dialogType = 'edit';
