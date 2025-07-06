@@ -211,18 +211,20 @@ export default {
       this.currentPage = val;
     },
     handleDelete(scope) {
-      const params = JSON.parse(JSON.stringify(scope));
-      params.roleList = [];
+      const params = {
+        roleConfigidList: [],
+      }
+      params.roleConfigidList.push(scope.roleConfigid);
       if (this.requestLock) {
         this.requestLock = false;
         this.$cloudbase.callFunction({
           name: 'operations',
           data: {
-            type: 'roleConfigSave',
+            type: 'roleConfigDel',
             data: params,
           }
         }).then(res => {
-          console.log('roleConfigSave result:', res);
+          console.log('roleConfigDel result:', res);
           if (res.result.success) {
             this.$message({
               message: `删除成功`,

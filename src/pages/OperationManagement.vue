@@ -27,6 +27,24 @@
         </el-col>
       </el-row>
     </div>
+    <!--配置区域 内容灰度开关-->
+    <div class="yb-selfconfig-zone">
+      <div class="yb-selfconfig-title">
+        <el-row>
+          <el-col :span="12">小程序 - 内容灰度开关 - 用于审核内容</el-col>
+          <el-col :offset="9" :span="3">
+            <el-button v-if="Redit" class="yb-button" type="success" size="small" @click="saveAndSubmitcontentSwitch()">保存修改开关设置</el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="yb-swiper-config">
+        <el-switch
+          v-model="contentSwitch"
+          active-color="#13ce66"
+          inactive-color="#ff4949">
+        </el-switch>
+      </div>
+    </div>
     <!--配置区域 轮播图-->
     <div class="yb-selfconfig-zone">
       <div class="yb-selfconfig-title">
@@ -143,6 +161,7 @@ export default {
         schoolid: 1,
       },
       detail: {}, // 全部数据
+      contentSwitch: false, // 内容展示灰度开关
       swiperData: [], // 轮播广告数据
       activityData: [], // 热门活动配置
       questionnaireid: '', // 用户调查问卷id配置
@@ -176,6 +195,40 @@ export default {
       }).catch(err => {
         console.error('schoolRead error:', err)
       });
+    },
+    saveAndSubmitcontentSwitch() {
+      let lock = true;
+      if (lock) {
+        console.log(this.swiperData);
+        const params = {
+          schoolid: this.form.schoolid,
+          detail: Object.assign(this.detail, { contentSwitch: this.contentSwitch }),
+        }
+        this.$cloudbase.callFunction({
+          name: 'operations',
+          data: {
+            type: 'schoolSave',
+            data: params,
+          }
+        }).then(res => {
+          console.log('schoolSave result:', res);
+          if (res.result.success) {
+            this.$message({
+              message: '内容灰度开关修改成功',
+              type: 'success',
+              duration: 1000
+            });
+            this.searchOperateList();
+          }
+        }).catch(err => {
+          this.$message({
+            message: '内容灰度开关修改失败',
+            type: 'error',
+            duration: 1000
+          });
+          console.error('schoolSave error:', err)
+        });
+      }
     },
     addSwiperPic() {
       this.swiperData.push({
