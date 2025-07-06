@@ -188,6 +188,7 @@ export default {
         if (res.result.success) {
           // 先把detail 整个保存
           this.detail = res.result.data[0].detail;
+          this.contentSwitch = res.result.data[0].detail.contentSwitch || false;
           this.swiperData = res.result.data[0].detail.swiperData || this.swiperData;
           this.activityData = res.result.data[0].detail.activityData || this.activityData;
           this.questionnaireid = res.result.data[0].detail.questionnaireid || this.questionnaireid;
